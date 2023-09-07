@@ -4,6 +4,10 @@ import os
 import sys
 
 
+def test():
+    ...
+
+
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dhbw_noten.settings')
