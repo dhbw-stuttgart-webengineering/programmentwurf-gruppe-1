@@ -66,4 +66,4 @@ HTML und CSS
 
 Einfaches erstellen von README-Files in Markdown
 
-- [Markdown](vscode:extension/yzhang.markdown-all-in-one
+- [Markdown](vscode:extension/yzhang.markdown-all-in-one)
