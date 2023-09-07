@@ -35,3 +35,35 @@ Nun könnt ihr ganz normal weiter arbeiten. Um nötige Bibliotheken zu installie
 
     pip install -r requirements.txt
 
+## Empfohlene Extensions
+
+Python:
+
+- [autoDocsstring](vscode:extension/njpwerner.autodocstring)
+- [autopep8](vscode:extension/ms-python.autopep8)
+- [django](vscode:extension/batisteo.vscode-django)
+- [Flake8](vscode:extension/ms-python.flake8)
+- [isort](vscode:extension/ms-python.isort)
+- [Pylance](vscode:extension/ms-python.vscode-pylance)
+- [Python](vscode:extension/ms-python.python)
+- [Python Extended](vscode:extension/tushortz.python-extended-snippets)
+- [Python Indent](vscode:extension/KevinRose.vsc-python-indent)
+
+Grafiken erstellen
+
+- [Draw.io Integration](vscode:extension/hediet.vscode-drawio)
+
+GitHub Integrationen
+
+- [GitHub Copilot](vscode:extension/GitHub.copilot)
+- [GitLens](vscode:extension/eamodio.gitlens)
+
+HTML und CSS
+
+- [HTML Boilerplate](vscode:extension/sidthesloth.html5-boilerplate)
+- [HTML CSS Support](vscode:extension/ecmel.vscode-html-css)
+- [W3C Web Validator](vscode:extension/CelianRiboulet.webvalidator)
+
+Einfaches erstellen von README-Files in Markdown
+
+- [Markdown](vscode:extension/yzhang.markdown-all-in-one
