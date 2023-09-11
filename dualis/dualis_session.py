@@ -4,8 +4,22 @@ import requests
 
 
 class DualisSession(requests.Session):
+    """Dualis session class
+
+    Args:
+        requests (_type_): Session Class
+    """
 
     def __init__(self, username: str, password: str):
+        """Constructor
+
+        Args:
+            username (str): username as E-Mail
+            password (str): Password
+
+        Raises:
+            Exception: If no username or password is provided
+        """
         super().__init__()
 
         if password is None or username is None:
@@ -34,6 +48,11 @@ class DualisSession(requests.Session):
         self._authToken = self._createAuthToken()
 
     def _createAuthToken(self):
+        """Creates the authToken
+
+        Returns:
+            authToken (str): authToken
+        """
 
         post_url = "https://dualis.dhbw.de/scripts/mgrqispi.dll"
         r = self.post(post_url,
@@ -48,6 +67,11 @@ class DualisSession(requests.Session):
         return session_id.group()[-15:]
 
     def getAuthToken(self):
+        """Returns the authToken
+
+        Returns:
+            str: authToken
+        """
         return self._authToken
 
 
