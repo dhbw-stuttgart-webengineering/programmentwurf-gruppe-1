@@ -14,7 +14,6 @@
         "davidanson.vscode-markdownlint",
         "ms-python.vscode-pylance",
         "ms-python.python",
-        "tushortz.python-extended-snippets",
         "kevinrose.vsc-python-indent",
         "celianriboulet.webvalidator"
     ]
