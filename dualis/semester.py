@@ -1,6 +1,9 @@
 from course import Course
 from dualis_session import DualisSession
 import bs4
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class Semester:
@@ -16,6 +19,8 @@ class Semester:
         """
         self._name = name
         self._id = id
+
+        logger.error("Test")
 
         self._courses = []
 

@@ -1,3 +1,4 @@
+
 class Course:
     """Represents a course in the dualis system
     """
