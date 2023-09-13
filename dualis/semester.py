@@ -50,7 +50,10 @@ class Semester:
             list: List of courses
         """
         r = session.get(
-            f"https://dualis.dhbw.de/scripts/mgrqispi.dll?APPNAME=CampusNet&PRGNAME=COURSERESULTS&ARGUMENTS=-N{session.getAuthToken()},-N000307,-N{self.getId()},")
+            "https://dualis.dhbw.de/scripts/mgrqispi.dll" +
+            "?APPNAME=CampusNet&PRGNAME=COURSERESULTS" +
+            f"&ARGUMENTS=-N{session.getAuthToken()}" +
+            f",-N000307,-N{self.getId()},")
         soup = bs4.BeautifulSoup(r.text, "html.parser")
 
         table = soup.find("table", {"class": "nb list"})

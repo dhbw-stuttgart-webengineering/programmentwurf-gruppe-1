@@ -58,7 +58,8 @@ if __name__ == "__main__":
     import logging.config
 
     logging.basicConfig(
-        level=logging.DEBUG, format="%(asctime)s %(levelname)s %(name)s.%(module)s: %(message)s")
+        level=logging.DEBUG,
+        format="%(asctime)s %(levelname)s %(name)s.%(module)s: %(message)s")
 
     dualis = Dualis(confidential_settings.EMAIL, confidential_settings.PASSWD)
     dualis.getGrades()

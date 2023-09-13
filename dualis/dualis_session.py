@@ -32,7 +32,8 @@ class DualisSession(requests.Session):
             'pass': password,
             'APPNAME': 'CampusNet',
             'PRGNAME': 'LOGINCHECK',
-            'ARGUMENTS': 'clino,usrname,pass,menuno,menu_type,browser,platform',
+            'ARGUMENTS':
+                'clino,usrname,pass,menuno,menu_type,browser,platform',
             'clino': '000000000000001',
             'menuno': '000324',
             'menu_type': 'classic',
@@ -40,7 +41,8 @@ class DualisSession(requests.Session):
             'platform': ''
         }
 
-        self._header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+        self._header = {'User-Agent':
+                        'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
                         'AppleWebKit/537.36 (KHTML, like Gecko)'
                         'Chrome/86.0.4240.111 Safari/537.36',
                         'origin': 'https://dualis.dhbw.de',
