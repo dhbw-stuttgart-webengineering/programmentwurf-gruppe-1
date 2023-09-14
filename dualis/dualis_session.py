@@ -1,6 +1,10 @@
-import re
-import requests
+"""Dualis Session Class"""
+
 import logging
+import re
+
+import requests
+from exceptions import NoUsernameorPasswordException
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +29,8 @@ class DualisSession(requests.Session):
         super().__init__()
 
         if password is None or username is None:
-            raise Exception("No username or password provided")
+            raise NoUsernameorPasswordException(
+                "No username or password provided")
 
         self._payload = {
             'usrname': username,
@@ -59,13 +64,13 @@ class DualisSession(requests.Session):
         """
 
         post_url = "https://dualis.dhbw.de/scripts/mgrqispi.dll"
-        r = self.post(post_url,
-                      data=self._payload,
-                      verify=False)
+        response = self.post(post_url,
+                             data=self._payload,
+                             verify=False)
 
-        url_index = r.headers["REFRESH"].index("URL=") + len("URL=")
+        url_index = response.headers["REFRESH"].index("URL=") + len("URL=")
         redirect_url = "https://dualis.dhbw-stuttgart.de" + \
-            r.headers["REFRESH"][url_index:]
+            response.headers["REFRESH"][url_index:]
         session_id = re.search('ARGUMENTS=-N([0-9]{15})', redirect_url)
 
         return session_id.group()[-15:]

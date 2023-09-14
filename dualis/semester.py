@@ -1,7 +1,10 @@
+"""Semester class for the dualis module"""
+
+import logging
+
+import bs4
 from course import Course
 from dualis_session import DualisSession
-import bs4
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -10,7 +13,7 @@ class Semester:
     """Represents a semester in the dualis system
     """
 
-    def __init__(self, name: str, id: str):
+    def __init__(self, name: str, identifier: str):
         """Constructor
 
         Args:
@@ -18,7 +21,7 @@ class Semester:
             id (str): Temporary Semester id (i.e. "000000015108000")
         """
         self._name = name
-        self._id = id
+        self._identifier = identifier
 
         logger.error("Test")
 
@@ -49,12 +52,12 @@ class Semester:
         Returns:
             list: List of courses
         """
-        r = session.get(
+        response = session.get(
             "https://dualis.dhbw.de/scripts/mgrqispi.dll" +
             "?APPNAME=CampusNet&PRGNAME=COURSERESULTS" +
             f"&ARGUMENTS=-N{session.getAuthToken()}" +
             f",-N000307,-N{self.getId()},")
-        soup = bs4.BeautifulSoup(r.text, "html.parser")
+        soup = bs4.BeautifulSoup(response.text, "html.parser")
 
         table = soup.find("table", {"class": "nb list"})
 
@@ -86,7 +89,7 @@ class Semester:
         Returns:
             str: Semester id
         """
-        return self._id
+        return self._identifier
 
     def __str__(self) -> str:
         """Returns a string representation of the semester
@@ -94,4 +97,4 @@ class Semester:
         Returns:
             str: String representation of the semester
         """
-        return f"{self._name} ({self._id})"
+        return f"{self._name} ({self._identifier})"

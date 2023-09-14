@@ -1,8 +1,11 @@
+"""Dualis class"""
+
+import logging
+
+import bs4
 import confidential_settings
 from dualis_session import DualisSession
-import bs4
 from semester import Semester
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -39,11 +42,11 @@ class Dualis:
         Returns:
             list: List of semester objects
         """
-        r = self.session.get(
+        response = self.session.get(
             "https://dualis.dhbw.de/scripts/mgrqispi.dll?" +
             "APPNAME=CampusNet&PRGNAME=COURSERESULTS&" +
             f"ARGUMENTS=-N{self.session.getAuthToken()},-N000307,")
-        soup = bs4.BeautifulSoup(r.text, "html.parser")
+        soup = bs4.BeautifulSoup(response.text, "html.parser")
 
         semester_list = []
 
