@@ -2,6 +2,9 @@
   "name": "apps",
   "module": "index.jsx",
   "type": "module",
+  "scripts": {
+    "dev": "bun --hot run index.jsx"
+  },
   "devDependencies": {
     "bun-types": "latest"
   },
