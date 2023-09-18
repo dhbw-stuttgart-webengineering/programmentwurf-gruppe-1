@@ -58,24 +58,20 @@ Python:
 - [Python Indent](vscode:extension/KevinRose.vsc-python-indent)
 
 Grafiken erstellen:
-Grafiken erstellen:
 
 - [Draw.io Integration](vscode:extension/hediet.vscode-drawio)
 
-GitHub Integrationen:
 GitHub Integrationen:
 
 - [GitHub Copilot](vscode:extension/GitHub.copilot)
 - [GitLens](vscode:extension/eamodio.gitlens)
 
 HTML und CSS:
-HTML und CSS:
 
 - [HTML Boilerplate](vscode:extension/sidthesloth.html5-boilerplate)
 - [HTML CSS Support](vscode:extension/ecmel.vscode-html-css)
 - [W3C Web Validator](vscode:extension/CelianRiboulet.webvalidator)
 
-Einfaches erstellen von README-Files in Markdown:
 Einfaches erstellen von README-Files in Markdown:
 
 - [Markdown](vscode:extension/yzhang.markdown-all-in-one)
