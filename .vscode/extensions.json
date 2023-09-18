@@ -1,21 +1,20 @@
 {
-  "recommendations": [
-    "njpwerner.autodocstring",
-    "ms-python.autopep8",
-    "batisteo.vscode-django",
-    "hediet.vscode-drawio",
-    "ms-python.flake8",
-    "eamodio.gitlens",
-    "sidthesloth.html5-boilerplate",
-    "ecmel.vscode-html-css",
-    "ms-python.isort",
-    "yzhang.markdown-all-in-one",
-    "davidanson.vscode-markdownlint",
-    "ms-python.vscode-pylance",
-    "tushortz.python-extended-snippets",
-    "kevinrose.vsc-python-indent",
-    "celianriboulet.webvalidator",
-    "alexcvzz.vscode-sqlite",
-    "gruntfuggly.todo-tree"
-  ]
+    "recommendations": [
+        "njpwerner.autodocstring",
+        "ms-python.autopep8",
+        "batisteo.vscode-django",
+        "hediet.vscode-drawio",
+        "ms-python.flake8",
+        "github.copilot",
+        "eamodio.gitlens",
+        "sidthesloth.html5-boilerplate",
+        "ecmel.vscode-html-css",
+        "ms-python.isort",
+        "yzhang.markdown-all-in-one",
+        "davidanson.vscode-markdownlint",
+        "ms-python.vscode-pylance",
+        "ms-python.python",
+        "kevinrose.vsc-python-indent",
+        "celianriboulet.webvalidator"
+    ]
 }
