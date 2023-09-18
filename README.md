@@ -43,34 +43,6 @@ Nun könnt ihr ganz normal weiter arbeiten. Um nötige Bibliotheken zu installie
 
     pip install -r requirements.txt
 
-Außerdem wird für das Frontend `Bun` benötigt. Installiert wird Bun via Terminal:
-
-    curl -fsSL https://bun.sh/install | bash
-
-Aus der `Readme.md` des `bun init`:
-
-To install dependencies:
-
-    bun install
-
-To run:
-
-    bun run index.jsx
-
-Außerdem wird für das Frontend Development `Bun` benötigt. Installiert wird Bun via Terminal:
-
-    curl -fsSL https://bun.sh/install | bash
-
-Aus der `Readme.md` des `bun init`:
-
-To install dependencies:
-
-    bun install
-
-To run:
-
-    bun run index.jsx
-
 ## Empfohlene Extensions
 
 Python:
