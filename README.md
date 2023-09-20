@@ -39,7 +39,7 @@ Nun könnt ihr ganz normal weiter arbeiten. Um nötige Bibliotheken zu installie
 
     pip install -r requirements.txt
 
-Außerdem wird für das Frontend `Bun` benötigt. Installiert wird Bun via Terminal:
+Außerdem wird für das Frontend Development `Bun` benötigt. Installiert wird Bun via Terminal:
 
     curl -fsSL https://bun.sh/install | bash
 
