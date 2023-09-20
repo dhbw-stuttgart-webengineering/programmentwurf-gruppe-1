@@ -54,7 +54,7 @@ class DualisSession(requests.Session):
                         'referer': 'https://dualis.dhbw.de/'
                         }
 
-        self._authToken = self._createAuthToken()
+        self._auth_token = self._createAuthToken()
 
     def _createAuthToken(self):
         """Creates the authToken
@@ -81,7 +81,7 @@ class DualisSession(requests.Session):
         Returns:
             str: authToken
         """
-        return self._authToken
+        return self._auth_token
 
 
 if __name__ == "__main__":
