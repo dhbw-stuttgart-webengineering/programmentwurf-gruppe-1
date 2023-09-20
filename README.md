@@ -11,6 +11,10 @@ Ein Projekt um via Dualis Login Noten auszulesen und sich mit anderen Studenten 
 
 `apps` ist alles was mit Frontend zu tun hat, in `dualis` finden sich alle Dateien für den Zugriff auf Dualis.
 
+## Ordnerstruktur
+
+`apps` ist alles was mit Frontend zu tun hat, in `dualis` finden sich alle Dateien für den Zugriff auf Dualis.
+
 ## Virtualenv Tutorial
 
 Zur einfachen Arbeit mit Python empfehle ich euch virtual env zu nutzen:
@@ -38,6 +42,20 @@ Um die erfolgreiche Installation zu überprüfen könnt ihr folgendes eingeben:
 Nun könnt ihr ganz normal weiter arbeiten. Um nötige Bibliotheken zu installieren könnt ihr noch mit `pip` die aufgelistetet Bibliotheken aus der `requirements.txt` installieren
 
     pip install -r requirements.txt
+
+Außerdem wird für das Frontend `Bun` benötigt. Installiert wird Bun via Terminal:
+
+    curl -fsSL https://bun.sh/install | bash
+
+Aus der `Readme.md` des `bun init`:
+
+To install dependencies:
+
+    bun install
+
+To run:
+
+    bun run index.jsx
 
 Außerdem wird für das Frontend Development `Bun` benötigt. Installiert wird Bun via Terminal:
 
@@ -68,20 +86,24 @@ Python:
 - [Python Indent](vscode:extension/KevinRose.vsc-python-indent)
 
 Grafiken erstellen:
+Grafiken erstellen:
 
 - [Draw.io Integration](vscode:extension/hediet.vscode-drawio)
 
+GitHub Integrationen:
 GitHub Integrationen:
 
 - [GitHub Copilot](vscode:extension/GitHub.copilot)
 - [GitLens](vscode:extension/eamodio.gitlens)
 
 HTML und CSS:
+HTML und CSS:
 
 - [HTML Boilerplate](vscode:extension/sidthesloth.html5-boilerplate)
 - [HTML CSS Support](vscode:extension/ecmel.vscode-html-css)
 - [W3C Web Validator](vscode:extension/CelianRiboulet.webvalidator)
 
+Einfaches erstellen von README-Files in Markdown:
 Einfaches erstellen von README-Files in Markdown:
 
 - [Markdown](vscode:extension/yzhang.markdown-all-in-one)

@@ -1,3 +1,5 @@
+"""Represents a course in the dualis system"""
+
 
 class Course:
     """Represents a course in the dualis system
