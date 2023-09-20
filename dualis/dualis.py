@@ -56,6 +56,8 @@ class Dualis:
         return semester_list
 
 
+test
+
 if __name__ == "__main__":
 
     import logging.config
