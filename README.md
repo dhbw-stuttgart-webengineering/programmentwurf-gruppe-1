@@ -7,6 +7,10 @@ Ein Projekt um via Dualis Login Noten auszulesen und sich mit anderen Studenten 
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/IEPW_6q_)
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-718a45dd9cf7e7f842a935f5ebbe5719a5e09af4491e668f4dbf3b35d5cca122.svg)](https://classroom.github.com/online_ide?assignment_repo_id=11744256&assignment_repo_type=AssignmentRepo)
 
+## Ordnerstruktur
+
+`apps` ist alles was mit Frontend zu tun hat, in `dualis` finden sich alle Dateien für den Zugriff auf Dualis.
+
 ## Virtualenv Tutorial
 
 Zur einfachen Arbeit mit Python empfehle ich euch virtual env zu nutzen:
@@ -35,6 +39,20 @@ Nun könnt ihr ganz normal weiter arbeiten. Um nötige Bibliotheken zu installie
 
     pip install -r requirements.txt
 
+Außerdem wird für das Frontend `Bun` benötigt. Installiert wird Bun via Terminal:
+
+    curl -fsSL https://bun.sh/install | bash
+
+Aus der `Readme.md` des `bun init`:
+
+To install dependencies:
+
+    bun install
+
+To run:
+
+    bun run index.jsx
+
 ## Empfohlene Extensions
 
 Python:
@@ -49,21 +67,21 @@ Python:
 - [Python Extended](vscode:extension/tushortz.python-extended-snippets)
 - [Python Indent](vscode:extension/KevinRose.vsc-python-indent)
 
-Grafiken erstellen
+Grafiken erstellen:
 
 - [Draw.io Integration](vscode:extension/hediet.vscode-drawio)
 
-GitHub Integrationen
+GitHub Integrationen:
 
 - [GitHub Copilot](vscode:extension/GitHub.copilot)
 - [GitLens](vscode:extension/eamodio.gitlens)
 
-HTML und CSS
+HTML und CSS:
 
 - [HTML Boilerplate](vscode:extension/sidthesloth.html5-boilerplate)
 - [HTML CSS Support](vscode:extension/ecmel.vscode-html-css)
 - [W3C Web Validator](vscode:extension/CelianRiboulet.webvalidator)
 
-Einfaches erstellen von README-Files in Markdown
+Einfaches erstellen von README-Files in Markdown:
 
 - [Markdown](vscode:extension/yzhang.markdown-all-in-one)
