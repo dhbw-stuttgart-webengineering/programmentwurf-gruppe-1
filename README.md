@@ -11,10 +11,6 @@ Ein Projekt um via Dualis Login Noten auszulesen und sich mit anderen Studenten 
 
 `apps` ist alles was mit Frontend zu tun hat, in `dualis` finden sich alle Dateien für den Zugriff auf Dualis.
 
-## Ordnerstruktur
-
-`apps` ist alles was mit Frontend zu tun hat, in `dualis` finden sich alle Dateien für den Zugriff auf Dualis.
-
 ## Virtualenv Tutorial
 
 Zur einfachen Arbeit mit Python empfehle ich euch virtual env zu nutzen:
