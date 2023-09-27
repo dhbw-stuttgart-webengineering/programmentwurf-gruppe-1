@@ -66,7 +66,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<
+
     'apps.home'  # Enable the inner home (home)
 ]
 
@@ -146,6 +146,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'apps.authentication.auth_backend.DualisAuthBackend',
+]
 
 
 LANGUAGE_CODE = 'en-us'
