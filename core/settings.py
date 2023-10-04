@@ -145,6 +145,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'apps.authentication.auth_backend.DualisAuthBackend',
+]
 
 LANGUAGE_CODE = 'en-us'
 

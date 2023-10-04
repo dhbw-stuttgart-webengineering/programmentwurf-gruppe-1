@@ -15,7 +15,7 @@ class DualisSession(requests.Session):
     Args:
         requests (_type_): Session Class
     """
-
+    
     def __init__(self, username: str, password: str):
         """Constructor
 
