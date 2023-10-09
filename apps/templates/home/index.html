@@ -1,0 +1,9 @@
+Home
+{% if request.user.is_authenticated %}
+    <p>Welcome, {{ request.user.username }}!</p>
+{% else %}
+    <p>You are not logged in.</p>
+{% endif %}
+
+<a href="{% url 'logout' %}?csrfmiddlewaretoken={{ csrf_token }}">Logout</a>
+

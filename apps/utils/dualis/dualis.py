@@ -3,9 +3,9 @@
 import logging
 
 import bs4
-import confidential_settings
-from dualis_session import DualisSession
-from semester import Semester
+from .dualis_session import DualisSession
+from .semester import Semester
+from .exceptions import InvalidUsernameorPasswordException, NoUsernameorPasswordException
 
 logger = logging.getLogger(__name__)
 
@@ -21,6 +21,7 @@ class Dualis:
             username (str): Username as E-Mail
             password (str): Password
         """
+
         self.session = DualisSession(username, password)
 
     def getGrades(self) -> list:
@@ -63,6 +64,3 @@ if __name__ == "__main__":
     logging.basicConfig(
         level=logging.DEBUG,
         format="%(asctime)s %(levelname)s %(name)s.%(module)s: %(message)s")
-
-    dualis = Dualis(confidential_settings.EMAIL, confidential_settings.PASSWD)
-    dualis.getGrades()
