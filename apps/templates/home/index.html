@@ -1,6 +1,6 @@
 Home
 {% if request.user.is_authenticated %}
-    <p>Welcome, {{ request.user.username }}!</p>
+    <p>Welcome, {{ request.user.name }}!</p>
 {% else %}
     <p>You are not logged in.</p>
 {% endif %}
