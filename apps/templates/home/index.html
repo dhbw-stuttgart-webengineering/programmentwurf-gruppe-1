@@ -1,9 +1,11 @@
-Home
-{% if request.user.is_authenticated %}
-    <p>Welcome, {{ request.user.name }}!</p>
+Home {% if request.user.is_authenticated %}
+<p>Welcome, {{ request.user.name }}!</p>
 {% else %}
-    <p>You are not logged in.</p>
+<p>You are not logged in.</p>
+{% endif %} {% if perms.is_superuser %}
+<p>You are a superuser.</p>
+{% else %}
+<p>You are not a superuser.</p>
 {% endif %}
 
 <a href="{% url 'logout' %}?csrfmiddlewaretoken={{ csrf_token }}">Logout</a>
-
