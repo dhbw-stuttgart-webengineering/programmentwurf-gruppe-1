@@ -16,7 +16,7 @@ def login_view(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     Returns:
         HttpResponse | HttpResponseRedirect: Renders login window or redirects to home page on successfull login.
     """
-	form = LoginForm(request.POST or None)
+    form = LoginForm(request.POST or None)
 
     msg = None
 
