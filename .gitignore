@@ -311,3 +311,6 @@ dist
 
 # IntelliJ based IDEs
 .idea
+
+#MacOS
+.DS_Store
