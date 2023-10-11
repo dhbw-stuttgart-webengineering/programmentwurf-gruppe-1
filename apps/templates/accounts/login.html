@@ -14,14 +14,17 @@
 
                 {% csrf_token %}
 
-                    {{ form.username }}
+                  <div id="email">
+                    {{ form.email }}
+                  </div>
+                  <div id="password">
                   {{ form.password }}
-                 <input type="checkbox" id="rememberMe">
-                  <label for="rememberMe">Remember me</label>
+                  </div>
                   <button type="submit" name="login">Sign in</button>
-                </p>
+              </p>
               </form>
             </div>
+
 
 {% endblock content %}
 
