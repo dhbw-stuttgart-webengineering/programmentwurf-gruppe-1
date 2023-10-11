@@ -1,10 +1,10 @@
 from django.contrib.auth import login
-from django.contrib.auth.models import User
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 
 from ..utils.dualis import Dualis, InvalidUsernameorPasswordException
 from .forms import LoginForm
+from .models import DualisUser
 
 
 def login_view(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
@@ -23,18 +23,19 @@ def login_view(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     if request.method == "POST":
 
         if form.is_valid():
-            username = form.cleaned_data.get("username")
+            email = form.cleaned_data.get("username")
 
             dualis = None
 
             try:
                 dualis = Dualis(
-                    username, form.cleaned_data.get("password"))
+                    email, form.cleaned_data.get("password"))
             except InvalidUsernameorPasswordException:
                 msg = "Invalid credentials"
             else:
                 request.session.set_expiry(30 * 60)
-                user, _ = User.objects.get_or_create(username=username)
+                user, _ = DualisUser.objects.update_or_create(
+                    email=email, name=dualis.getName())
                 login(request, user,
                       backend='django.contrib.auth.backends.ModelBackend')
                 return redirect("/")
