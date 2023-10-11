@@ -3,8 +3,8 @@
 import logging
 
 import bs4
-from course import Course
-from dualis_session import DualisSession
+from .course import Course
+from .dualis_session import DualisSession
 
 logger = logging.getLogger(__name__)
 

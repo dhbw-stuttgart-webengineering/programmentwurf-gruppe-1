@@ -4,7 +4,7 @@ import logging
 import re
 
 import requests
-from exceptions import NoUsernameorPasswordException
+from .exceptions import NoUsernameorPasswordException, InvalidUsernameorPasswordException
 
 logger = logging.getLogger(__name__)
 
@@ -15,7 +15,7 @@ class DualisSession(requests.Session):
     Args:
         requests (_type_): Session Class
     """
-    
+
     def __init__(self, username: str, password: str):
         """Constructor
 
@@ -67,8 +67,10 @@ class DualisSession(requests.Session):
         response = self.post(post_url,
                              data=self._payload,
                              verify=False)
-
-        url_index = response.headers["REFRESH"].index("URL=") + len("URL=")
+        try:
+            url_index = response.headers["REFRESH"].index("URL=") + len("URL=")
+        except Exception as e:
+            raise InvalidUsernameorPasswordException from e
         redirect_url = "https://dualis.dhbw-stuttgart.de" + \
             response.headers["REFRESH"][url_index:]
         session_id = re.search('ARGUMENTS=-N([0-9]{15})', redirect_url)
@@ -82,11 +84,3 @@ class DualisSession(requests.Session):
             str: authToken
         """
         return self._auth_token
-
-
-if __name__ == "__main__":
-    import confidential_settings
-
-    dualis_session = DualisSession(
-        confidential_settings.EMAIL, confidential_settings.PASSWD)
-    print(dualis_session.getAuthToken())
