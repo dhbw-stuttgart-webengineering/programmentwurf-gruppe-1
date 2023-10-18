@@ -5,21 +5,30 @@
 {% block body_class %} Sign-in-basic {% endblock %}
 
 {% block content %}
-
+<main>
+  <p>
   {% if msg %}
     {{ msg | safe }}
   {% else %}
     Dualis Anmeldung
   {% endif %}
-  <form role="form" method="post" action="">
+  </p>
+  <form id="login_form" role="form" method="post" action="">
     {% csrf_token %}
 
     {{ form.email }}
     {{ form.password }}
-    <input type="checkbox">Daten merken</input>
-    <button type="submit">Anmelden</button>
-</form>
 
+    <fieldset>
+      <legend></legend>
+      <label for="remindme">
+        <input type="checkbox" id="remindme" name="remindme">
+          Daten merken
+      </label>
+    </fieldset>
+    <button id="submit_login" type="submit" onclick="loading(this.id)">Anmelden</button>
+  </form>
+</main>
 
 
 {% endblock content %}

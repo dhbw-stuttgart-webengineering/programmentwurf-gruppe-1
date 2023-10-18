@@ -14,7 +14,8 @@ def login_view(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
         request (HttpRequest): HttpRequest Object
 
     Returns:
-        HttpResponse | HttpResponseRedirect: Renders login window or redirects to home page on successfull login.
+        HttpResponse | HttpResponseRedirect: Renders login window or redirects
+        to home page on successfull login.
     """
     form = LoginForm(request.POST or None)
 
@@ -30,7 +31,7 @@ def login_view(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
                 dualis = Dualis(
                     email, form.cleaned_data.get("password"))
             except InvalidUsernameorPasswordException:
-                msg = "Invalid credentials"
+                msg = "Email oder Passwort falsch!"
             else:
                 request.session.set_expiry(30 * 60)
                 user, _ = DualisUser.objects.update_or_create(
@@ -39,6 +40,6 @@ def login_view(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
                       backend='django.contrib.auth.backends.ModelBackend')
                 return redirect("/")
         else:
-            msg = 'Error validating the form'
+            msg = 'Konnte nicht übermittelt werden.'
 
     return render(request, "accounts/login.html", {"form": form, "msg": msg})

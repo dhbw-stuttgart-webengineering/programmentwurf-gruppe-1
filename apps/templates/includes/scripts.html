@@ -1,9 +1,15 @@
+{% load static %}
+
 <!--   Core JS Files   -->
 <script
-  src="{{ ASSETS_ROOT }}/js/minimal-theme-switcher.js"
+  src="{% static "/js/minimal-theme-switcher.js" %}"
   type="text/javascript"
 ></script>
 <script
-  src="{{ ASSETS_ROOT }}/js/core/bootstrap.js"
+  src="{% static "/js/bootstrap.js" %}"
+  type="text/javascript"
+></script>
+<script
+  src="{% static "/js/loading.js" %}"
   type="text/javascript"
 ></script>
