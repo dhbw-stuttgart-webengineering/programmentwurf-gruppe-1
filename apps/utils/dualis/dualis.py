@@ -24,6 +24,24 @@ class Dualis:
 
         self.session = DualisSession(username, password)
 
+    def getName(self) -> str:
+        """Returns the name of the user
+
+        Returns:
+            str: Name of the user
+        """
+        response = self.session.get(
+            f"https://dualis.dhbw.de/scripts/mgrqispi.dll?APPNAME=CampusNet&PRGNAME=MLSSTART&ARGUMENTS=-N{self.session.getAuthToken()},-N000019,")
+        soup = bs4.BeautifulSoup(response.text, "html.parser")
+
+        import re
+        name_pattern = r'Herzlich willkommen, (.*?)!'
+
+        match = re.search(name_pattern, soup.find("h1").text.strip())
+
+        if match:
+            return match.group(1)
+
     def getGrades(self) -> list:
         """Prints the grades
 
