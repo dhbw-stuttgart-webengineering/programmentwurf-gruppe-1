@@ -1,12 +1,23 @@
-{% extends "layouts/base-fullscreen.html" %} {% if request.user.is_authenticated
-%}
-<p>Welcome, {{ request.user.name }}!</p>
-{% else %}
-<p>You are not logged in.</p>
-{% endif %} {% if perms.is_superuser %}
-<p>You are a superuser.</p>
-{% else %}
-<p>You are not a superuser.</p>
-{% endif %}
+{% extends "layouts/base-fullscreen.html" %}
+
+{% block title %} Home {% endblock %}
+
+{% block content %}
+
+<main>
+	{% if request.user.is_authenticated %}
+	<p>Willkommen, {{ request.user.name }}!</p>
+	{% else %}
+	<p>Du bist nicht eingeloggt!</p>
+	{% endif %} {% if perms.is_superuser %}
+	<p>Du bist ein Admin.</p>
+	{% else %}
+	<p>Du bist kein Admin.</p>
+	{% endif %}
 
 <a href="{% url 'logout' %}?csrfmiddlewaretoken={{ csrf_token }}">Logout</a>
+
+</main>
+
+{% endblock content %}
+```
