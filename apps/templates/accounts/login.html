@@ -1,27 +1,25 @@
-{% block title %} Sign IN {% endblock %} 
+{% extends "layouts/base-fullscreen.html" %}
 
-{% block body_class %} sign-in-basic {% endblock %}
+{% block title %} Sign In {% endblock %} 
+
+{% block body_class %} Sign-in-basic {% endblock %}
 
 {% block content %}
 
-  
-                    {% if msg %}
-                      {{ msg | safe }}
-                    {% else %}
-                      Add your credentials
-                    {% endif %}
-              <form role="form" method="post" action="" class="text-start">
+  {% if msg %}
+    {{ msg | safe }}
+  {% else %}
+    Dualis Anmeldung
+  {% endif %}
+  <form role="form" method="post" action="">
+    {% csrf_token %}
 
-                {% csrf_token %}
+    {{ form.username }}
+    {{ form.password }}
 
-                    {{ form.username }}
-                  {{ form.password }}
-                 <input type="checkbox" id="rememberMe">
-                  <label for="rememberMe">Remember me</label>
-                  <button type="submit" name="login">Sign in</button>
-                </p>
-              </form>
-            </div>
+    <input type="checkbox">Daten merken</input>
+    <button type="submit">Anmelden</button>
+  </form>
 
 {% endblock content %}
 
