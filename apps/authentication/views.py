@@ -1,3 +1,4 @@
+"""Login View"""
 from django.contrib.auth import login
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
@@ -14,16 +15,16 @@ def login_view(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
         request (HttpRequest): HttpRequest Object
 
     Returns:
-        HttpResponse | HttpResponseRedirect: Renders login window or redirects to home page on successfull login.
+        HttpResponse | HttpResponseRedirect: Renders login window or 
+        redirects to home page on successfull login.
     """
     form = LoginForm(request.POST or None)
 
     msg = None
-
     if request.method == "POST":
 
         if form.is_valid():
-            email = form.cleaned_data.get("username")
+            email = form.cleaned_data.get("email")
 
             dualis = None
 
@@ -35,7 +36,11 @@ def login_view(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
             else:
                 request.session.set_expiry(30 * 60)
                 user, _ = DualisUser.objects.update_or_create(
-                    email=email, name=dualis.getName())
+                    email=email, name=dualis.get_name())
+
+                for module in dualis.get_grades():
+                    print(module)
+
                 login(request, user,
                       backend='django.contrib.auth.backends.ModelBackend')
                 return redirect("/")

@@ -1,3 +1,4 @@
+"""Dualis API"""
 from .dualis import Dualis
 from .exceptions import InvalidUsernameorPasswordException
 
