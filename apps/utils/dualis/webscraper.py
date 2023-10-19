@@ -140,6 +140,8 @@ class WebScraper:
                 grade_first_attempt = (float(columns[3].text.strip().replace(",", "."))
                                        if "noch nicht gesetzt" not in columns[3].text else None)
                 units[-1]["grade_first_attempt"] = grade_first_attempt
+
+                # TODO Add support for second attempt
         return units
 
     def _extract_name_and_id(self, module: str) -> (str, str):
