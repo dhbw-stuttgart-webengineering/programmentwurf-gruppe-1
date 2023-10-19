@@ -2,10 +2,8 @@
 
 import logging
 
-import bs4
 from .dualis_session import DualisSession
-from .semester import Semester
-from .exceptions import InvalidUsernameorPasswordException, NoUsernameorPasswordException
+from .webscraper import WebScraper
 
 logger = logging.getLogger(__name__)
 
@@ -23,62 +21,20 @@ class Dualis:
         """
 
         self.session = DualisSession(username, password)
+        self.webscraper = WebScraper(session=self.session)
 
-    def getName(self) -> str:
+    def get_name(self) -> str:
         """Returns the name of the user
 
         Returns:
             str: Name of the user
         """
-        response = self.session.get(
-            f"https://dualis.dhbw.de/scripts/mgrqispi.dll?APPNAME=CampusNet&PRGNAME=MLSSTART&ARGUMENTS=-N{self.session.getAuthToken()},-N000019,")
-        soup = bs4.BeautifulSoup(response.text, "html.parser")
+        return self.webscraper.scrape_username()
 
-        import re
-        name_pattern = r'Herzlich willkommen, (.*?)!'
-
-        match = re.search(name_pattern, soup.find("h1").text.strip())
-
-        if match:
-            return match.group(1)
-
-    def getGrades(self) -> list:
-        """Prints the grades
+    def get_grades(self) -> list:
+        """Return a List of Module Objects that contain all Units
 
         Returns:
-            list: List of grades
+            list: List of Module Objects
         """
-        for semester in self._getSemesterList():
-            logger.debug(semester.getId())
-            semester.scrapeCourses(self.session)
-
-            for course in semester.getCourses():
-                logger.debug(course)
-
-    def _getSemesterList(self) -> list:
-        """Returns a list of semester objects
-
-        Returns:
-            list: List of semester objects
-        """
-        response = self.session.get(
-            "https://dualis.dhbw.de/scripts/mgrqispi.dll?" +
-            "APPNAME=CampusNet&PRGNAME=COURSERESULTS&" +
-            f"ARGUMENTS=-N{self.session.getAuthToken()},-N000307,")
-        soup = bs4.BeautifulSoup(response.text, "html.parser")
-
-        semester_list = []
-
-        for option in soup.find_all("option"):
-            semester_list.append(Semester(option.text, option["value"]))
-
-        return semester_list
-
-
-if __name__ == "__main__":
-
-    import logging.config
-
-    logging.basicConfig(
-        level=logging.DEBUG,
-        format="%(asctime)s %(levelname)s %(name)s.%(module)s: %(message)s")
+        return self.webscraper.scrape()

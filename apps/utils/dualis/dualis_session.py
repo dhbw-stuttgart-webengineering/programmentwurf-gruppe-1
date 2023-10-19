@@ -2,7 +2,7 @@
 
 import logging
 import re
-
+import bs4
 import requests
 from .exceptions import NoUsernameorPasswordException, InvalidUsernameorPasswordException
 
@@ -54,9 +54,14 @@ class DualisSession(requests.Session):
                         'referer': 'https://dualis.dhbw.de/'
                         }
 
-        self._auth_token = self._createAuthToken()
+        self._auth_token = self._create_authtoken()
 
-    def _createAuthToken(self):
+    def get(self, url, **kwargs) -> bs4.BeautifulSoup:
+        response = super().get(url, **kwargs)
+        response.encoding = 'UTF-8'
+        return bs4.BeautifulSoup(response.text, "html.parser")
+
+    def _create_authtoken(self):
         """Creates the authToken
 
         Returns:
@@ -77,7 +82,7 @@ class DualisSession(requests.Session):
 
         return session_id.group()[-15:]
 
-    def getAuthToken(self):
+    def get_authtoken(self):
         """Returns the authToken
 
         Returns:
