@@ -1,4 +1,4 @@
-{% extends "layouts/base-fullscreen.html" %}
+{% extends "layouts/base-fullscreen.html" %} 
 
 {% block title %} Sign In {% endblock %} 
 
@@ -13,21 +13,23 @@
   {% endif %}
   </p>
   <form id="login_form" role="form" method="post" action="">
-    {% csrf_token %}
+    {% csrf_token %} 
 
-    {{ form.email }}
+    {{ form.email }} 
     {{ form.password }}
-
+    
     <fieldset>
       <legend></legend>
-      <label for="remindme">
-        <input type="checkbox" id="remindme" name="remindme">
-          Daten merken
+      
+      <label for="rememberme">
+        {{ form.rememberme }}
+        Daten merken
       </label>
     </fieldset>
-    <button id="submit_login" type="submit" onclick="loading(this.id)">Anmelden</button>
+    <button id="submit_login" type="submit" onclick="loading(this.id)">
+      Anmelden
+    </button>
   </form>
 </main>
-
 
 {% endblock content %}

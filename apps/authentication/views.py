@@ -1,13 +1,56 @@
 """Login View"""
+import base64
+
+from Crypto.Cipher import AES
+from django.conf import settings
 from django.contrib.auth import login
+from django.contrib.auth.views import logout_then_login
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
+from django.views.decorators.cache import cache_control
 
 from ..utils.dualis import Dualis, InvalidUsernameorPasswordException
 from .forms import LoginForm
 from .models import DualisUser
 
 
+def encrypt(data):
+    secret_key = settings.SECRET_KEY[0:32].encode("utf-8")
+
+    cipher = AES.new(secret_key, AES.MODE_GCM)
+    ciphertext, tag = cipher.encrypt_and_digest(data.encode('utf-8'))
+    return base64.b64encode(cipher.nonce + ciphertext + tag).decode('utf-8')
+
+
+def decrypt(encrypted_data):
+    secret_key = settings.SECRET_KEY[0:32].encode("utf-8")
+
+    data = base64.b64decode(encrypted_data.encode('utf-8'))
+    nonce, ciphertext, tag = data[:16], data[16:-16], data[-16:]
+    cipher = AES.new(secret_key, AES.MODE_GCM, nonce=nonce)
+    return cipher.decrypt_and_verify(ciphertext, tag).decode('utf-8')
+
+
+def make_login(request: HttpRequest, email, password) -> bool:
+    dualis = None
+
+    dualis = Dualis(
+        email, password)
+
+    request.session.set_expiry(10)
+    user, _ = DualisUser.objects.update_or_create(
+        email=email, name=dualis.get_name())
+
+    for module in dualis.get_grades():
+        print(module)
+
+    login(request, user,
+          backend='django.contrib.auth.backends.ModelBackend')
+
+    return True
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def login_view(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     """Login View
 
@@ -21,30 +64,67 @@ def login_view(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     form = LoginForm(request.POST or None)
 
     msg = None
+
     if request.method == "POST":
 
         if form.is_valid():
             email = form.cleaned_data.get("email")
-
-            dualis = None
+            password = form.cleaned_data.get("password")
 
             try:
-                dualis = Dualis(
-                    email, form.cleaned_data.get("password"))
+                success = make_login(request, email, password)
             except InvalidUsernameorPasswordException:
-                msg = "Email oder Passwort falsch!"
+                msg = 'Ungültige Anmeldedaten'
             else:
-                request.session.set_expiry(30 * 60)
-                user, _ = DualisUser.objects.update_or_create(
-                    email=email, name=dualis.get_name())
+                if form.cleaned_data.get("rememberme"):
+                    response = redirect("/")
+                    response.set_cookie(
+                        "password", encrypt(form.cleaned_data.get("password")))
+                    response.set_cookie(
+                        "email", encrypt(form.cleaned_data.get("email")))
+                    return response
 
-                for module in dualis.get_grades():
-                    print(module)
-
-                login(request, user,
-                      backend='django.contrib.auth.backends.ModelBackend')
                 return redirect("/")
         else:
             msg = 'Konnte nicht übermittelt werden.'
 
-    return render(request, "accounts/login.html", {"form": form, "msg": msg})
+        return render(request, "accounts/login.html", {"form": form, "msg": msg})
+
+    if request.COOKIES.get("password") and request.COOKIES.get("email"):
+        try:
+            password = decrypt(request.COOKIES.get("password"))
+            email = decrypt(request.COOKIES.get("email"))
+
+            make_login(request, email, password)
+
+            return redirect("/")
+
+        except (ValueError, InvalidUsernameorPasswordException):
+            response = render(request, "accounts/login.html",
+                              {"form": form, "msg": msg})
+            response.set_cookie("password", None)
+            response.set_cookie("email", None)
+
+            print("login with cookies unsuccessful")
+
+            return response
+
+    else:
+        return render(request, "accounts/login.html", {"form": form, "msg": msg})
+
+
+def logout_view(request: HttpRequest) -> HttpResponseRedirect:
+    """Logout View
+
+    Args:
+        request (HttpRequest): HttpRequest Object
+
+    Returns:
+        HttpResponseRedirect: Redirects to login page.
+    """
+
+    response = logout_then_login(request)
+    response.set_cookie("password", None)
+    response.set_cookie("email", None)
+
+    return response
