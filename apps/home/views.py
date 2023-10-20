@@ -4,9 +4,11 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
+from django.views.decorators.cache import cache_control
 
 
 @login_required(login_url="/login/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def index(request):
     context = {'segment': 'index', }
 
@@ -14,6 +16,7 @@ def index(request):
 
 
 @login_required(login_url="/login/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def pages(request):
     context = {}
     # All resource paths end in .html.
