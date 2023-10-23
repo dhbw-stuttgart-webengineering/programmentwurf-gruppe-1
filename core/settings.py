@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.authentication',
     'apps.home',  # Enable the inner home (home)
-
+    'apps.data_endpoint',
 ]
 
 MIDDLEWARE = [
@@ -63,6 +63,8 @@ MIDDLEWARE = [
 ]
 
 AUTH_USER_MODEL = "authentication.DualisUser"
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 ROOT_URLCONF = 'core.urls'
 LOGIN_REDIRECT_URL = "home"  # Route defined in home/urls.py
@@ -131,7 +133,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Paris'
 
 USE_I18N = True
 USE_L10N = True
