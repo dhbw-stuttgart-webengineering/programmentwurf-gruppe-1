@@ -12,10 +12,11 @@ from django.views.decorators.cache import cache_control
 from ..utils.dualis import Dualis, InvalidUsernameorPasswordException
 from .forms import LoginForm
 from .models import DualisUser
+from datetime import timedelta
 
 
 def encrypt(data):
-    secret_key = settings.SECRET_KEY[0:32].encode("utf-8")
+    secret_key = settings.SECRET_KEY[0:16].encode("utf-8")
 
     cipher = AES.new(secret_key, AES.MODE_GCM)
     ciphertext, tag = cipher.encrypt_and_digest(data.encode('utf-8'))
@@ -23,7 +24,7 @@ def encrypt(data):
 
 
 def decrypt(encrypted_data):
-    secret_key = settings.SECRET_KEY[0:32].encode("utf-8")
+    secret_key = settings.SECRET_KEY[0:16].encode("utf-8")
 
     data = base64.b64decode(encrypted_data.encode('utf-8'))
     nonce, ciphertext, tag = data[:16], data[16:-16], data[-16:]
@@ -37,12 +38,11 @@ def make_login(request: HttpRequest, email, password) -> bool:
     dualis = Dualis(
         email, password)
 
-    request.session.set_expiry(10)
     user, _ = DualisUser.objects.update_or_create(
         email=email, name=dualis.get_name())
 
-    for module in dualis.get_grades():
-        print(module)
+    # for module in dualis.get_grades():
+    #     print(module)
 
     login(request, user,
           backend='django.contrib.auth.backends.ModelBackend')
@@ -77,40 +77,19 @@ def login_view(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
                 msg = 'Ungültige Anmeldedaten'
             else:
                 if form.cleaned_data.get("rememberme"):
-                    response = redirect("/")
-                    response.set_cookie(
-                        "password", encrypt(form.cleaned_data.get("password")))
-                    response.set_cookie(
-                        "email", encrypt(form.cleaned_data.get("email")))
-                    return response
+                    request.session.set_expiry(timedelta(days=30))
+                else:
+                    request.session.set_expiry(0)
 
-                return redirect("/")
+                response = redirect("/")
+                response.set_cookie(
+                    "password", encrypt(form.cleaned_data.get("password")))
+
+                return response
         else:
             msg = 'Konnte nicht übermittelt werden.'
 
-        return render(request, "accounts/login.html", {"form": form, "msg": msg})
-
-    if request.COOKIES.get("password") and request.COOKIES.get("email"):
-        try:
-            password = decrypt(request.COOKIES.get("password"))
-            email = decrypt(request.COOKIES.get("email"))
-
-            make_login(request, email, password)
-
-            return redirect("/")
-
-        except (ValueError, InvalidUsernameorPasswordException):
-            response = render(request, "accounts/login.html",
-                              {"form": form, "msg": msg})
-            response.set_cookie("password", None)
-            response.set_cookie("email", None)
-
-            print("login with cookies unsuccessful")
-
-            return response
-
-    else:
-        return render(request, "accounts/login.html", {"form": form, "msg": msg})
+    return render(request, "accounts/login.html", {"form": form, "msg": msg})
 
 
 def logout_view(request: HttpRequest) -> HttpResponseRedirect:
@@ -125,6 +104,5 @@ def logout_view(request: HttpRequest) -> HttpResponseRedirect:
 
     response = logout_then_login(request)
     response.set_cookie("password", None)
-    response.set_cookie("email", None)
 
     return response

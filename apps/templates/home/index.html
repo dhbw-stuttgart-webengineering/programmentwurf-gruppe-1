@@ -2,6 +2,12 @@
 
 {% block title %} Home {% endblock %}
 
+{% block javascript %}
+<script>
+	load_data();
+</script>
+{% endblock javascript %}
+
 {% block content %}
 
 <main>
@@ -14,10 +20,14 @@
 	{% else %}
 	<p>Du bist kein Admin.</p>
 	{% endif %}
+	
+	
 
 <a href="{% url 'logout' %}?csrfmiddlewaretoken={{ csrf_token }}">Logout</a>
 
 </main>
 
 {% endblock content %}
+
+
 ```
