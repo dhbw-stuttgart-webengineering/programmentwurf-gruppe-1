@@ -28,7 +28,8 @@ CSRF_TRUSTED_ORIGINS = ["https://"+env('SERVER', default='127.0.0.1')]
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]']
+ALLOWED_HOSTS = ['.localhost', '127.0.0.1',
+                 '[::1]', env('SERVER', default='127.0.0.1')]
 
 # Application definition
 
