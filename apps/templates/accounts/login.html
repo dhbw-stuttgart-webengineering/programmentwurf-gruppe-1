@@ -1,32 +1,35 @@
-{% block title %} Sign IN {% endblock %} 
+{% extends "layouts/base-fullscreen.html" %} 
 
-{% block body_class %} sign-in-basic {% endblock %}
+{% block title %} Sign In {% endblock %} 
 
 {% block content %}
 
-  
-                    {% if msg %}
-                      {{ msg | safe }}
-                    {% else %}
-                      Add your credentials
-                    {% endif %}
-              <form role="form" method="post" action="" class="text-start">
+<main>
+  <p>
+  {% if msg %}
+    {{ msg | safe }}
+  {% else %}
+    Dualis Anmeldung
+  {% endif %}
+  </p>
+  <form id="login_form" role="form" method="post" action="">
+    {% csrf_token %} 
 
-                {% csrf_token %}
-
-                  <div id="email">
-                    {{ form.email }}
-                  </div>
-                  <div id="password">
-                  {{ form.password }}
-                  </div>
-                  <button type="submit" name="login">Sign in</button>
-              </p>
-              </form>
-            </div>
-
+    {{ form.email }} 
+    {{ form.password }}
+    
+    <fieldset>
+      <legend></legend>
+      
+      <label for="rememberme">
+        {{ form.rememberme }}
+        Eingeloggt bleiben
+      </label>
+    </fieldset>
+    <button id="submit_login" type="submit" onclick="loading(this.id)">
+      Anmelden
+    </button>
+  </form>
+</main>
 
 {% endblock content %}
-
-<!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
