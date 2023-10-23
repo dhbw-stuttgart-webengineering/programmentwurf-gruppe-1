@@ -2,10 +2,7 @@ from pathlib import Path
 import os
 import environ
 
-env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, True)
-)
+env = environ.Env(DEBUG=(bool, False))
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -16,18 +13,15 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = env('SECRET_KEY', default='S#perS3crEt_007')
-SECRET_KEY = 'django-insecure-d6u3r6tdl@8xv36li0fw18axp-n!jj7xj--)ti3z#3l16o%gp3'
-DEBUG = True
-
+SECRET_KEY = env('SECRET_KEY')
+DEBUG = env('DEBUG', default=False)
 
 # Assets Management
-ASSETS_ROOT = os.getenv('ASSETS_ROOT', '/static/assets')
+ASSETS_ROOT = os.getenv('ASSETS_ROOT', '/static')
 
 # load production server from .env
-ALLOWED_HOSTS = ['localhost', 'localhost:85', '127.0.0.1',
-                 env('SERVER', default='127.0.0.1')]
-CSRF_TRUSTED_ORIGINS = ['http://localhost:85', 'http://127.0.0.1',
-                        'https://' + env('SERVER', default='127.0.0.1')]
+ALLOWED_HOSTS = [env('SERVER', default='127.0.0.1')]
+CSRF_TRUSTED_ORIGINS = ["https://"+env('SERVER', default='127.0.0.1')]
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
