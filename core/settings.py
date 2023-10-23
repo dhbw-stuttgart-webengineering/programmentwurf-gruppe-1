@@ -22,6 +22,8 @@ ASSETS_ROOT = os.getenv('ASSETS_ROOT', '/static')
 # load production server from .env
 ALLOWED_HOSTS = [env('SERVER', default='127.0.0.1')]
 CSRF_TRUSTED_ORIGINS = ["https://"+env('SERVER', default='127.0.0.1')]
+CSRF_ALLOWED_ORIGINS = ["https://"+env('SERVER', default='127.0.0.1')]
+CORS_ORIGINS_WHITELIST = ["https://"+env('SERVER', default='127.0.0.1')]
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
