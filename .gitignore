@@ -314,3 +314,5 @@ dist
 
 #MacOS
 .DS_Store
+
+core/staticfiles/

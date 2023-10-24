@@ -64,7 +64,6 @@ def login_view(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     form = LoginForm(request.POST or None)
 
     msg = None
-
     if request.method == "POST":
 
         if form.is_valid():
