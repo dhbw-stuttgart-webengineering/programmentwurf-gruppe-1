@@ -95,14 +95,14 @@ if env('DB_ENGINE') and env('DB_ENGINE') == "mysql":
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': env('DB_NAME', 'appseed_db'),
-            'USER': env('DB_USERNAME', 'appseed_db_usr'),
-            'PASSWORD': env('DB_PASS', 'pass'),
-            'HOST': env('DB_HOST', 'localhost'),
+            'NAME': env('DB_NAME'),
+            'USER': env('DB_USERNAME'),
+            'PASSWORD': env('DB_PASS'),
+            'HOST': env('DB_HOST'),
             'PORT': env.int('DB_PORT', default=3306)
         },
     }
-elif not env('DEBUG'):
+elif env('DEBUG') != 'True':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
