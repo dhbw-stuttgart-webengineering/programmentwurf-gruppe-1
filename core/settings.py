@@ -102,13 +102,16 @@ if env('DB_ENGINE') and env('DB_ENGINE') == "mysql":
             'PORT': env.int('DB_PORT', default=3306)
         },
     }
-else:
+elif not env('DEBUG'):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': 'db.sqlite3',
         }
     }
+else:
+    raise ConnectionError(
+        "Could not connect to any database with DEBUG=False.")
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
