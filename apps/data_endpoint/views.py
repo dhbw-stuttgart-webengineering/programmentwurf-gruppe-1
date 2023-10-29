@@ -6,6 +6,7 @@ from django.views.decorators.cache import cache_control
 from ..authentication.views import decrypt, logout_view
 from ..utils.dualis import Dualis
 from ..utils.dualis.exceptions import InvalidUsernameorPasswordException
+from ..data_endpoint.models import Grades, Courses
 
 # Create your views here.
 
@@ -37,11 +38,13 @@ def load_data(request):
 
         data = dualis.get_grades()
 
-        # TODO Save to database
-
         print(data)
+        print("Gal")
+
+        # TODO Save to database
 
         return JsonResponse({}, status=200)
 
     except InvalidUsernameorPasswordException:
+        print("exep")
         return logout_view(request)
