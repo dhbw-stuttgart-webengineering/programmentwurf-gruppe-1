@@ -1,0 +1,24 @@
+{% block javascript %}
+<script>
+var xhr = new XMLHttpRequest();
+xhr.open("GET", "background/load_data", true);
+
+xhr.onreadystatechange = function() {
+  if (xhr.readyState == 4) {
+    if (xhr.status == 200) {
+      // Redirect to a new page
+      window.location.href = "{{ redirect_url }}";
+    }
+  }
+};
+
+xhr.send();
+
+</script>
+{% endblock javascript %}
+
+{% block content %}
+
+<p aria-busy=true>Loading...</p>
+
+{% endblock content %}
