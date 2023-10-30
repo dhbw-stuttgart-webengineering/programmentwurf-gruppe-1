@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render
 from django.views.decorators.cache import cache_control
+from django.utils import timezone
 
 from ..authentication.views import decrypt, logout_view
 from ..utils.dualis import Dualis
@@ -42,6 +43,9 @@ def load_data(request):
         print("Gal")
 
         # TODO Save to database
+
+        request.user.last_updated = timezone.localtime()
+        request.user.save()
 
         return JsonResponse({}, status=200)
 
