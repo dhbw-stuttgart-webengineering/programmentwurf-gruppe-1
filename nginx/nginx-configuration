@@ -1,0 +1,55 @@
+# NGINX Proxy Server Configuration
+
+server {
+    server_name betterdualis.de;
+
+    # Error Pages
+    error_page 502 /error-502.html;
+    location /error-502.html {
+            root /home/jopee/dhbw/programmentwurf-gruppe-1/nginx;
+    }
+    location /css {
+            alias /home/jopee/dhbw/programmentwurf-gruppe-1/nginx/css/;
+    }
+    location /img {
+            alias /home/jopee/dhbw/programmentwurf-gruppe-1/nginx/img/;
+    }
+    location /js {
+            alias /home/jopee/dhbw/programmentwurf-gruppe-1/nginx/js/;
+    }
+    location /fonts {
+            alias /home/jopee/dhbw/programmentwurf-gruppe-1/nginx/fonts/;
+    }
+
+    # Load Django's static files
+    location /static {
+            alias /home/jopee/dhbw/programmentwurf-gruppe-1/core/staticfiles;
+    }
+
+    # Proxy to Django
+    location / {
+            proxy_pass http://localhost:8000;
+            include /etc/nginx/proxy_params;
+            proxy_redirect off;
+    }
+
+    # SSL Configuration
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/betterdualis.de/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/betterdualis.de/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+
+}
+
+server {
+    if ($host = betterdualis.de) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+        listen 80;
+        server_name betterdualis.de;
+    return 404; # managed by Certbot
+
+
+}

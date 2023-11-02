@@ -4,9 +4,14 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
+from django.views.decorators.cache import cache_control
+from datetime import timedelta
+from ..utils.decorators import refresh_dualis
 
 
 @login_required(login_url="/login/")
+@refresh_dualis()
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def index(request):
     context = {'segment': 'index', }
 
@@ -14,6 +19,7 @@ def index(request):
 
 
 @login_required(login_url="/login/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def pages(request):
     context = {}
     # All resource paths end in .html.
@@ -30,7 +36,6 @@ def pages(request):
         return HttpResponse(html_template.render(context, request))
 
     except template.TemplateDoesNotExist:
-
         html_template = loader.get_template('home/page-404.html')
         return HttpResponse(html_template.render(context, request))
 
