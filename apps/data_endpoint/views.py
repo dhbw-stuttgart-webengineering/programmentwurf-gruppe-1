@@ -1,3 +1,4 @@
+"""Data Endpoint View"""
 from cryptography.fernet import InvalidToken
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, JsonResponse
@@ -32,6 +33,8 @@ def loading_view(request: HttpRequest):
 
 @login_required(login_url="/login/")
 def refresh_data(request):
+    """Refreshes the data from dualis and returns 200 on success
+    """
     try:
         password = decrypt(request.COOKIES.get("password"))
 

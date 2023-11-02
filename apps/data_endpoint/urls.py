@@ -1,3 +1,4 @@
+"""URL Configuration for data_endpoint app."""
 from django.urls import path
 from .views import refresh_data
 

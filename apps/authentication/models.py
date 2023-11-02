@@ -21,4 +21,4 @@ class DualisUser(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     def get_absolute_url(self):
-        return "/users/%i/" % (self.pk)
+        return f"/users/{self.pk}/"
