@@ -17,7 +17,7 @@
     <link rel="shortcut icon" href="{%  static 'images/favicon.ico' %}">
   </head>
   <script>{% block javascript %}{% endblock javascript %}</script>
-  {% include 'includes/scripts.html' %}
+  
 
   <nav class="container-fluid">
       <ul>
@@ -40,7 +40,7 @@
     </nav>
 
   <body class="container">
-    {% block content %}{% endblock content %} 
+    {% block content %}{% endblock content %} {% include 'includes/scripts.html' %}
     
   </body>
 </html>
