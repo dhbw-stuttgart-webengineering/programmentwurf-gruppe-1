@@ -7,7 +7,7 @@ from django.utils import timezone
 from ..authentication.views import decrypt, logout_view
 from ..utils.dualis import Dualis
 from ..utils.dualis.exceptions import InvalidUsernameorPasswordException
-from ..data_endpoint.models import Grades, Courses
+from ..data_endpoint.datasafe import search_data
 
 # Create your views here.
 
@@ -39,8 +39,8 @@ def load_data(request):
 
         data = dualis.get_grades()
 
-        print(data)
-        print("Gal")
+        search_data(data)
+        #print(data)
 
         # TODO Save to database
 
@@ -50,5 +50,4 @@ def load_data(request):
         return JsonResponse({}, status=200)
 
     except InvalidUsernameorPasswordException:
-        print("exep")
         return logout_view(request)
