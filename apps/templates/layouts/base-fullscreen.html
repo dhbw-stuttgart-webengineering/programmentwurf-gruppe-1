@@ -16,7 +16,9 @@
 
     <link rel="shortcut icon" href="{%  static 'images/favicon.ico' %}">
   </head>
-  <script>{% block javascript %}{% endblock javascript %}</script>
+
+  {% block javascript %}{% endblock javascript %}
+  
   {% include 'includes/scripts.html' %}
 
   <nav class="container-fluid">
