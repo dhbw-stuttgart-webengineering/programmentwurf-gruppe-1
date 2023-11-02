@@ -5,7 +5,10 @@ class LoginForm(forms.Form):
     email = forms.EmailField(
         max_length=254,
         widget=forms.EmailInput(
-            attrs={'class': 'form-control', 'placeholder': 'Email'}),
+            attrs={'class': 'form-control',
+                   'placeholder': 'Email',
+                   'autofocus': True,
+                   'id': 'email'}),
     )
     rememberme = forms.BooleanField(required=False,
                                     initial=False,
@@ -15,7 +18,8 @@ class LoginForm(forms.Form):
     password = forms.CharField(
         widget=forms.PasswordInput(
             attrs={
-                "placeholder": "Dualis Passwort",
-                "class": "form-control"
+                'placeholder': 'Dualis Passwort',
+                'class': 'form-control',
+                'id': 'password'
             }
         ))
