@@ -1,7 +1,7 @@
 """Login View"""
-import base64
+from datetime import timedelta
 
-from Crypto.Cipher import AES
+from cryptography.fernet import Fernet
 from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.views import logout_then_login
@@ -12,27 +12,45 @@ from django.views.decorators.cache import cache_control
 from ..utils.dualis import Dualis, InvalidUsernameorPasswordException
 from .forms import LoginForm
 from .models import DualisUser
-from datetime import timedelta
 
 
-def encrypt(data):
-    secret_key = settings.SECRET_KEY[0:16].encode("utf-8")
+def encrypt(data: str) -> str:
+    """Encrypts data with the SECRET_KEY from environment
 
-    cipher = AES.new(secret_key, AES.MODE_GCM)
-    ciphertext, tag = cipher.encrypt_and_digest(data.encode('utf-8'))
-    return base64.b64encode(cipher.nonce + ciphertext + tag).decode('utf-8')
+    Args:
+        data (str): String to encrypt
+
+    Returns:
+        str: Encrypted String
+    """
+    f = Fernet(settings.SECRET_KEY.encode())
+    return f.encrypt(data.encode()).decode()
 
 
-def decrypt(encrypted_data):
-    secret_key = settings.SECRET_KEY[0:16].encode("utf-8")
+def decrypt(encrypted_data: str):
+    """Decrypts data with the SECRET_KEY from environment
 
-    data = base64.b64decode(encrypted_data.encode('utf-8'))
-    nonce, ciphertext, tag = data[:16], data[16:-16], data[-16:]
-    cipher = AES.new(secret_key, AES.MODE_GCM, nonce=nonce)
-    return cipher.decrypt_and_verify(ciphertext, tag).decode('utf-8')
+    Args:
+        encrypted_data (str): Encrypted String
+
+    Returns:
+        _type_: Decrypted String
+    """
+    f = Fernet(settings.SECRET_KEY.encode())
+    return f.decrypt(encrypted_data).decode()
 
 
 def make_login(request: HttpRequest, email, password) -> bool:
+    """Makes a login with the given credentials
+
+    Args:
+        request (HttpRequest): HttpRequest Object
+        email (_type_): Email
+        password (_type_): Password
+
+    Returns:
+        bool: True on successfull login
+    """
     dualis = None
 
     dualis = Dualis(
@@ -71,7 +89,7 @@ def login_view(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
             password = form.cleaned_data.get("password")
 
             try:
-                success = make_login(request, email, password)
+                _ = make_login(request, email, password)
             except InvalidUsernameorPasswordException:
                 msg = 'Ungültige Anmeldedaten'
             else:

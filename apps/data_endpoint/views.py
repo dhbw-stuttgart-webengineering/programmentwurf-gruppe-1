@@ -3,6 +3,7 @@ from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render
 from django.views.decorators.cache import cache_control
 from django.utils import timezone
+from cryptography.fernet import InvalidToken
 
 from ..authentication.views import decrypt, logout_view
 from ..utils.dualis import Dualis
@@ -48,4 +49,9 @@ def load_data(request):
         return JsonResponse({}, status=200)
 
     except InvalidUsernameorPasswordException:
+        return logout_view(request)
+    except ValueError:
+        return logout_view(request)
+    except InvalidToken:
+        print("Invalid Token")
         return logout_view(request)
