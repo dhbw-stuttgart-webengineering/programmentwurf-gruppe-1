@@ -40,9 +40,6 @@ def load_data(request):
         data = dualis.get_grades()
 
         search_data(data)
-        #print(data)
-
-        # TODO Save to database
 
         request.user.last_updated = timezone.localtime()
         request.user.save()
