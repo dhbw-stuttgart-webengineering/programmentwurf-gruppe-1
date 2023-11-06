@@ -2,8 +2,7 @@ import os
 from ..utils.dualis.module import Module
 from ..data_endpoint.save_to_bank import save_dates
 
-def search_data(data):
-    print(data)
+def search_data(data, email_id):
     for item_not_dict in data:
         item = item_not_dict.to_dict()
         semester = item["semester"]
@@ -16,6 +15,6 @@ def search_data(data):
             unit_credits = unit["credits"]
             unit_grade_first_attempt = unit["grade_first_attempt"]
             unit_grade_second_attempt = unit["grade_second_attempt"]
-            save_dates(unit_id, unit_name, credits, unit_credits, unit_grade_first_attempt, unit_grade_second_attempt, semester, "sebast")
+            save_dates(email_id, unit_id, unit_name, credits, unit_credits, unit_grade_first_attempt, unit_grade_second_attempt, semester, "sebast")
 
 

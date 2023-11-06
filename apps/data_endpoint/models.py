@@ -12,8 +12,8 @@ class Courses(models.Model):
 
 class Grades(models.Model):
     name = models.CharField(max_length=200, default=None)
-    grade_first = models.IntegerField(default=0, null=True)
-    grade_second = models.IntegerField(default=0, null=True)
+    grade_first = models.DecimalField(max_digits=2, decimal_places=1,default=0, null=True)
+    grade_second = models.DecimalField(max_digits=2, decimal_places=1,default=0, null=True)
     semester = models.CharField(max_length=200, default=None, null=True)
     sum_of_credits = models.CharField(max_length=200, default=None, null=True)
     partial_credits = models.CharField(max_length=200, default=None, null=True)

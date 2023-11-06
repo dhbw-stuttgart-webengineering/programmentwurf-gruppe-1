@@ -7,7 +7,8 @@ from django.utils import timezone
 from ..authentication.views import decrypt, logout_view
 from ..utils.dualis import Dualis
 from ..utils.dualis.exceptions import InvalidUsernameorPasswordException
-from ..data_endpoint.datasafe import search_data
+from ..data_endpoint.data_save import search_data
+from ..data_endpoint.read_data import get_grades
 
 # Create your views here.
 
@@ -39,7 +40,9 @@ def load_data(request):
 
         data = dualis.get_grades()
 
-        search_data(data)
+        get_grades(request.user.email)
+
+        search_data(data, request.user.email)
 
         request.user.last_updated = timezone.localtime()
         request.user.save()
