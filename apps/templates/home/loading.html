@@ -1,0 +1,27 @@
+{% extends "layouts/base-fullscreen.html" %}
+
+{% block title %} Loading {% endblock %}
+
+{% block content %}
+
+<body>
+  <p aria-busy=true>Loading...</p>
+</body>
+
+{% endblock content %}
+
+{% block javascript %}
+var xhr = new XMLHttpRequest();
+xhr.open("GET", "api/refresh_data", true);
+
+xhr.onreadystatechange = function() {
+  if (xhr.readyState == 4) {
+    if (xhr.status == 200) {
+      // Redirect to a new page
+      window.location.href = "{{ redirect_url }}";
+    }
+  }
+};
+
+xhr.send();
+{% endblock javascript %}

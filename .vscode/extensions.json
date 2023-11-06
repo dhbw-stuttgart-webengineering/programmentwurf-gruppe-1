@@ -1,0 +1,20 @@
+{
+    "recommendations": [
+        "njpwerner.autodocstring",
+        "ms-python.autopep8",
+        "batisteo.vscode-django",
+        "hediet.vscode-drawio",
+        "github.copilot",
+        "eamodio.gitlens",
+        "sidthesloth.html5-boilerplate",
+        "ecmel.vscode-html-css",
+        "ms-python.isort",
+        "yzhang.markdown-all-in-one",
+        "davidanson.vscode-markdownlint",
+        "ms-python.vscode-pylance",
+        "ms-python.python",
+        "kevinrose.vsc-python-indent",
+        "celianriboulet.webvalidator",
+        "ms-python.pylint"
+    ]
+}

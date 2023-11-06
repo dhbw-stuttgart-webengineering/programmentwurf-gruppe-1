@@ -1,0 +1,35 @@
+{% extends "layouts/base-fullscreen.html" %} 
+
+{% block title %} Sign In {% endblock %} 
+
+{% block content %}
+
+<main>
+  <p>
+  {% if msg %}
+    {{ msg | safe }}
+  {% else %}
+    Dualis Anmeldung
+  {% endif %}
+  </p>
+  <form id="login_form" role="form" method="post" action="">
+    {% csrf_token %} 
+
+    {{ form.email }} 
+    {{ form.password }}
+    
+    <fieldset>
+      <legend></legend>
+      
+      <label for="rememberme">
+        {{ form.rememberme }}
+        Eingeloggt bleiben
+      </label>
+    </fieldset>
+    <button id="submit_login" type="submit" onclick="loading(this.id)">
+      Anmelden
+    </button>
+  </form>
+</main>
+
+{% endblock content %}
