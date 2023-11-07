@@ -5,7 +5,7 @@ from .managers import UserManager
 
 
 class DualisUser(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(max_length=254, unique=True)
+    email = models.EmailField(max_length=254, unique=True, primary_key=True)
     name = models.CharField(max_length=254, null=True, blank=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
@@ -21,4 +21,4 @@ class DualisUser(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     def get_absolute_url(self):
-        return "/users/%i/" % (self.pk)
+        return f"/users/{self.pk}/"
