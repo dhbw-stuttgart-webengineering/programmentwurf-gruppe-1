@@ -15,6 +15,6 @@ def search_data(data, email_id):
             unit_credits = unit["credits"]
             unit_grade_first_attempt = unit["grade_first_attempt"]
             unit_grade_second_attempt = unit["grade_second_attempt"]
-            save_dates(email_id, unit_id, unit_name, credits, unit_credits, unit_grade_first_attempt, unit_grade_second_attempt, semester, "sebast")
+            save_dates(email_id, unit_id, unit_name, credits, unit_credits, unit_grade_first_attempt, unit_grade_second_attempt, semester)
 
 
