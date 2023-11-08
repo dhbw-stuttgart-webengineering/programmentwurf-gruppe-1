@@ -315,7 +315,7 @@ dist
 #MacOS
 .DS_Store
 
-migrations/*.py
+migrations/*
 !migrations/__init__.py
 
 core/staticfiles/
