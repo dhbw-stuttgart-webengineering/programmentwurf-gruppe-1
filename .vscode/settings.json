@@ -1,7 +1,8 @@
 {
-    "pylint.args": [
-        "--init-hook",
-        "import sys; sys.path.insert(0, './dualis');"
-    ]
+  "pylint.args": ["--init-hook", "import sys; sys.path.insert(0, './dualis');"],
 
+  "[django-html]": {
+    "editor.formatOnSave": false,
+    "editor.formatOnPaste": false
+  }
 }
