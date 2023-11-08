@@ -313,4 +313,11 @@ dist
 #MacOS
 .DS_Store
 
-core/staticfiles/
+core/staticfiles/misc.xml
+misc.xml
+vcs.xml
+programmentwurf-gruppe-1.iml
+modules.xml
+.idea\
+inspectionProfiles\
+migrations\
