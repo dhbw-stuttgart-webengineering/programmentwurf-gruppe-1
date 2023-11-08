@@ -6,7 +6,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 django.setup()
 from ..data_endpoint.models import Grades, Courses
 
-def save_dates(email_id, unit_id, unit_name, sum_unit_credits, part_unit_credits, unit_grade_first_attempt, unit_grade_second_attempt,semester, name):
+def save_dates(email_id, unit_id, unit_name, sum_unit_credits, part_unit_credits, unit_grade_first_attempt, unit_grade_second_attempt,semester):
 
     course_to_save, created = Courses.objects.get_or_create(name=unit_id)
 
