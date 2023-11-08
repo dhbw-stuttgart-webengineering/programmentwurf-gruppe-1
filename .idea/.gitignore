@@ -1,3 +1,12 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+
 # Django #
 *.log
 *.pot
@@ -309,6 +318,8 @@ dist
 .yarn/install-state.gz
 .pnp.\*
 
+# IntelliJ based IDEs
+.idea
 
 #MacOS
 .DS_Store
