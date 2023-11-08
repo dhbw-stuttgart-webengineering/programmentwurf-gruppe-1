@@ -313,7 +313,7 @@ dist
 #MacOS
 .DS_Store
 
-core/staticfiles/misc.xml
+core/staticfiles
 misc.xml
 vcs.xml
 programmentwurf-gruppe-1.iml
