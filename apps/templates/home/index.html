@@ -50,20 +50,22 @@
     var myChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: [{% for course in courses %}'{{ course.name }}',{% endfor %}],
+        labels: ['Kurs A', 'Kurs B', 'Kurs C', 'Kurs D'],
         datasets: [{
-          label: 'Durchschnittspunktzahl',
-          data: [{% for course in courses %}{{ course.average_points }},{% endfor %}],
-          backgroundColor: 'rgba(75, 192, 192, 0.5)',
+          label: 'Durchschnittsnoten',
+          data: [2.4, 1.9, 3.7, 2.1],
+          backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)'],
           borderColor: 'rgba(75, 192, 192, 1)',
           borderWidth: 1
         }]
       },
       options: {
+        responsive: true,
         scales: {
           y: {
-            beginAtZero: true,
-            max: 100
+            beginAtZero: false, // Beginnt nicht bei 0
+            min: 1, // Mindestwert für y-Achse
+            max: 6, // Maximalwert für y-Achse
           }
         },
         plugins: {
