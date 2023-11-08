@@ -1,7 +1,18 @@
+{% extends "layouts/base-fullscreen.html" %}
+
+{% block title %} Loading {% endblock %}
+
+{% block content %}
+
+<body>
+  <p aria-busy=true>Loading...</p>
+</body>
+
+{% endblock content %}
+
 {% block javascript %}
-<script>
 var xhr = new XMLHttpRequest();
-xhr.open("GET", "background/load_data", true);
+xhr.open("GET", "api/refresh_data", true);
 
 xhr.onreadystatechange = function() {
   if (xhr.readyState == 4) {
@@ -13,12 +24,4 @@ xhr.onreadystatechange = function() {
 };
 
 xhr.send();
-
-</script>
 {% endblock javascript %}
-
-{% block content %}
-
-<p aria-busy=true>Loading...</p>
-
-{% endblock content %}

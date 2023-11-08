@@ -1,8 +1,10 @@
+"""Data Endpoint View"""
+from cryptography.fernet import InvalidToken
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render
-from django.views.decorators.cache import cache_control
 from django.utils import timezone
+from django.views.decorators.cache import cache_control
 
 from ..authentication.views import decrypt, logout_view
 from ..utils.dualis import Dualis
@@ -32,7 +34,9 @@ def loading_view(request: HttpRequest):
 
 
 @login_required(login_url="/login/")
-def load_data(request):
+def refresh_data(request):
+    """Refreshes the data from dualis and returns 200 on success
+    """
     try:
         password = decrypt(request.COOKIES.get("password"))
 
@@ -47,7 +51,12 @@ def load_data(request):
         request.user.last_updated = timezone.localtime()
         request.user.save()
 
-        return JsonResponse({}, status=200)
+        return JsonResponse({"Success": 200}, status=200)
 
     except InvalidUsernameorPasswordException:
+        return logout_view(request)
+    except ValueError:
+        return logout_view(request)
+    except InvalidToken:
+        print("Invalid Token")
         return logout_view(request)

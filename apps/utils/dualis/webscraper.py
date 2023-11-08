@@ -117,9 +117,10 @@ class WebScraper:
         return self._extract_unit_info(unit_soup)
 
     def _extract_unit_info(self, soup: bs4.BeautifulSoup) -> list:
-        units = []
+        units = {}
         table = soup.find("table", {"class": "tb"})
 
+        last_header = None
         for row in table.find_all("tr"):
             columns = row.find_all("td")
 
@@ -132,17 +133,27 @@ class WebScraper:
                 else:  # Module has multiple units
                     header = columns[0].text.strip()
 
-                unit_id, unit_name = self._extract_name_and_id(header)
-                units.append({"id_": unit_id,
-                              "name": unit_name})
+                if header not in units.keys():
+                    unit_id, unit_name = self._extract_name_and_id(header)
+                    units[header] = {"id_": unit_id,
+                                     "name": unit_name}
+                last_header = header
 
             elif columns[0].has_attr('class') and 'tbdata' in columns[0]['class']:
-                grade_first_attempt = (float(columns[3].text.strip().replace(",", "."))
-                                       if "noch nicht gesetzt" not in columns[3].text else None)
-                units[-1]["grade_first_attempt"] = grade_first_attempt
+                
+                if "noch nicht gesetzt" in columns[3].text:
+                    grade = None
+                elif "b" in columns[3].text:
+                    grade = 1.0
+                else:
+                    grade = float(columns[3].text.strip().replace(",", "."))
 
-                # TODO Add support for second attempt
-        return units
+                if "grade_first_attempt" in units[last_header].keys():
+                    units[last_header]["grade_second_attempt"] = grade
+                else:
+                    units[last_header]["grade_first_attempt"] = grade
+
+        return units.values()
 
     def _extract_name_and_id(self, module: str) -> (str, str):
 

@@ -1,6 +1,7 @@
+"""URL Configuration for data_endpoint app."""
 from django.urls import path
-from .views import load_data
+from .views import refresh_data
 
 urlpatterns = [
-    path('background/load_data', load_data, name="load_data"),
+    path('api/refresh_data', refresh_data, name="load_data"),
 ]
