@@ -140,8 +140,13 @@ class WebScraper:
                 last_header = header
 
             elif columns[0].has_attr('class') and 'tbdata' in columns[0]['class']:
-                grade = (float(columns[3].text.strip().replace(",", "."))
-                         if "noch nicht gesetzt" not in columns[3].text else None)
+                
+                if "noch nicht gesetzt" in columns[3].text:
+                    grade = None
+                elif "b" in columns[3].text:
+                    grade = 1.0
+                else:
+                    grade = float(columns[3].text.strip().replace(",", "."))
 
                 if "grade_first_attempt" in units[last_header].keys():
                     units[last_header]["grade_second_attempt"] = grade
