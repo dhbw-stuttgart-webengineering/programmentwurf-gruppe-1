@@ -9,6 +9,8 @@ from django.views.decorators.cache import cache_control
 from ..authentication.views import decrypt, logout_view
 from ..utils.dualis import Dualis
 from ..utils.dualis.exceptions import InvalidUsernameorPasswordException
+from ..data_endpoint.data_save import search_data
+from ..data_endpoint.read_data import get_grades
 
 # Create your views here.
 
@@ -42,9 +44,9 @@ def refresh_data(request):
 
         data = dualis.get_grades()
 
-        # TODO Save to database
+        get_grades(request.user.email)
 
-        print(data)
+        search_data(data, request.user.email)
 
         request.user.last_updated = timezone.localtime()
         request.user.save()
