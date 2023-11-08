@@ -1,3 +1,4 @@
+"""Models for the authentication app."""
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 
@@ -5,6 +6,8 @@ from .managers import UserManager
 
 
 class DualisUser(AbstractBaseUser, PermissionsMixin):
+    """DualisUser Model
+    """
     email = models.EmailField(max_length=254, unique=True, primary_key=True)
     name = models.CharField(max_length=254, null=True, blank=True)
     is_staff = models.BooleanField(default=False)
@@ -21,4 +24,9 @@ class DualisUser(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     def get_absolute_url(self):
+        """Returns the url to access a particular instance of DualisUser.
+
+        Returns:
+            str: URL for DualisUser instance.
+        """
         return f"/users/{self.pk}/"
