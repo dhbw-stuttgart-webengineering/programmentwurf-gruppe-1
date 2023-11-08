@@ -140,7 +140,7 @@ class WebScraper:
                 last_header = header
 
             elif columns[0].has_attr('class') and 'tbdata' in columns[0]['class']:
-                
+
                 if "noch nicht gesetzt" in columns[3].text:
                     grade = None
                 elif "b" in columns[3].text:

@@ -1,4 +1,4 @@
-from pathlib import Path
+"""Setting for project"""
 import os
 import environ
 
