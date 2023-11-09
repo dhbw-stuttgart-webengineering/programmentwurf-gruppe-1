@@ -11,6 +11,7 @@ from ..utils.dualis import Dualis
 from ..utils.dualis.exceptions import InvalidUsernameorPasswordException
 from ..data_endpoint.data_save import search_data
 from ..data_endpoint.read_data import get_grades
+from ..data_endpoint.calculate_average import calculate_average_module, calculate_average_first_attempt, calculate_average_second_attempt
 
 # Create your views here.
 
@@ -45,6 +46,12 @@ def refresh_data(request):
         data = dualis.get_grades()
 
         get_grades(request.user.email)
+
+        calculate_average_first_attempt()
+
+        calculate_average_second_attempt()
+
+        calculate_average_module()
 
         search_data(data, request.user.email)
 
