@@ -15,7 +15,7 @@ def refresh_dualis(max_age=timedelta(minutes=1)):
         def wrapped_view(request):
             if not request.user.last_updated:  # if no last_updated
                 return loading_view(request)
-            elif timezone.localtime() - request.user.last_updated > max_age:
+            if timezone.localtime() - request.user.last_updated > max_age:
                 # if last_updated is older than max_age
                 return loading_view(request)
             else:
