@@ -11,20 +11,26 @@ class LoginForm(forms.Form):
         max_length=254,
         widget=forms.EmailInput(
             attrs={'class': 'form-control',
-                   'placeholder': 'Email',
-                   'autofocus': True,
-                   'id': 'email'}),
+                   'placeholder': 'DHBW Email',
+                   'id': 'email',
+                   'type': 'email',
+                   'autofocus': True
+                   }
+        ),
     )
     rememberme = forms.BooleanField(required=False,
                                     initial=False,
                                     widget=forms.CheckboxInput(
-                                        attrs={'class': 'form-check-input'}),
+                                        attrs={'class': 'form-check-input'}
+                                    ),
                                     )
     password = forms.CharField(
         widget=forms.PasswordInput(
             attrs={
-                'placeholder': 'Dualis Passwort',
                 'class': 'form-control',
-                'id': 'password'
+                'placeholder': 'Dualis Passwort',
+                'id': 'password',
+                'type': 'password'
             }
-        ))
+        )
+    )

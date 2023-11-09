@@ -1,11 +1,27 @@
 function loading_login(button, email, password) {
   if (document.getElementById("login_form").checkValidity()) {
-    document.getElementById(button).setAttribute("aria-busy", "true");
-    document.getElementById(email).setAttribute("aria-invalid", "false");
-    document.getElementById(password).setAttribute("aria-invalid", "false");
+    console.log("valid");
+    document.getElementById(button).setAttribute("disabled", "disabled");
+    let spinner = document.createElement("span");
+    spinner.setAttribute(
+      "class",
+      "spinner-border spinner-border-sm aria-hidden='true'"
+    );
+    spinner.setAttribute("aria-hidden", "true");
+    document.getElementById(button).appendChild(spinner);
+    document
+      .getElementById(email)
+      .setAttribute("class", "form-control is-valid");
+    document
+      .getElementById(password)
+      .setAttribute("class", "form-control is-valid");
   } else {
-    document.getElementById(button).setAttribute("aria-busy", "false");
-    document.getElementById(email).setAttribute("aria-invalid", "true");
-    document.getElementById(password).setAttribute("aria-invalid", "true");
+    document.getElementById(button).removeAttribute("disabled");
+    document
+      .getElementById(email)
+      .setAttribute("class", "form-control is-invalid");
+    document
+      .getElementById(password)
+      .setAttribute("class", "form-control is-invalid");
   }
 }
