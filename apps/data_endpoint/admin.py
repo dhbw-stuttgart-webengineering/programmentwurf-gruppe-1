@@ -1,3 +1,4 @@
+"""Admin Confirguration for the Data Endpoint App."""
 from django.contrib import admin
 
 # Register your models here.
