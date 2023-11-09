@@ -70,8 +70,7 @@ class DualisSession(requests.Session):
 
         post_url = "https://dualis.dhbw.de/scripts/mgrqispi.dll"
         response = self.post(post_url,
-                             data=self._payload,
-                             verify=False)
+                             data=self._payload)
         try:
             url_index = response.headers["REFRESH"].index("URL=") + len("URL=")
         except Exception as e:
