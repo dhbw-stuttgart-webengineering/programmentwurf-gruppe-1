@@ -46,9 +46,9 @@ def pages(request: HttpRequest) -> HttpResponse:
 
         if load_template == 'admin':
             return HttpResponseRedirect(reverse('admin:index'))
-        else:
-            html_template = loader.get_template('home/page-404.html')
-            return HttpResponse(html_template.render(context, request))
-    except Exception:
+
+        html_template = loader.get_template('home/page-404.html')
+        return HttpResponse(html_template.render(context, request))
+    except Exception:  # pylint: disable=broad-except # disable broad except warning, since all exception should be caught here
         html_template = loader.get_template('home/page-500.html')
         return HttpResponse(html_template.render(context, request))

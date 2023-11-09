@@ -49,8 +49,7 @@ class Unit:
         """
         if self._grade_second_attempt:
             return self._grade_second_attempt
-        else:
-            return self._grade_first_attempt
+        return self._grade_first_attempt
 
     def __str__(self) -> str:
         return json.dumps(self.to_dict(),
