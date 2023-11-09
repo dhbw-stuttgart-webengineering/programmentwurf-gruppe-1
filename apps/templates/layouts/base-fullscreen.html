@@ -39,26 +39,34 @@
 
   {% block javascript %}{% endblock javascript %}
 
-  <nav class="navbar navbar-expand">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="./" onclick="event.preventDefault()">DHBW Notenvergleich</a>
-      <ul>
-        <li>
-          <details role="list" dir="rtl">
-            <summary aria-haspopup="listbox" role="link" class="secondary">Theme</summary>
-            <ul role="listbox">
-              <li><a href="#" data-theme-switcher="auto">Auto</a></li>
-              <li><a href="#" data-theme-switcher="light">Light</a></li>
-              <li><a href="#" data-theme-switcher="dark">Dark</a></li>
+  <nav class="navbar navbar-expand-lg bg-body-secondary sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="./" onclick="event.preventDefault()">DHBW-Notenvergleich</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}?csrfmiddlewaretoken={{ csrf_token }}">Logout</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Theme
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#" data-bs-theme-value="auto">Auto</a></li>
+              <li><a class="dropdown-item" href="#" data-bs-theme-value="light">Light</a></li>
+              <li><a class="dropdown-item" href="#" data-bs-theme-value="dark">Dark</a></li>
             </ul>
-          </details>
-        </li>
-      </ul>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
 
-  <body class="container">
+  <main class="container">
     {% block content %}{% endblock content %} {% include 'includes/scripts.html' %}
     
-  </body>
+  </main>
 </html>

@@ -2,7 +2,7 @@
 {% block title %} Home {%endblock title %} 
 {% block content %}
 
-<main>
+<div class="container mt-5">
   {% if request.user.is_authenticated %}
   <p>Willkommen, {{ request.user.name }}!</p>
   {% else %}
@@ -21,9 +21,7 @@
       <canvas id="misschart"></canvas>
     </div>
   </div>
-
-  <a href="{% url 'logout' %}?csrfmiddlewaretoken={{ csrf_token }}">Logout</a>
-</main>
+</div>
 
 <style>
 	.chart-container {
