@@ -1,8 +1,7 @@
 version: 2
 updates:
 - package-ecosystem: "pip"
-  uses: actions/checkout@v3
-  directory: "/"
+  directory: ""
   schedule:
     interval: daily
     time: "13:00"
