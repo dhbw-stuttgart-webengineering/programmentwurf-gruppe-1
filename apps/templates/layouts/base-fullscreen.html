@@ -1,7 +1,7 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="de" itemscope itemtype="http://schema.org/WebPage" data-bs-theme="dark">
+<html lang="de" itemscope itemtype="http://schema.org/WebPage">
   <head>
     <meta charset="utf-8" />
     <meta
@@ -14,23 +14,6 @@
       rel="shortcut icon"
       href="{% static 'images/favicon.ico' %}"
     >
-
-    <!-- CSS Files -->
-    <!-- TODO: Richtie Bootstrap Version linken -->
-    <!-- Backup
-    <link
-      rel="stylesheet"
-      href="{% static 'css/bootstrap-grid.min.css' %}"
-    >
-    <link
-    rel="stylesheet"
-    href="{% static 'css/bootstrap-utilities.min.css' %}"
-    >
-    <link
-      rel="stylesheet"
-      href="{% static 'css/pico.min.css' %}"
-    >
-    -->
     <link
       rel="stylesheet"
       href="{% static 'css/bootstrap.min.css' %}"
@@ -41,12 +24,17 @@
 
   <nav class="navbar navbar-expand-lg bg-body-secondary sticky-top">
     <div class="container">
-      <a class="navbar-brand" href="./" onclick="event.preventDefault()">DHBW-Notenvergleich</a>
+      <a class="navbar-brand" href="./" onclick="event.preventDefault()"><strong>DHBW-Notenvergleich</strong></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link" href="{% url 'logout' %}?csrfmiddlewaretoken={{ csrf_token }}">Logout</a>
           </li>
@@ -65,7 +53,7 @@
     </div>
   </nav>
 
-  <main class="container">
+  <main class="container mt-5">
     {% block content %}{% endblock content %} {% include 'includes/scripts.html' %}
     
   </main>
