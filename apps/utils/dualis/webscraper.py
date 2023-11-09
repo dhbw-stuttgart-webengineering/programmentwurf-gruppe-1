@@ -60,6 +60,7 @@ class WebScraper:
 
         if match:
             return match.group(1)
+        return ""
 
     def _scrape_semester_dropdown(self) -> list:
         """Returns a list of semester objects
