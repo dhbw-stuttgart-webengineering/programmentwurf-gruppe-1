@@ -1,7 +1,12 @@
+"""Forms for the authentication app."""
 from django import forms
 
 
 class LoginForm(forms.Form):
+    """Login Form
+
+    Takes E-Mail, Password and Rememberme Checkbox
+    """
     email = forms.EmailField(
         max_length=254,
         widget=forms.EmailInput(
