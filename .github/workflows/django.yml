@@ -28,5 +28,6 @@ jobs:
     - name: Run Tests
       env:
         SECRET_KEY: y6h1LoqmwHScUD1dIh_DO_NOT_USE_IN_PRODUCTION=
+        DB_ENGINE: sqlite3
       run: |
         python manage.py test
