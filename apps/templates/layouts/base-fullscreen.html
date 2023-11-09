@@ -17,6 +17,7 @@
 
     <!-- CSS Files -->
     <!-- TODO: Richtie Bootstrap Version linken -->
+    <!-- Backup
     <link
       rel="stylesheet"
       href="{% static 'css/bootstrap-grid.min.css' %}"
@@ -29,16 +30,18 @@
       rel="stylesheet"
       href="{% static 'css/pico.min.css' %}"
     >
+    -->
+    <link
+      rel="stylesheet"
+      href="{% static 'css/bootstrap.min.css' %}"
+    >
   </head>
 
   {% block javascript %}{% endblock javascript %}
 
-  <nav class="container-fluid">
-      <ul>
-        <li>
-          <a href="./" class="contrast" onclick="event.preventDefault()"><strong>DHBW Notenvergleich</strong></a>
-        </li>
-      </ul>
+  <nav class="navbar navbar-expand">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="./" onclick="event.preventDefault()">DHBW Notenvergleich</a>
       <ul>
         <li>
           <details role="list" dir="rtl">
@@ -51,7 +54,8 @@
           </details>
         </li>
       </ul>
-    </nav>
+    </div>
+  </nav>
 
   <body class="container">
     {% block content %}{% endblock content %} {% include 'includes/scripts.html' %}
