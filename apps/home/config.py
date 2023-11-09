@@ -1,11 +1,8 @@
-# -*- encoding: utf-8 -*-
-"""
-Copyright (c) 2019 - present AppSeed.us
-"""
-
+"""Config for home app."""
 from django.apps import AppConfig
 
 
 class MyConfig(AppConfig):
+    """Config for home app."""
     name = 'apps.home'
     label = 'apps_home'

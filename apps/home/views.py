@@ -1,18 +1,26 @@
+"""Views for the home app"""
 from django import template
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.template import loader
 from django.urls import reverse
 from django.views.decorators.cache import cache_control
-from datetime import timedelta
 from ..utils.decorators import refresh_dualis
 
 
 @login_required(login_url="/login/")
 @refresh_dualis()
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def index(request):
+def index(request: HttpRequest) -> HttpResponse:
+    """Index View
+
+    Args:
+        request (HttpRequest): HttpRequest Object
+
+    Returns:
+        HttpResponse: HttpResponde Object
+    """
     context = {'segment': 'index', }
 
     return render(request, "home/index.html", context)
@@ -20,7 +28,15 @@ def index(request):
 
 @login_required(login_url="/login/")
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def pages(request):
+def pages(request: HttpRequest) -> HttpResponse:
+    """Index View
+
+    Args:
+        request (HttpRequest): HttpRequest Object
+
+    Returns:
+        HttpResponse: HttpResponde Object
+    """
     context = {}
     # All resource paths end in .html.
     # Pick out the html file name from the url. And load that template.
