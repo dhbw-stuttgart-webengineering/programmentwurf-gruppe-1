@@ -70,15 +70,14 @@ class DualisSession(requests.Session):
 
         post_url = "https://dualis.dhbw.de/scripts/mgrqispi.dll"
         response = self.post(post_url,
-                             data=self._payload,
-                             verify=False)
+                             data=self._payload)
         try:
             url_index = response.headers["REFRESH"].index("URL=") + len("URL=")
         except Exception as e:
             raise InvalidUsernameorPasswordException from e
         redirect_url = "https://dualis.dhbw-stuttgart.de" + \
             response.headers["REFRESH"][url_index:]
-        session_id = re.search('ARGUMENTS=-N([0-9]{15})', redirect_url)
+        session_id = re.search(r'ARGUMENTS=-N([\d]{15})', redirect_url)
 
         return session_id.group()[-15:]
 

@@ -1,7 +1,7 @@
 """Data Endpoint View"""
 from cryptography.fernet import InvalidToken
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest, JsonResponse
+from django.http import HttpRequest, JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
 from django.views.decorators.cache import cache_control
@@ -13,30 +13,36 @@ from ..data_endpoint.data_save import search_data
 from ..data_endpoint.read_data import get_grades
 from ..data_endpoint.calculate_average import calculate_average_module, calculate_average_first_attempt, calculate_average_second_attempt
 
-# Create your views here.
-
 
 @login_required(login_url="/login/")
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def loading_view(request: HttpRequest):
-    """Returns loading view that redirects to the current page when data is refreshed
+def loading_view(request: HttpRequest) -> HttpResponse:
+    """Returns loading view that redirects to the current page when data
+    is refreshed
 
     Args:
-        request (HttpRequest): _description_
+        request (HttpRequest): HttpRequest Object
 
     Returns:
-        _type_: _description_
+        HttpResponse: HttpResponse Object
     """
 
     if request.COOKIES.get("password"):
-        return render(request, "home/loading.html", {"redirect_url": request.path})
+        return render(request, "home/loading.html",
+                      {"redirect_url": request.path})
     else:
         return logout_view(request)
 
 
 @login_required(login_url="/login/")
-def refresh_data(request):
-    """Refreshes the data from dualis and returns 200 on success
+def refresh_data(request: HttpRequest) -> HttpResponse:
+    """Refreshes the data of the user
+
+    Args:
+        request (HttpRequest): HttpRequest Object
+
+    Returns:
+        HttpResponse: HttpResponse Object
     """
     try:
         password = decrypt(request.COOKIES.get("password"))

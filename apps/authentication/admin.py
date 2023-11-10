@@ -1,3 +1,4 @@
+"""Admin Confirguration for the Authentication App."""
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
@@ -5,6 +6,7 @@ from .models import DualisUser
 
 
 class UserAdmin(BaseUserAdmin):
+    """Register User Model in Admin Panel."""
     fieldsets = (
         (None, {'fields': ('email', 'password', 'name', 'last_login')}),
         ('Permissions', {'fields': (
