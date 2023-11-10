@@ -15,6 +15,6 @@ urlpatterns = [
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages'),
 
-    path('apps/templates/home/', views.own_grades_view, name='index'),
+    path('', views.own_grades_view, name='own_grades_view'),
 
 ]

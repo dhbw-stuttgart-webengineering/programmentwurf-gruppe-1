@@ -32,8 +32,8 @@
         {% endfor %}
       </tbody>
     </table>
-
-    <a href="{% url 'logout' %}?csrfmiddlewaretoken={{ csrf_token }}">Logout</a>
+  {{request.user.grades}}
+  <a href="{% url 'logout' %}?csrfmiddlewaretoken={{ csrf_token }}">Logout</a>
   </div>
 
   <div class="chart-box">

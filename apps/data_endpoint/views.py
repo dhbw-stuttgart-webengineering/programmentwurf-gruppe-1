@@ -60,3 +60,4 @@ def refresh_data(request):
     except InvalidToken:
         print("Invalid Token")
         return logout_view(request)
+    
