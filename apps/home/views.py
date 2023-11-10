@@ -35,7 +35,8 @@ def sitemap(_: HttpRequest) -> HttpResponse:
     Returns:
         HttpResponse: HttpResponse Object
     """
-    return HttpResponse(open(settings.STATIC_ROOT+"/sitemap.xml", encoding="utf-8").read(), content_type='text/xml')
+    return HttpResponse(open(settings.STATIC_ROOT+"/sitemap.xml", encoding="utf-8").read(),
+                        content_type='text/xml')
 
 
 @login_required(login_url="/login/")
