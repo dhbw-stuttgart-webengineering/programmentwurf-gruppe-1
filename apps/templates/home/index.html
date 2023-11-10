@@ -2,7 +2,7 @@
 {% block title %} Home {%endblock title %} 
 {% block content %}
 
-<main>
+<div class="container">
   {% if request.user.is_authenticated %}
   <p>Willkommen, {{ request.user.name }}!</p>
   {% else %}
@@ -21,9 +21,7 @@
       <canvas id="misschart"></canvas>
     </div>
   </div>
-
-  <a href="{% url 'logout' %}?csrfmiddlewaretoken={{ csrf_token }}">Logout</a>
-</main>
+</div>
 
 <style>
 	.chart-container {
@@ -43,7 +41,6 @@
 	}
 </style>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var ctx = document.getElementById('comparechart').getContext('2d');
@@ -90,7 +87,7 @@
     }
   });
 </script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
 	document.addEventListener("DOMContentLoaded", function () {
 	  var ctx = document.getElementById("misschart").getContext("2d");

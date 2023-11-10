@@ -16,7 +16,8 @@ from ..data_endpoint.read_data import get_grades
 @login_required(login_url="/login/")
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def loading_view(request: HttpRequest) -> HttpResponse:
-    """Returns loading view that redirects to the current page when data is refreshed
+    """Returns loading view that redirects to the current page when data
+    is refreshed
 
     Args:
         request (HttpRequest): HttpRequest Object
@@ -26,7 +27,8 @@ def loading_view(request: HttpRequest) -> HttpResponse:
     """
 
     if request.COOKIES.get("password"):
-        return render(request, "home/loading.html", {"redirect_url": request.path})
+        return render(request, "home/loading.html",
+                      {"redirect_url": request.path})
     else:
         return logout_view(request)
 
