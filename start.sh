@@ -1,3 +1,6 @@
 #!/bin/bash
-#/home/jopee/dhbw/programmentwurf-gruppe-1/venv/bin/python3 /home/jopee/dhbw/programmentwurf-gruppe-1/manage.py collectstatic < "yes" && 
-/home/jopee/dhbw/programmentwurf-gruppe-1/venv/bin/python3 /home/jopee/dhbw/programmentwurf-gruppe-1/manage.py runserver
+
+# start.sh executed in production envrionment
+# First collects all static files, then runs the server
+venv/bin/python3 manage.py collectstatic --no-input && 
+venv/bin/python3 manage.py runserver

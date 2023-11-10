@@ -2,6 +2,7 @@
 {% block title %} Home {%endblock title %} 
 {% block content %}
 
+<<<<<<< HEAD
 <main class="grid-container">
   <div class="grades">
     {% if request.user.is_authenticated %}
@@ -10,6 +11,18 @@
     <p>Du bist nicht eingeloggt!</p>
     {% endif %} 
     
+=======
+<div class="container">
+  {% if request.user.is_authenticated %}
+  <p>Willkommen, {{ request.user.name }}!</p>
+  {% else %}
+  <p>Du bist nicht eingeloggt!</p>
+  {% endif %} {% if perms.is_superuser %}
+  <p>Du bist ein Admin.</p>
+  {% else %}
+  <p>Du bist kein Admin.</p>
+  {% endif %}
+>>>>>>> origin/main
 
     <h2>Eigene Noten</h2>
     <table>
@@ -35,6 +48,7 @@
   {{cours}}
   <a href="{% url 'logout' %}?csrfmiddlewaretoken={{ csrf_token }}">Logout</a>
   </div>
+<<<<<<< HEAD
 
   <div class="chart-box">
     <canvas id="comparechart"></canvas>
@@ -44,6 +58,9 @@
     <canvas id="misschart"></canvas>
   </div>
 </main>
+=======
+</div>
+>>>>>>> origin/main
 
 <style>
   .grid-container {
@@ -85,7 +102,6 @@
   }
 </style>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var ctx = document.getElementById('comparechart').getContext('2d');
@@ -132,7 +148,7 @@
     }
   });
 </script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
 	document.addEventListener("DOMContentLoaded", function () {
 	  var ctx = document.getElementById("misschart").getContext("2d");
