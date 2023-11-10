@@ -9,21 +9,21 @@
     {% else %}
     <p>Du bist nicht eingeloggt!</p>
     {% endif %} 
-    {% if perms.is_superuser %}
-    <p>Du bist ein Admin.</p>
-    {% else %}
-    <p>Du bist kein Admin.</p>
-    {% endif %}
+    
 
     <h2>Eigene Noten</h2>
     <table>
       <thead>
+        <!-- Beispiel: in deinem HTML-Template -->
+        
+
         <tr>
           <th>Kurs</th>
           <th>Note</th>
         </tr>
       </thead>
       <tbody>
+        
         {% for grade in own_grades %}
         <tr>
           <td>{{ grade.course }}</td>
@@ -32,7 +32,7 @@
         {% endfor %}
       </tbody>
     </table>
-  {{request.user.grades}}
+  {{cours}}
   <a href="{% url 'logout' %}?csrfmiddlewaretoken={{ csrf_token }}">Logout</a>
   </div>
 
@@ -59,6 +59,7 @@
     padding: 10px;
     max-width: 500px;
     width: 100%; /* Jede Box nimmt die gesamte verfügbare Breite */
+    
   }
 
   .grades {
@@ -72,9 +73,11 @@
     display: flex; /* Elemente als Flexbox behandeln */
     justify-content: center; /* Inhalt horizontal zentrieren */
     align-items: center; /* Inhalt vertikal zentrieren */
+    
   }
   #comparechart{
     grid-row: 1 / 2; /* Position in erster Zeile */
+   
   }
 
   #misschart {
@@ -94,7 +97,7 @@
           label: 'Durchschnittsnoten',
           data: [2.4, 1.9, 3.7, 2.1],
           backgroundColor: generateRandomColors(4),
-          borderColor: 'rgba(75, 192, 192, 1)',
+          borderColor: 'rgba(255, 255, 255, 1)',
           borderWidth: 1
         }]
       },
