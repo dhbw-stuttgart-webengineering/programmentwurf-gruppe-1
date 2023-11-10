@@ -12,12 +12,6 @@ def search_data(data, email_id):
                        id_module,
                        dates["id"],
                        dates["name"],
-                       unit["id"],
-                       unit["name"],
                        dates["credits"],
-                       unit["credits"],
-                       unit["grade_first_attempt"],
-                       unit["grade_second_attempt"],
-                       dates["semester"])
-
-
+                       dates["semester"],
+                       unit)

@@ -1,3 +1,4 @@
+"""save the data from dualis in the database"""
 import os
 import django
 from ..data_endpoint.models import Grade, Unit, Module
@@ -10,14 +11,16 @@ def save_dates(email_id,
                id_module,
                abk,
                bezeichnung,
-               unit_id,
-               unit_name,
                credits_,
-               unit_credits,
-               unit_grade_first_attempt,
-               unit_grade_second_attempt,
-               semester):
+               semester,
+               unit):
     """save the data from dualis in the database"""
+    unit_id = unit["id"]
+    unit_name = unit["name"]
+    unit_credits = unit["credits"]
+    unit_grade_first_attempt = unit["grade_first_attempt"]
+    unit_grade_second_attempt = unit["grade_second_attempt"]
+
     module_to_save, created = Module.objects.get_or_create(module_id=id_module)
 
     if created:
@@ -37,7 +40,7 @@ def save_dates(email_id,
         unit_to_save.id_of_module = module_to_save
         unit_to_save.save()
 
-    student_grades = Grade.objects.get_or_create(email_id=email_id, id_of_unit=unit_to_save)
+    student_grades, _ = Grade.objects.get_or_create(email_id=email_id, id_of_unit=unit_to_save)
     student_grades.name = email_id
     student_grades.grade_first_attempt = unit_grade_first_attempt
     student_grades.grade_second_attempt = unit_grade_second_attempt
