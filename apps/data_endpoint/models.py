@@ -1,3 +1,4 @@
+"""Database models for the data_endpoint app"""
 from django.db import models
 
 
