@@ -2,7 +2,8 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Grades, Courses
+from .models import Grade, Module, Unit
 
-admin.site.register(Grades)
-admin.site.register(Courses)
+admin.site.register(Grade)
+admin.site.register(Unit)
+admin.site.register(Module)
