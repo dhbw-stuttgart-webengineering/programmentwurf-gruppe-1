@@ -5,8 +5,8 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.template import loader
 from django.urls import reverse
 from django.views.decorators.cache import cache_control
-from ..utils.decorators import refresh_dualis
 from django.conf import settings
+from ..utils.decorators import refresh_dualis
 
 
 @login_required(login_url="/login/")
@@ -25,7 +25,8 @@ def index(request: HttpRequest) -> HttpResponse:
 
     return render(request, "home/index.html", context)
 
-def sitemap(request: HttpRequest) -> HttpResponse:
+
+def sitemap(_: HttpRequest) -> HttpResponse:
     """Sitemap View
 
     Args:
@@ -34,7 +35,8 @@ def sitemap(request: HttpRequest) -> HttpResponse:
     Returns:
         HttpResponse: HttpResponse Object
     """
-    return HttpResponse(open(settings.STATIC_ROOT+"/sitemap.xml").read(), content_type='text/xml')
+    return HttpResponse(open(settings.STATIC_ROOT+"/sitemap.xml", encoding="utf-8").read(), content_type='text/xml')
+
 
 @login_required(login_url="/login/")
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -61,5 +63,6 @@ def pages(request: HttpRequest) -> HttpResponse:
         html_template = loader.get_template('home/page-404.html')
         return HttpResponse(html_template.render(context, request))
     except Exception:  # pylint: disable=broad-except # disable broad except warning, since all exception should be caught here
-        html_template = loader.get_template('home/page-404.html') # Should be 500
+        html_template = loader.get_template(
+            'home/page-404.html')  # Should be 500
         return HttpResponse(html_template.render(context, request))
