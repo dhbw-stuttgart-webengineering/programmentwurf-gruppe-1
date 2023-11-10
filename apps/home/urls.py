@@ -11,6 +11,6 @@ urlpatterns = [
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages'),
 
-    path('', views.own_grades_view, name='own_grades_view'),
+    
 
 ]
