@@ -9,6 +9,7 @@ def get_grades(email_id):
     matching_id = Grade.objects.filter(email_id=email_id)
     grade_dict = {}
     grade_list = []
+
     for eintrag in matching_id:
         unit_id = Unit.objects.get(unit_id=eintrag.id_of_unit)
         module_id = Module.objects.get(module_id=unit_id.id_of_module)
