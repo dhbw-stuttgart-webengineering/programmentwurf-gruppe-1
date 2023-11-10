@@ -1,12 +1,23 @@
 import os
 import django
+from ..data_endpoint.models import Grade, Unit, Module
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 django.setup()
-from ..data_endpoint.models import Grade, Unit, Module
 
-def save_dates(email_id,id_module, abk, bezeichnung, unit_id, unit_name, credits_, unit_credits, unit_grade_first_attempt, unit_grade_second_attempt, semester):
 
+def save_dates(email_id,
+               id_module,
+               abk,
+               bezeichnung,
+               unit_id,
+               unit_name,
+               credits_,
+               unit_credits,
+               unit_grade_first_attempt,
+               unit_grade_second_attempt,
+               semester):
+    """save the data from dualis in the database"""
     module_to_save, created = Module.objects.get_or_create(module_id=id_module)
 
     if created:
@@ -26,7 +37,7 @@ def save_dates(email_id,id_module, abk, bezeichnung, unit_id, unit_name, credits
         unit_to_save.id_of_module = module_to_save
         unit_to_save.save()
 
-    student_grades, create = Grade.objects.get_or_create(email_id=email_id, id_of_unit=unit_to_save)
+    student_grades = Grade.objects.get_or_create(email_id=email_id, id_of_unit=unit_to_save)
     student_grades.name = email_id
     student_grades.grade_first_attempt = unit_grade_first_attempt
     student_grades.grade_second_attempt = unit_grade_second_attempt

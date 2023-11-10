@@ -1,11 +1,14 @@
+"""Module to read the data from the database"""
 import os
 import django
+from ..data_endpoint.models import Grade, Unit, Module
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 django.setup()
-from ..data_endpoint.models import Grade, Unit, Module
+
 
 def get_grades(email_id):
+    """get the grades from the database"""
     matching_id = Grade.objects.filter(email_id=email_id)
     grade_dict = {}
     grade_list = []
