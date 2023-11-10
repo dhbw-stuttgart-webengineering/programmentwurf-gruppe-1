@@ -1,8 +1,10 @@
+"""User Manager"""
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils import timezone
 
 
 class UserManager(BaseUserManager):
+    """User Manager"""
 
     def _create_user(self, email, password, is_staff, is_superuser, **extra_fields):
         if not email:
@@ -23,8 +25,27 @@ class UserManager(BaseUserManager):
         return user
 
     def create_user(self, email, password, **extra_fields):
+        """Creates a User.
+
+        Args:
+            email (str): EMail
+            password (str): Password
+
+        Returns:
+            User: Instance of DualisUser
+        """
+
         return self._create_user(email, password, False, False, **extra_fields)
 
     def create_superuser(self, email, password, **extra_fields):
+        """Creates a superuser.
+
+        Args:
+            email (str): EMail
+            password (str): Password
+
+        Returns:
+            User: Instance of DualisUser
+        """
         user = self._create_user(email, password, True, True, **extra_fields)
         return user

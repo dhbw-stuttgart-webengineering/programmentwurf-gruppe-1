@@ -60,6 +60,7 @@ class WebScraper:
 
         if match:
             return match.group(1)
+        return ""
 
     def _scrape_semester_dropdown(self) -> list:
         """Returns a list of semester objects
@@ -133,14 +134,14 @@ class WebScraper:
                 else:  # Module has multiple units
                     header = columns[0].text.strip()
 
-                if header not in units.keys():
+                if header not in units.keys():  # pylint: disable=consider-iterating-dictionary # Not iteratinge, hence disabling exception
                     unit_id, unit_name = self._extract_name_and_id(header)
                     units[header] = {"id_": unit_id,
                                      "name": unit_name}
                 last_header = header
 
             elif columns[0].has_attr('class') and 'tbdata' in columns[0]['class']:
-                
+
                 if "noch nicht gesetzt" in columns[3].text:
                     grade = None
                 elif "b" in columns[3].text:
@@ -153,7 +154,7 @@ class WebScraper:
                 else:
                     units[last_header]["grade_first_attempt"] = grade
 
-        return units.values()
+        return list(units.values())
 
     def _extract_name_and_id(self, module: str) -> (str, str):
 

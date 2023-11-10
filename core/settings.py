@@ -1,4 +1,4 @@
-from pathlib import Path
+"""Setting for project"""
 import os
 import environ
 
@@ -12,19 +12,20 @@ CORE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = env('SECRET_KEY', default='S#perS3crEt_007')
 SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG', default=False)
 
 # Assets Management
 ASSETS_ROOT = os.getenv('ASSETS_ROOT', '/static')
 
+HTTPS = "https://"
+
 # load production server from .env
 ALLOWED_HOSTS = [env('SERVER', default='127.0.0.1')]
 CSRF_TRUSTED_ORIGINS = [
-    "https://"+env('SERVER', default='127.0.0.1'), "https://betterdualis.de"]
-CSRF_ALLOWED_ORIGINS = ["https://"+env('SERVER', default='127.0.0.1')]
-CORS_ORIGINS_WHITELIST = ["https://"+env('SERVER', default='127.0.0.1')]
+    HTTPS+env('SERVER', default='127.0.0.1'), "https://betterdualis.de"]
+CSRF_ALLOWED_ORIGINS = [HTTPS+env('SERVER', default='127.0.0.1')]
+CORS_ORIGINS_WHITELIST = [HTTPS+env('SERVER', default='127.0.0.1')]
 
 # Application definition
 
