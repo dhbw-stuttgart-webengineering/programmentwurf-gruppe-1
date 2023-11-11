@@ -7,7 +7,12 @@
 
   <!-- Main links -->
   <url>
-    <loc>https://django-dashboard-dattaable.appseed.us</loc>
+    <loc>https://www.betterdualis.de</loc>
+    <priority>1</priority>
+    <changefreq>monthly</changefreq>
+  </url>#
+  <url>
+    <loc>https://www.betterdualis.de/login</loc>
     <priority>1</priority>
     <changefreq>monthly</changefreq>
   </url>

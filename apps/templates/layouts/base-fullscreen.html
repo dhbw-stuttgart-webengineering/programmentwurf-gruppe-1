@@ -20,6 +20,7 @@
     >
   </head>
 
+  {% include 'includes/scripts.html' %}
   {% block javascript %}{% endblock javascript %}
 
   <nav class="navbar navbar-expand-lg bg-body-secondary sticky-top">
@@ -57,7 +58,6 @@
   </nav>
 
   <main class="container mt-5">
-    {% block content %}{% endblock content %} {% include 'includes/scripts.html' %}
-    
+    {% block content %}{% endblock content %}
   </main>
 </html>
