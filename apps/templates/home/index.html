@@ -36,11 +36,15 @@
   </div>
 
   <div class="chart-box">
-    <canvas id="comparechart"></canvas>
+    <div class="compare">
+      <canvas id="comparechart"></canvas>
+    </div>
   </div>
 
   <div class="chart-box">
-    <canvas id="misschart"></canvas>
+    <div class="miss">
+      <canvas id="misschart"></canvas>
+    </div>
   </div>
 </main>
 
@@ -99,7 +103,8 @@ th, td {
   
 
   function compareCharts() {
-    removeCharts();
+    var compareChartCtx = removeAndCreateCanvas('comparechart',0);
+    var missChartCtx = removeAndCreateCanvas('misschart',1);
 
     var compareChartCtx = document.getElementById('comparechart').getContext('2d');
     var missChartCtx = document.getElementById('misschart').getContext('2d');
@@ -203,21 +208,30 @@ th, td {
     button.addEventListener('click', compareCharts);
   }
     
-  function removeCharts() {
-    var compareChartCanvas = document.getElementById('comparechart');
-    var missChartCanvas = document.getElementById('misschart');
+  function removeAndCreateCanvas(chartId, index) {
+    var oldCanvas = document.getElementById(chartId);
   
-    // Überprüfen, ob die Canvas-Elemente vorhanden sind, bevor sie entfernt werden
-    if (compareChartCanvas) {
-      var compareChartCtx = compareChartCanvas.getContext('2d');
-      compareChartCtx.clearRect(0, 0, compareChartCanvas.width, compareChartCanvas.height);
+    if (oldCanvas) {
+      // Canvas-Element entfernen
+      oldCanvas.parentNode.removeChild(oldCanvas);
     }
   
-    if (missChartCanvas) {
-      var missChartCtx = missChartCanvas.getContext('2d');
-      missChartCtx.clearRect(0, 0, missChartCanvas.width, missChartCanvas.height);
+    // Neues Canvas-Element erstellen
+    var newCanvas = document.createElement('canvas');
+    newCanvas.id = chartId;
+    
+    // Dem gewünschten Container hinzufügen
+    if (index == 0) {
+      var container = document.querySelector('.compare');  // Ändere dies entsprechend deinem HTML-Layout
+    } else {
+      var container = document.querySelector('.miss');  // Ändere dies entsprechend deinem HTML-Layout
     }
+    container.appendChild(newCanvas);
+  
+    return newCanvas.getContext('2d');
   }
+  
+  
   </script>
 
 {% endblock content %}
