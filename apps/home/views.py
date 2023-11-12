@@ -21,7 +21,7 @@ def index(request: HttpRequest) -> HttpResponse:
     Returns:
         HttpResponse: HttpResponde Object
     """
-
+    # Beispiel für die Verwendung von eigenen Daten
     own_grades = [
         {'course': 'Mathematik', 'grade': 2.7},
         {'course': 'Englisch', 'grade': 1.9},
@@ -30,7 +30,6 @@ def index(request: HttpRequest) -> HttpResponse:
     ]
     context = {'own_grades': own_grades}
     return render(request, 'home/index.html', context)
-
 
 def sitemap(_: HttpRequest) -> HttpResponse:
     """Sitemap View
