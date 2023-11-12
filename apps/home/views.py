@@ -22,14 +22,12 @@ def index(request: HttpRequest) -> HttpResponse:
         HttpResponse: HttpResponde Object
     """
 
-   
     own_grades = [
         {'course': 'Mathematik', 'grade': 2.7},
         {'course': 'Englisch', 'grade': 1.9},
         {'course': 'Geschichte', 'grade': 3.3},
         # ...
     ]
-
     context = {'own_grades': own_grades}
     return render(request, 'home/index.html', context)
 
@@ -75,5 +73,3 @@ def pages(request: HttpRequest) -> HttpResponse:
         html_template = loader.get_template(
             'home/page-404.html')  # Should be 500
         return HttpResponse(html_template.render(context, request))
-    
-

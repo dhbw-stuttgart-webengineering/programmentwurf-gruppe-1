@@ -9,12 +9,10 @@
     {% else %}
     <p>Du bist nicht eingeloggt!</p>
     {% endif %} 
-    
-
+  
     <h2>Eigene Noten</h2>
-    <table>
+    <table aria-describedby="grades-summary">
       <thead>
-        <!-- Beispiel: in deinem HTML-Template -->
         <tr>
           <th>Kurs</th>
           <th>Note</th>
@@ -32,7 +30,6 @@
       </tbody>
     </table>
   {{cours}}
-  <!-- <a href="{% url 'logout' %}?csrfmiddlewaretoken={{ csrf_token }}">Logout</a> -->
   </div>
 
   <div class="chart-box">
@@ -109,7 +106,6 @@ th, td {
     var compareChartCtx = document.getElementById('comparechart').getContext('2d');
     var missChartCtx = document.getElementById('misschart').getContext('2d');
 
-    // Zufällige Werte generieren (ersetze dies durch deine Logik)
     var compareChartData = generateRandomChartData();
     var missChartData = generateRandomMissChartData();
 
@@ -178,8 +174,6 @@ th, td {
     
   }
   
-  
-  
   function generateRandomColors(numColors) {
     var colors = [];
     for (let i = 0; i < numColors; i++) {
@@ -189,25 +183,13 @@ th, td {
     return colors;
   }
   function generateRandomChartData() {
-    // Hier kannst du die Logik zum Generieren zufälliger Daten implementieren
     return [Math.random() * 5 + 1, Math.random() * 5 + 1, Math.random() * 5 + 1, Math.random() * 5 + 1];
   }
 
   function generateRandomMissChartData() {
-    // Hier kannst du die Logik zum Generieren zufälliger Daten implementieren
     return [Math.random(), Math.random()];
   }
 
-
-  function removeClickListener(button) {
-    
-    button.removeEventListener('click', compareCharts);
-  }
-  function addClickListener(button) {
-    
-    button.addEventListener('click', compareCharts);
-  }
-    
   function removeAndCreateCanvas(chartId, index) {
     var oldCanvas = document.getElementById(chartId);
   
@@ -222,16 +204,14 @@ th, td {
     
     // Dem gewünschten Container hinzufügen
     if (index == 0) {
-      var container = document.querySelector('.compare');  // Ändere dies entsprechend deinem HTML-Layout
+      var container = document.querySelector('.compare');  // Wähle comparechart aus
     } else {
-      var container = document.querySelector('.miss');  // Ändere dies entsprechend deinem HTML-Layout
+      var container = document.querySelector('.miss');  // Wähle misschart aus
     }
     container.appendChild(newCanvas);
   
     return newCanvas.getContext('2d');
   }
-  
-  
   </script>
 
 {% endblock content %}
