@@ -11,6 +11,9 @@ def get_grades(email_id):
     """get the grades from the database"""
     matching_id = Grade.objects.filter(email_id=email_id)
     grade_list = []
+    proof_vorhanden = False
+    index_of_element = 0
+    grade_dict = {}
 
     for eintrag in matching_id:
         unit_id = Unit.objects.get(unit_id=eintrag.id_of_unit)
@@ -40,20 +43,43 @@ def get_grades(email_id):
         except TypeError:
             module_average = module_id.average
 
-        grade_dict =\
-            {"module_abk" : module_id.module_abk,
-             "module_name" : module_id.module_name,
-             "semester" : module_id.semester,
-             "module_credit" : module_id.credits,
-             "module_average" : module_average,
-             "unit_id" : unit_id,
-             "unit_name" : unit_id.unit_name,
-             "unit_credits" : unit_id.credits,
-             "average_first_attempt" : average_first,
-             "average_second_attempt" : average_second,
-             "grade_first_attempt" : grade_first,
-             "grade_second_attempt" : grade_second
-            }
+        for list_eintrag in grade_list:
+            if list_eintrag["module_id"] == module_id:
+                proof_vorhanden = True
+                index_of_element = grade_list.index(list_eintrag)
+            else:
+                proof_vorhanden = False
+
+        if proof_vorhanden:
+            unit_dict =\
+                {"unit_id" : unit_id,
+                    "unit_name" : unit_id.unit_name,
+                    "unit_credits" : unit_id.credits,
+                    "average_first_attempt" : average_first,
+                    "average_second_attempt" : average_second,
+                    "grade_first_attempt" : grade_first,
+                    "grade_second_attempt" : grade_second
+                    }
+            grade_list.insert(index_of_element, unit_dict)
+        else:
+            units = \
+                {"unit_id" : unit_id,
+                 "unit_name" : unit_id.unit_name,
+                 "unit_credits" : unit_id.credits,
+                 "average_first_attempt" : average_first,
+                 "average_second_attempt" : average_second,
+                 "grade_first_attempt" : grade_first,
+                 "grade_second_attempt" : grade_second
+                }
+            grade_dict = \
+                {"module_id" : module_id.module_id,
+                 "module_abk" : module_id.module_abk,
+                 "module_name" : module_id.module_name,
+                 "semester" : module_id.semester,
+                 "module_credit" : module_id.credits,
+                 "module_average" : module_average,
+                 "units" : units
+                 }
         grade_list.append(grade_dict)
 
     print(grade_list)
