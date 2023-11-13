@@ -17,6 +17,7 @@ function loading_login(button, email, password, remember_me) {
       .setAttribute("class", "form-control is-valid");
   } else {
     document.getElementById(button).removeAttribute("disabled");
+    document.getElementById(remember_me).removeAttribute("disabled");
     document
       .getElementById(email)
       .setAttribute("class", "form-control is-invalid");
