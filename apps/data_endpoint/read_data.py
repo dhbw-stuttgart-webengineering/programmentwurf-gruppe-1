@@ -30,20 +30,28 @@ def get_grades(email_id):
             unit_dict =\
                 {"unit_name" : unit_id.unit_name,
                  "unit_credits" : unit_id.credits,
-                 "average_first_attempt" : float(unit_id.average_first_attempt) if unit_id.average_first_attempt else None,
-                 "average_second_attempt" : float(unit_id.average_second_attempt) if unit_id.average_second_attempt else None,
-                 "grade_first_attempt" : float(eintrag.grade_first_attempt) if eintrag.grade_first_attempt else None,
-                 "grade_second_attempt" : float(eintrag.grade_second_attempt) if eintrag.grade_second_attempt else None
+                 "average_first_attempt" : float(unit_id.average_first_attempt) \
+                     if unit_id.average_first_attempt else None,
+                 "average_second_attempt" : float(unit_id.average_second_attempt) \
+                     if unit_id.average_second_attempt else None,
+                 "grade_first_attempt" : float(eintrag.grade_first_attempt) \
+                     if eintrag.grade_first_attempt else None,
+                 "grade_second_attempt" : float(eintrag.grade_second_attempt) \
+                     if eintrag.grade_second_attempt else None
                 }
             grade_list[index_of_element]["units"].append(unit_dict)
         else:
             unit = \
                 {"unit_name" : unit_id.unit_name,
                  "unit_credits" : unit_id.credits,
-                 "average_first_attempt" : float(unit_id.average_first_attempt) if unit_id.average_first_attempt else None,
-                 "average_second_attempt" : float(unit_id.average_second_attempt) if unit_id.average_second_attempt else None,
-                 "grade_first_attempt" : float(eintrag.grade_first_attempt) if eintrag.grade_first_attempt else None,
-                 "grade_second_attempt" : float(eintrag.grade_second_attempt) if eintrag.grade_second_attempt else None
+                 "average_first_attempt" : float(unit_id.average_first_attempt) \
+                     if unit_id.average_first_attempt else None,
+                 "average_second_attempt" : float(unit_id.average_second_attempt) \
+                     if unit_id.average_second_attempt else None,
+                 "grade_first_attempt" : float(eintrag.grade_first_attempt) \
+                     if eintrag.grade_first_attempt else None,
+                 "grade_second_attempt" : float(eintrag.grade_second_attempt) \
+                     if eintrag.grade_second_attempt else None
                 }
             grade_dict = \
                 {"module_id" : module_id.module_id,
