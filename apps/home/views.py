@@ -28,8 +28,14 @@ def index(request: HttpRequest) -> HttpResponse:
         {'course': 'Geschichte', 'grade': 3.3},
         # ...
     ]
+
+    from ..data_endpoint.calculate_average import calculate_total_average_weighted
+
+    print(calculate_total_average_weighted(request.user.email))
+
     context = {'own_grades': own_grades}
     return render(request, 'home/index.html', context)
+
 
 def sitemap(_: HttpRequest) -> HttpResponse:
     """Sitemap View
