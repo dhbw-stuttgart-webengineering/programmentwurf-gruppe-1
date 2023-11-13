@@ -2,10 +2,8 @@ function loading_login(button, email, password, remember_me) {
   if (document.getElementById("login_form").checkValidity()) {
     document.getElementById(button).setAttribute("disabled", "disabled");
     let spinner = document.createElement("span");
-    spinner.setAttribute(
-      "class",
-      "spinner-border spinner-border-sm aria-hidden='true'"
-    );
+    spinner.setAttribute("class", "spinner-border spinner-border-sm");
+    spinner.setAttribute("aria-hidden", "true");
     document.getElementById(button).appendChild(spinner);
     document.getElementById(remember_me).setAttribute("disabled", "disabled");
     document
