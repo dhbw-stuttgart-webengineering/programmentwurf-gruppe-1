@@ -28,44 +28,48 @@ def get_grades(email_id):
 
         if proof_vorhanden:
             unit_dict =\
-                {"unit_name" : unit_id.unit_name,
-                 "unit_credits" : unit_id.credits,
-                 "average_first_attempt" : float(unit_id.average_first_attempt) \
-                     if unit_id.average_first_attempt else None,
-                 "average_second_attempt" : float(unit_id.average_second_attempt) \
-                     if unit_id.average_second_attempt else None,
-                 "grade_first_attempt" : float(eintrag.grade_first_attempt) \
-                     if eintrag.grade_first_attempt else None,
-                 "grade_second_attempt" : float(eintrag.grade_second_attempt) \
-                     if eintrag.grade_second_attempt else None
-                }
+                {"unit_id": str(unit_id),
+                 "unit_name": unit_id.unit_name,
+                 "unit_credits": unit_id.credits,
+                 "average_first_attempt": float(unit_id.average_first_attempt)
+                 if unit_id.average_first_attempt else None,
+                 "average_second_attempt": float(unit_id.average_second_attempt)
+                 if unit_id.average_second_attempt else None,
+                 "grade_first_attempt": float(eintrag.grade_first_attempt)
+                 if eintrag.grade_first_attempt else None,
+                 "grade_second_attempt": float(eintrag.grade_second_attempt)
+                 if eintrag.grade_second_attempt else None
+                 }
             grade_list[index_of_element]["units"].append(unit_dict)
         else:
             unit = \
-                {"unit_name" : unit_id.unit_name,
-                 "unit_credits" : unit_id.credits,
-                 "average_first_attempt" : float(unit_id.average_first_attempt) \
-                     if unit_id.average_first_attempt else None,
-                 "average_second_attempt" : float(unit_id.average_second_attempt) \
-                     if unit_id.average_second_attempt else None,
-                 "grade_first_attempt" : float(eintrag.grade_first_attempt) \
-                     if eintrag.grade_first_attempt else None,
-                 "grade_second_attempt" : float(eintrag.grade_second_attempt) \
-                     if eintrag.grade_second_attempt else None
-                }
+                {"unit_id": str(unit_id),
+                 "unit_name": unit_id.unit_name,
+                 "unit_credits": unit_id.credits,
+                 "average_first_attempt": float(unit_id.average_first_attempt)
+                 if unit_id.average_first_attempt else None,
+                 "average_second_attempt": float(unit_id.average_second_attempt)
+                 if unit_id.average_second_attempt else None,
+                 "grade_first_attempt": float(eintrag.grade_first_attempt)
+                 if eintrag.grade_first_attempt else None,
+                 "grade_second_attempt": float(eintrag.grade_second_attempt)
+                 if eintrag.grade_second_attempt else None
+                 }
             grade_dict = \
-                {"module_id" : module_id.module_id,
-                 "module_abk" : module_id.module_abk,
-                 "module_name" : module_id.module_name,
-                 "semester" : module_id.semester,
-                 "module_credit" : module_id.credits,
-                 "module_average" : float(module_id.average) if module_id.average else None,
-                 "units" : [unit]
+                {"module_id": module_id.module_id,
+                 "module_abk": module_id.module_abk,
+                 "module_name": module_id.module_name,
+                 "semester": module_id.semester,
+                 "module_credit": module_id.credits,
+                 "module_average": float(module_id.average) if module_id.average else None,
+                 "units": [unit]
                  }
         grade_list.append(grade_dict)
 
-    return grade_list       #Die Noten aus der Datenbank werden in einem
-                    #  Dictionary gespeichert und in einer Liste zurückgegeben"""
+    return grade_list  # Die Noten aus der Datenbank werden in einem
+    #  Dictionary gespeichert und in einer Liste zurückgegeben"""
+
+
 def get_module():
     """function to get the modules from the database"""
     module_list = []
@@ -78,14 +82,13 @@ def get_module():
             average = eintrag.average
 
         module_dict =\
-            {"module_abk" : eintrag.module_abk,
-             "module_name" : eintrag.module_name,
-             "semester" : eintrag.semester,
-             "module_credit" : eintrag.credits,
-             "module_average" : average
-            }
+            {"module_abk": eintrag.module_abk,
+             "module_name": eintrag.module_name,
+             "semester": eintrag.semester,
+             "module_credit": eintrag.credits,
+             "module_average": average
+             }
         module_list.append(module_dict)
 
-
-    return module_list       #Die Module aus der Datenbank werden in einem
-                            #  Dictionary gespeichert und in einer Liste zurückgegeben"""
+    return module_list  # Die Module aus der Datenbank werden in einem
+    #  Dictionary gespeichert und in einer Liste zurückgegeben"""
