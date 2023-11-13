@@ -16,7 +16,13 @@ def get_grade_distribution(unit_id: str) -> List[float]:
 
     grades = Grade.objects.filter(id_of_unit=unit_id)
 
-    return [float(grade.grade_first_attempt) for grade in grades]
+    grade_distribution = []
+
+    for grade in grades:
+        if grade.grade_first_attempt:
+            grade_distribution.append(float(grade.grade_first_attempt))
+
+    return grade_distribution
 
 
 def get_grade_distribution_as_dict(unit_id: str) -> dict:
