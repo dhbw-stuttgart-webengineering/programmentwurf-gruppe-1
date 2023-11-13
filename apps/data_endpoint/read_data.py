@@ -44,7 +44,7 @@ def get_grades(email_id):
             module_average = module_id.average
 
         for list_eintrag in grade_list:
-            if list_eintrag["module_id"] == module_id:
+            if list_eintrag["module_id"] == str(module_id):
                 proof_vorhanden = True
                 index_of_element = grade_list.index(list_eintrag)
             else:
@@ -52,19 +52,17 @@ def get_grades(email_id):
 
         if proof_vorhanden:
             unit_dict =\
-                {"unit_id" : unit_id,
-                    "unit_name" : unit_id.unit_name,
-                    "unit_credits" : unit_id.credits,
-                    "average_first_attempt" : average_first,
-                    "average_second_attempt" : average_second,
-                    "grade_first_attempt" : grade_first,
-                    "grade_second_attempt" : grade_second
-                    }
-            grade_list.insert(index_of_element, unit_dict)
+                {"unit_name" : unit_id.unit_name,
+                 "unit_credits" : unit_id.credits,
+                 "average_first_attempt" : average_first,
+                 "average_second_attempt" : average_second,
+                 "grade_first_attempt" : grade_first,
+                 "grade_second_attempt" : grade_second
+                }
+            grade_list[index_of_element]["units"].append(unit_dict)
         else:
-            units = \
-                {"unit_id" : unit_id,
-                 "unit_name" : unit_id.unit_name,
+            unit = \
+                {"unit_name" : unit_id.unit_name,
                  "unit_credits" : unit_id.credits,
                  "average_first_attempt" : average_first,
                  "average_second_attempt" : average_second,
@@ -78,11 +76,10 @@ def get_grades(email_id):
                  "semester" : module_id.semester,
                  "module_credit" : module_id.credits,
                  "module_average" : module_average,
-                 "units" : units
+                 "units" : [unit]
                  }
         grade_list.append(grade_dict)
 
-    print(grade_list)
     return grade_list       #Die Noten aus der Datenbank werden in einem
                     #  Dictionary gespeichert und in einer Liste zurückgegeben"""
 def get_module():

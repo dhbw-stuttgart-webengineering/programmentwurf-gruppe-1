@@ -52,7 +52,6 @@ def refresh_data(request: HttpRequest) -> HttpResponse:
         dualis = Dualis(request.user.email, password)
 
         data = dualis.get_grades()
-        print(data)
 
         get_grades(request.user.email)
 
