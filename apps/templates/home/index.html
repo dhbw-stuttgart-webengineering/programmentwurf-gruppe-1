@@ -132,7 +132,7 @@ th, td {
     var compareChartData = grade.grade_distribution;
     var missChartData = [grade.failure_rate, grade.passing_rate];
 
-    var noten = [];
+    var noten = []; // Noten von 1.0 bis 5.0
     for (var i = 1; i <= 5; i += 0.1) {
       noten.push(parseFloat(i.toFixed(1)));
     }
@@ -148,8 +148,8 @@ th, td {
               borderColor: generateRandomColors(1)[0],
               borderWidth: 2,
               pointBackgroundColor: '#fff',
-              pointRadius: 6,
-              pointHoverRadius: 8,
+              pointRadius: 4,
+              pointHoverRadius: 6,
           }]
       },
       options: {
@@ -201,7 +201,7 @@ th, td {
           },
           title: {
             display: true,
-            text: "Prüfungsergebnisse",
+            text: "Durchfallquote - " + coursename,
           },
         },
       },

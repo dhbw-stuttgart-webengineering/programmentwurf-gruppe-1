@@ -27,6 +27,19 @@ def index(request: HttpRequest) -> HttpResponse:
     """
 
     own_grades = get_grades(request.user.email)
+
+    # Entferne Duplikate basierend auf dem Modulnamen
+    unique_modules = []
+    for module in own_grades:
+        module_name = module['module_name']
+        
+        # Überprüfe, ob das Modul bereits in unique_modules ist
+        if not any(existing_module['module_name'] == module_name for existing_module in unique_modules):
+            unique_modules.append(module)
+
+    # Aktualisiere own_grades mit den eindeutigen Modulen
+    own_grades = unique_modules
+
     for module in own_grades:
         for unit in module['units']:
             # Ersetze None-Werte durch 0
