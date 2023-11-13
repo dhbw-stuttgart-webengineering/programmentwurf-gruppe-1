@@ -23,25 +23,29 @@
       <div class="form-floating mb-3">
         {{ form.password }}
         <label for="password">Passwort</label>
-      </div>
+      </div>      
       
-      <div>
-          <button type="button" onclick="guest_login()"><span>Als Demo-Nutzer anmelden.</span></button>
-      </div>
-
       <div class="form-switch mb-3">
         {{ form.rememberme }}
         <label class="form-check-label" for="rememberme">Angemeldet bleiben</label>
       </div>
       
       <button
-        class="form-control btn btn-primary submit px-3"
+        class="form-control btn btn-primary submit px-3 mb-3"
         id="submit_login"
         type="submit"
         onclick="loading_login('submit_login', 'email', 'password', 'rememberme');"
-      >
+        >
         <span role="status">Anmelden</span>
       </button>
+
+      <button
+        class="form-control btn btn-secondary mb-3"
+        type="button"
+        onclick="guest_login()">
+        <span>Als Demo-Nutzer anmelden.</span>
+      </button>
+
     </form>
   </div>
 </div>
