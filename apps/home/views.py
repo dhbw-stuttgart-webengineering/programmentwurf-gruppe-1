@@ -1,12 +1,15 @@
 """Views for the home app"""
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
+from django.http import HttpResponse, HttpResponseRedirect, HttpRequest, JsonResponse
 from django.template import loader
 from django.urls import reverse
 from django.views.decorators.cache import cache_control
 from django.conf import settings
+
+from apps.data_endpoint.read_data import get_grades
 from ..utils.decorators import refresh_dualis
+import json
 
 
 @login_required(login_url="/login/")
@@ -21,13 +24,10 @@ def index(request: HttpRequest) -> HttpResponse:
     Returns:
         HttpResponse: HttpResponde Object
     """
-    # Beispiel für die Verwendung von eigenen Daten
-    own_grades = [
-        {'course': 'Mathematik', 'grade': 2.7},
-        {'course': 'Englisch', 'grade': 1.9},
-        {'course': 'Geschichte', 'grade': 3.3},
-        # ...
-    ]
+
+    own_grades = get_grades(request.user.email)
+    
+    print(json.dumps(own_grades,indent=4))
     context = {'own_grades': own_grades}
     return render(request, 'home/index.html', context)
 

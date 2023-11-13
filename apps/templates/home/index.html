@@ -15,21 +15,41 @@
       <thead>
         <tr>
           <th>Kurs</th>
-          <th>Note</th>
-          <th>Vergleich</th>
+          <th>Note (1. Versuch)</th>
+          <th>Note (2. Versuch)</th>
+          {% if grade.grade_first_attempt is not null %}
+            <th>Vergleich</th>
+          {% endif %}
+          
         </tr>
       </thead>
       <tbody>
-        {% for grade in own_grades %}
-        <tr>
-          <td>{{ grade.course }}</td>
-          <td>{{ grade.grade }}</td>
-          <td><button id= "compareButton" type="button"  onclick="compareCharts()">Vergleich</button></td>
-        </tr>
+        {% for module in own_grades %}
+          {% for grade in module.units %}
+          <tr>
+              <td>{{ grade.unit_name }}</td>
+              <td>
+                  {% if grade.grade_first_attempt is not null %}
+                    {{ grade.grade_first_attempt }}
+                  {% else %}
+                    N/A
+                  {% endif %}
+              </td>
+              <td>
+                  {% if grade.grade_second_attempt %}
+                      {{ grade.grade_second_attempt }}
+                  {% else %}
+                      N/A
+                  {% endif %}
+              </td>
+              {% if grade.grade_first_attempt is not null %}
+              <td><button class="compareButton" type="button"  onclick="compareCharts({{ grade|safe }})">Vergleich</button></td>
+              {% endif %}
+          </tr>
+          {% endfor %}
         {% endfor %}
       </tbody>
     </table>
-  {{cours}}
   </div>
   
   <div class="chart-box">
@@ -98,7 +118,8 @@ th, td {
 </style>
 
 <script>
-  function compareCharts() {
+  function compareCharts(grade) {
+    var coursename = grade.course;
     var compareChartCtx = removeAndCreateCanvas('comparechart');
     var missChartCtx = removeAndCreateCanvas('misschart');
 
@@ -113,7 +134,7 @@ th, td {
       data: {
         labels: ['Kurs A', 'Kurs B', 'Kurs C', 'Kurs D'],
         datasets: [{
-          label: 'Durchschnittsnoten',
+          label: 'Durchschnittsnoten - ' + coursename,
           data: compareChartData,
           backgroundColor: generateRandomColors(4),
           borderColor: 'rgba(255, 255, 255, 1)',
@@ -135,7 +156,7 @@ th, td {
           },
           title: {
             display: true,
-            text: 'Kursvergleich'
+            text: 'Kursvergleich - ' + coursename
           }
         }
       }
@@ -211,6 +232,7 @@ th, td {
   
     return newCanvas.getContext('2d');
   }
+
   </script>
 
 {% endblock content %}
