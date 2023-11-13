@@ -54,7 +54,7 @@ def calculate_total_average_weighted(email: str) -> float:
     for grade in grades:
         unit = Unit.objects.get(unit_id=grade.id_of_unit)
 
-        if "T3_1000" in unit.unit_id:
+        if "T3_1000" in str(unit.unit_id):
             continue
 
         if grade.grade_first_attempt is None:
@@ -79,17 +79,16 @@ def calculate_total_average(email: str) -> float:
     for grade in grades:
         unit = Unit.objects.get(unit_id=grade.id_of_unit)
 
-        if "T3_1000" in unit.unit_id:
+        if "T3_1000" in str(unit.unit_id):
             continue
 
         if grade.grade_first_attempt is None:
             continue
 
         if grade.grade_second_attempt:
-            total_grades += (float(grade.grade_second_attempt)
-                             * float(unit.credits))
+            total_grades += float(grade.grade_second_attempt)
         else:
-            total_grades += (float(grade.grade_first_attempt)
-                             * float(unit.credits))
-        n_grades = + 1
+            total_grades += float(grade.grade_first_attempt)
+        n_grades += 1
+
     return total_grades / n_grades
