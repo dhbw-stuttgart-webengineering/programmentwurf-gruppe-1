@@ -4,7 +4,7 @@ from django.utils import timezone
 from ..data_endpoint.views import loading_view
 
 
-def refresh_dualis(max_age=timedelta(minutes=1)):
+def refresh_dualis(max_age=timedelta(minutes=30)):
     """Returns View that refreshes dualis data if it is older than max_age.
 
     Args:
