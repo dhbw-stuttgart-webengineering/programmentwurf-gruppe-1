@@ -25,16 +25,16 @@
         <label for="password">Passwort</label>
       </div>
       
-      <div class="form-switch my-3">
+      <div class="form-switch mb-3">
         {{ form.rememberme }}
-        <label class="form-check-label" for="remember_me">Angemeldet bleiben</label>
+        <label class="form-check-label" for="rememberme">Angemeldet bleiben</label>
       </div>
       
       <button
         class="form-control btn btn-primary submit px-3"
         id="submit_login"
         type="submit"
-        onclick="loading_login('submit_login', 'email', 'password', 'remember_me');"
+        onclick="loading_login('submit_login', 'email', 'password', 'rememberme');"
       >
         <span role="status">Anmelden</span>
       </button>

@@ -22,7 +22,7 @@ class LoginForm(forms.Form):
                                     initial=False,
                                     widget=forms.CheckboxInput(
                                         attrs={'class': 'form-check-input',
-                                               'id': 'remember_me',
+                                               'id': 'rememberme',
                                                'type': 'checkbox',
                                                'role': 'switch'}
                                     ),
