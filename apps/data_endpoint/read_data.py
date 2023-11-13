@@ -10,29 +10,82 @@ django.setup()
 def get_grades(email_id):
     """get the grades from the database"""
     matching_id = Grade.objects.filter(email_id=email_id)
-    grade_dict = {}
     grade_list = []
+    proof_vorhanden = False
+    index_of_element = 0
+    grade_dict = {}
 
     for eintrag in matching_id:
         unit_id = Unit.objects.get(unit_id=eintrag.id_of_unit)
         module_id = Module.objects.get(module_id=unit_id.id_of_module)
-        grade_dict["module_abk"] = module_id.module_abk
-        grade_dict["module_name"] = module_id.module_name
-        grade_dict["semester"] = module_id.semester
-        grade_dict["module_credit"] = module_id.credits
-        grade_dict["module_average"] = module_id.average
 
-        grade_dict["unit_id"] = unit_id
-        grade_dict["unit_name"] = unit_id.unit_name
-        grade_dict["unit_credits"]= unit_id.credits
-        grade_dict["average_first_attempt"]= unit_id.average_first_attempt
-        grade_dict["average_second_attempt"]= unit_id.average_second_attempt
+        for list_eintrag in grade_list:
+            if list_eintrag["module_id"] == str(module_id):
+                proof_vorhanden = True
+                index_of_element = grade_list.index(list_eintrag)
+            else:
+                proof_vorhanden = False
 
-        grade_dict["grade_first_attempt"]= eintrag.grade_first_attempt
-        grade_dict["note_zweitversuch"]= eintrag.grade_second_attempt
-
-        for key, value in grade_dict.items():
-            grade_list.append((key, value))
+        if proof_vorhanden:
+            unit_dict =\
+                {"unit_name" : unit_id.unit_name,
+                 "unit_credits" : unit_id.credits,
+                 "average_first_attempt" : float(unit_id.average_first_attempt) \
+                     if unit_id.average_first_attempt else None,
+                 "average_second_attempt" : float(unit_id.average_second_attempt) \
+                     if unit_id.average_second_attempt else None,
+                 "grade_first_attempt" : float(eintrag.grade_first_attempt) \
+                     if eintrag.grade_first_attempt else None,
+                 "grade_second_attempt" : float(eintrag.grade_second_attempt) \
+                     if eintrag.grade_second_attempt else None
+                }
+            grade_list[index_of_element]["units"].append(unit_dict)
+        else:
+            unit = \
+                {"unit_name" : unit_id.unit_name,
+                 "unit_credits" : unit_id.credits,
+                 "average_first_attempt" : float(unit_id.average_first_attempt) \
+                     if unit_id.average_first_attempt else None,
+                 "average_second_attempt" : float(unit_id.average_second_attempt) \
+                     if unit_id.average_second_attempt else None,
+                 "grade_first_attempt" : float(eintrag.grade_first_attempt) \
+                     if eintrag.grade_first_attempt else None,
+                 "grade_second_attempt" : float(eintrag.grade_second_attempt) \
+                     if eintrag.grade_second_attempt else None
+                }
+            grade_dict = \
+                {"module_id" : module_id.module_id,
+                 "module_abk" : module_id.module_abk,
+                 "module_name" : module_id.module_name,
+                 "semester" : module_id.semester,
+                 "module_credit" : module_id.credits,
+                 "module_average" : float(module_id.average) if module_id.average else None,
+                 "units" : [unit]
+                 }
+        grade_list.append(grade_dict)
 
     return grade_list       #Die Noten aus der Datenbank werden in einem
+                    #  Dictionary gespeichert und in einer Liste zurückgegeben"""
+def get_module():
+    """function to get the modules from the database"""
+    module_list = []
+    module_id = Module.objects.all()
+
+    for eintrag in module_id:
+        try:
+            average = float(eintrag.average)
+        except TypeError:
+            average = eintrag.average
+
+        module_dict =\
+            {"module_abk" : eintrag.module_abk,
+             "module_name" : eintrag.module_name,
+             "semester" : eintrag.semester,
+             "module_credit" : eintrag.credits,
+             "module_average" : average
+            }
+        module_list.append(module_dict)
+
+
+    return module_list       #Die Module aus der Datenbank werden in einem
                             #  Dictionary gespeichert und in einer Liste zurückgegeben"""
