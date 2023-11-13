@@ -129,39 +129,51 @@ th, td {
     var compareChartCtx = document.getElementById('comparechart').getContext('2d');
     var missChartCtx = document.getElementById('misschart').getContext('2d');
 
-    var compareChartData = generateRandomChartData(grade);
+    var compareChartData = grade.grade_distribution;
     var missChartData = [grade.failure_rate, grade.passing_rate];
 
-    var compareChart = new Chart(compareChartCtx, {
-      type: 'bar',
+    var noten = [];
+    for (var i = 1; i <= 5; i += 0.1) {
+      noten.push(parseFloat(i.toFixed(1)));
+    }
+
+    var lineChart = new Chart(compareChartCtx, {
+      type: 'line',
       data: {
-        labels: ['Dein Kurs', 'Kurs B', 'Kurs C', 'Kurs D'],
-        datasets: [{
-          label: 'Durchschnittsnoten - ' + coursename,
-          data: compareChartData,
-          backgroundColor: generateRandomColors(4),
-          borderColor: 'rgba(255, 255, 255, 1)',
-          borderWidth: 1
-        }]
+          labels: noten.map(String),  // Konvertiere Noten in Zeichenketten für die Anzeige
+          datasets: [{
+              label: 'Anzahl der Schüler',
+              data: compareChartData,  // Annahme: compareChartData enthält die Anzahl der Schüler für jede Note
+              fill: false,
+              borderColor: generateRandomColors(1)[0],
+              borderWidth: 2,
+              pointBackgroundColor: '#fff',
+              pointRadius: 6,
+              pointHoverRadius: 8,
+          }]
       },
       options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: false,
-            min: 1,
-            max: 6,
-          }
-        },
-        plugins: {
-          legend: {
-            display: false
+          responsive: true,
+          scales: {
+              y: {
+                  beginAtZero: true,
+                  stepSize: 1,  // Schrittgröße auf der Y-Achse
+              }
+              
           },
-          title: {
-            display: true,
-            text: 'Kursvergleich - ' + coursename
+          plugins: {
+              legend: {
+                  display: false
+              },
+              title: {
+                  display: true,
+                  text: 'Notenverteilung - ' + coursename
+              },
+              tooltip: {
+                  mode: 'index',
+                  intersect: false,
+              }
           }
-        }
       }
     });
 
