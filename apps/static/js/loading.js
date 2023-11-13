@@ -25,3 +25,9 @@ function loading_login(button, email, password, rememberme) {
       .setAttribute("class", "form-control is-invalid");
   }
 }
+
+
+function guest_login() {
+  document.getElementById("email").value = "example@lehre.dhbw-stuttgart.de"
+  document.getElementById("password").value = "You found the example password!"
+}
