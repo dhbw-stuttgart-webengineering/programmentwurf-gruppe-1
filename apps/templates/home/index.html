@@ -14,50 +14,64 @@
     <table aria-describedby="grades-summary">
       <thead>
         <tr>
-          <th>Kurs</th>
-          <th>Note (1. Versuch)</th>
-          <th>Note (2. Versuch)</th>
-          {% if grade.grade_first_attempt %}
-            <th>Vergleich</th>
-          {% endif %}
-          
+          <th><h4>Kurs:</h4></th>
         </tr>
       </thead>
       <tbody>
         {% for module in own_grades %}
-        <tr class="module-row" data-module-id="{{ module.module_id }}">
-          <td><b>{{ module.module_name }}</b></td>
+        <tr>
+          <td>
+            <a href="#module{{ module.module_id }}" class="module-name" data-bs-toggle="collapse">
+              <b>{{ module.module_name }}</b>
+            </a>
+          </td>
         </tr>
-          {% for grade in module.units %}
-          <tr class="unit-row" data-module-id="{{ module.module_id }}">
-              <td>{{ grade.unit_name }}</td>
-              <td>
-                  {% if grade.grade_first_attempt %}
-                    {{ grade.grade_first_attempt }}
-                  {% else %}
-                    N/A
-                  {% endif %}
-              </td>
-              <td>
-                  {% if grade.grade_second_attempt %}
-                      {{ grade.grade_second_attempt }}
-                  {% else %}
-                      N/A
-                  {% endif %}
-              </td>
-              {% if grade.grade_first_attempt %}
-              <td><button class="compareButton" type="button"  onclick="compareCharts({{ grade|safe }})">Vergleich</button></td>
-              {% endif %}
-          {% endfor %}
-          <tr>
+        <tr>
+         {% for grade in module.units %} 
+          <td colspan="4" class="collapse" id="module{{ module.module_id }}">
+            <div class="row">
+              <div class="col">
+                  <div class="row">
+                    <div class="col"><b>Modul</b><br><br>{{ grade.unit_name }}</div>
+                    <div class="col">
+                      <b>1. Versuch</b> <br><br>
+                      {% if grade.grade_first_attempt %}
+                        {{ grade.grade_first_attempt }}
+                      {% else %}
+                        N/A
+                      {% endif %}
+                    </div>
+                    <div class="col">
+                      <b>2. Versuch</b> <br><br>
+                      {% if grade.grade_second_attempt %}
+                        {{ grade.grade_second_attempt }}
+                      {% else %}
+                        N/A
+                      {% endif %}
+                    </div>
+                    <div class="col">
+                      <b>Vergleich</b> <br><br>
+                      {% if grade.grade_first_attempt %}
+                        <button class="compareButton" type="button" onclick="compareCharts({{ grade|safe }})">Vergleich</button>
+                      {% endif %}
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
             {% if module.total_average %}
-            <td><b>Gesamtdurchschnitt: {{ module.total_average }}</b></td>
+              <b>Gesamtdurchschnitt: {{ module.total_average }}</b>
             {% endif %}
-          </tr>
+          </td>
+        </tr>
         {% endfor %}
-        
       </tbody>
     </table>
+        
   </div>
   
   <div class="chart-box">
@@ -73,10 +87,12 @@
   </div>
 </main>
 
+
+
 <style>
   .grid-container {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Zwei Spalten */
+    grid-template-columns: 1.5fr 1fr; /* Zwei Spalten */
     grid-template-rows: 1fr 1fr; /* Automatische Höhe */
     gap: 20px; /* Abstand zwischen den Spalten */
   }
@@ -85,7 +101,7 @@
     border: 2px solid #ccc;
     border-radius: 10px;
     padding: 10px;
-    max-width: 500px;
+    max-width: 700px;
     width: 100%; /* Jede Box nimmt die gesamte verfügbare Breite */
     
   }
@@ -121,9 +137,13 @@ th, td {
     text-align: left;
     padding: 8px;
 }
+.module-name {
+  color: #000;
+  text-decoration: none;
+}
 </style>
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 <script>
   function compareCharts(grade) {
     var coursename = grade.unit_name;
@@ -246,17 +266,20 @@ th, td {
     return newCanvas.getContext('2d');
   }
 
-  $(document).ready(function(){
-    $(".unit-row, .average-row").hide(); // Verstecke alle Unit- und Durchschnittszeilen zu Beginn
+  document.addEventListener('DOMContentLoaded', function () {
+    var moduleNames = document.querySelectorAll('.module-name');
   
-    $(".module-row").click(function(){
-      var moduleId = $(this).data("module-id");
+    moduleNames.forEach(function (moduleName) {
+      moduleName.addEventListener('click', function () {
+        var moduleId = moduleName.getAttribute('href').substring(1);
+        var moduleRow = document.getElementById(moduleId);
   
-      // Verstecke alle Unit- und Durchschnittszeilen
-      $(".unit-row, .average-row").hide();
-  
-      // Zeige nur die Zeilen des ausgewählten Moduls
-      $(".unit-row[data-module-id='" + moduleId + "'], .average-row[data-module-id='" + moduleId + "']").show();
+        if (moduleRow.classList.contains('show')) {
+          moduleRow.classList.remove('show');
+        } else {
+          moduleRow.classList.add('show');
+        }
+      });
     });
   });
 
