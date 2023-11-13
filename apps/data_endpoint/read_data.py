@@ -18,30 +18,6 @@ def get_grades(email_id):
     for eintrag in matching_id:
         unit_id = Unit.objects.get(unit_id=eintrag.id_of_unit)
         module_id = Module.objects.get(module_id=unit_id.id_of_module)
-        try:
-            average_first= float(unit_id.average_first_attempt)
-        except TypeError:
-            average_first = unit_id.average_first_attempt
-
-        try:
-            average_second = float(unit_id.average_second_attempt)
-        except TypeError:
-            average_second = unit_id.average_second_attempt
-
-        try:
-            grade_first = float(eintrag.grade_first_attempt)
-        except TypeError:
-            grade_first = eintrag.grade_first_attempt
-
-        try:
-            grade_second = float(eintrag.grade_second_attempt)
-        except TypeError:
-            grade_second = eintrag.grade_second_attempt
-
-        try:
-            module_average = float(module_id.average)
-        except TypeError:
-            module_average = module_id.average
 
         for list_eintrag in grade_list:
             if list_eintrag["module_id"] == str(module_id):
@@ -54,20 +30,20 @@ def get_grades(email_id):
             unit_dict =\
                 {"unit_name" : unit_id.unit_name,
                  "unit_credits" : unit_id.credits,
-                 "average_first_attempt" : average_first,
-                 "average_second_attempt" : average_second,
-                 "grade_first_attempt" : grade_first,
-                 "grade_second_attempt" : grade_second
+                 "average_first_attempt" : float(unit_id.average_first_attempt) if unit_id.average_first_attempt else None,
+                 "average_second_attempt" : float(unit_id.average_second_attempt) if unit_id.average_second_attempt else None,
+                 "grade_first_attempt" : float(eintrag.grade_first_attempt) if eintrag.grade_first_attempt else None,
+                 "grade_second_attempt" : float(eintrag.grade_second_attempt) if eintrag.grade_second_attempt else None
                 }
             grade_list[index_of_element]["units"].append(unit_dict)
         else:
             unit = \
                 {"unit_name" : unit_id.unit_name,
                  "unit_credits" : unit_id.credits,
-                 "average_first_attempt" : average_first,
-                 "average_second_attempt" : average_second,
-                 "grade_first_attempt" : grade_first,
-                 "grade_second_attempt" : grade_second
+                 "average_first_attempt" : float(unit_id.average_first_attempt) if unit_id.average_first_attempt else None,
+                 "average_second_attempt" : float(unit_id.average_second_attempt) if unit_id.average_second_attempt else None,
+                 "grade_first_attempt" : float(eintrag.grade_first_attempt) if eintrag.grade_first_attempt else None,
+                 "grade_second_attempt" : float(eintrag.grade_second_attempt) if eintrag.grade_second_attempt else None
                 }
             grade_dict = \
                 {"module_id" : module_id.module_id,
@@ -75,7 +51,7 @@ def get_grades(email_id):
                  "module_name" : module_id.module_name,
                  "semester" : module_id.semester,
                  "module_credit" : module_id.credits,
-                 "module_average" : module_average,
+                 "module_average" : float(module_id.average) if module_id.average else None,
                  "units" : [unit]
                  }
         grade_list.append(grade_dict)
