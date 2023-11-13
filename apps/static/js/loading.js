@@ -6,7 +6,6 @@ function loading_login(button, email, password, remember_me) {
       "class",
       "spinner-border spinner-border-sm aria-hidden='true'"
     );
-    spinner.setAttribute("aria-hidden", "true");
     document.getElementById(button).appendChild(spinner);
     document.getElementById(remember_me).setAttribute("disabled", "disabled");
     document
