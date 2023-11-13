@@ -21,7 +21,10 @@ class LoginForm(forms.Form):
     rememberme = forms.BooleanField(required=False,
                                     initial=False,
                                     widget=forms.CheckboxInput(
-                                        attrs={'class': 'form-check-input'}
+                                        attrs={'class': 'form-check-input',
+                                               'id': 'rememberme',
+                                               'type': 'checkbox',
+                                               'role': 'switch'}
                                     ),
                                     )
     password = forms.CharField(

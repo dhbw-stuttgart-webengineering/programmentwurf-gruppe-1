@@ -10,6 +10,7 @@ django.setup()
 def get_grades(email_id):
     """get the grades from the database"""
     matching_id = Grade.objects.filter(email_id=email_id)
+
     grade_list = []
     proof_vorhanden = False
     index_of_element = 0
@@ -18,6 +19,7 @@ def get_grades(email_id):
     for eintrag in matching_id:
         unit_id = Unit.objects.get(unit_id=eintrag.id_of_unit)
         module_id = Module.objects.get(module_id=unit_id.id_of_module)
+
         try:
             average_first= float(unit_id.average_first_attempt)
         except TypeError:
@@ -107,4 +109,5 @@ def get_module():
 
 
     return module_list       #Die Module aus der Datenbank werden in einem
+
                             #  Dictionary gespeichert und in einer Liste zurückgegeben"""
