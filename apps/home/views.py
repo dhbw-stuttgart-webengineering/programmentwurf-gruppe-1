@@ -29,10 +29,6 @@ def index(request: HttpRequest) -> HttpResponse:
         # ...
     ]
 
-    from ..data_endpoint.calculate_average import calculate_total_average_weighted
-
-    print(calculate_total_average_weighted(request.user.email))
-
     context = {'own_grades': own_grades}
     return render(request, 'home/index.html', context)
 
