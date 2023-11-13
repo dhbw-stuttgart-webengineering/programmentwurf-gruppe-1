@@ -22,7 +22,7 @@ def get_grade_distribution(unit_id: str) -> List[float]:
         if grade.grade_first_attempt:
             grade_distribution.append(float(grade.grade_first_attempt))
 
-    return grade_distribution
+    return sorted(grade_distribution)
 
 
 def get_grade_distribution_as_dict(unit_id: str) -> dict:
