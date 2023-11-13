@@ -21,10 +21,15 @@ def index(request: HttpRequest) -> HttpResponse:
     Returns:
         HttpResponse: HttpResponde Object
     """
-    context = {'segment': 'index', }
-
-    return render(request, "home/index.html", context)
-
+    # Beispiel für die Verwendung von eigenen Daten
+    own_grades = [
+        {'course': 'Mathematik', 'grade': 2.7},
+        {'course': 'Englisch', 'grade': 1.9},
+        {'course': 'Geschichte', 'grade': 3.3},
+        # ...
+    ]
+    context = {'own_grades': own_grades}
+    return render(request, 'home/index.html', context)
 
 def sitemap(_: HttpRequest) -> HttpResponse:
     """Sitemap View
