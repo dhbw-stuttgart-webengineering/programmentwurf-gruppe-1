@@ -25,11 +25,11 @@
       </thead>
       <tbody>
         {% for module in own_grades %}
-        <tr>
+        <tr class="module-row" data-module-id="{{ module.module_id }}">
           <td><b>{{ module.module_name }}</b></td>
         </tr>
           {% for grade in module.units %}
-          <tr>
+          <tr class="unit-row" data-module-id="{{ module.module_id }}">
               <td>{{ grade.unit_name }}</td>
               <td>
                   {% if grade.grade_first_attempt %}
@@ -48,9 +48,14 @@
               {% if grade.grade_first_attempt %}
               <td><button class="compareButton" type="button"  onclick="compareCharts({{ grade|safe }})">Vergleich</button></td>
               {% endif %}
-          </tr>
           {% endfor %}
+          <tr class="average-row" data-module-id="{{ module.module_id }}">
+            {% if module.total_average %}
+            <td><b>Gesamtdurchschnitt: {{ module.total_average }}</b></td>
+            {% endif %}
+          </tr>
         {% endfor %}
+        
       </tbody>
     </table>
   </div>
@@ -62,7 +67,6 @@
   </div>
 
   <div class="chart-box">
-    <br/>
     <div class="miss">
       <canvas id="misschart"></canvas>
     </div>
@@ -117,9 +121,9 @@ th, td {
     text-align: left;
     padding: 8px;
 }
-
 </style>
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
   function compareCharts(grade) {
     var coursename = grade.unit_name;
@@ -217,9 +221,7 @@ th, td {
     }
     return colors;
   }
-  function generateRandomChartData(grade) {
-    return [grade.average_first_attempt, Math.random() * 5 + 1, Math.random() * 5 + 1, Math.random() * 5 + 1];
-  }
+  
 
   function removeAndCreateCanvas(chartId) {
     var oldCanvas = document.getElementById(chartId);
@@ -243,6 +245,20 @@ th, td {
   
     return newCanvas.getContext('2d');
   }
+
+  $(document).ready(function(){
+    $(".unit-row, .average-row").hide(); // Verstecke alle Unit- und Durchschnittszeilen zu Beginn
+  
+    $(".module-row").click(function(){
+      var moduleId = $(this).data("module-id");
+  
+      // Verstecke alle Unit- und Durchschnittszeilen
+      $(".unit-row, .average-row").hide();
+  
+      // Zeige nur die Zeilen des ausgewählten Moduls
+      $(".unit-row[data-module-id='" + moduleId + "'], .average-row[data-module-id='" + moduleId + "']").show();
+    });
+  });
 
   </script>
 
