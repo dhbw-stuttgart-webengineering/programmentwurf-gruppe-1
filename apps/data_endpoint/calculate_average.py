@@ -46,6 +46,14 @@ def calculate_average_second_attempt():
 
 
 def calculate_total_average_weighted(email: str) -> float:
+    """Function to calculate the total average weighted
+
+    Args:
+        email (str): Students Email
+
+    Returns:
+        float: Total average weighted
+    """
     grades = Grade.objects.filter(email_id=email)
 
     total_grades = 0.0
@@ -71,6 +79,14 @@ def calculate_total_average_weighted(email: str) -> float:
 
 
 def calculate_total_average(email: str) -> float:
+    """Function to calculate the total average
+
+    Args:
+        email (str): Students Email
+
+    Returns:
+        float: Total average
+    """
     grades = Grade.objects.filter(email_id=email)
 
     total_grades = 0.0
