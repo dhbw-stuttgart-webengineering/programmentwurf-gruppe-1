@@ -26,7 +26,13 @@ def index(request: HttpRequest) -> HttpResponse:
     """
 
     own_grades = get_grades(request.user.email)
-    
+    for module in own_grades:
+        for grade in module['units']:
+            # Ersetze None-Werte durch 0
+            for key in grade:
+                if grade[key] is None:
+                    grade[key] = 0
+
     print(json.dumps(own_grades,indent=4))
     context = {'own_grades': own_grades}
     return render(request, 'home/index.html', context)
