@@ -1,6 +1,5 @@
-function loading_login(button, email, password) {
+function loading_login(button, email, password, remember_me) {
   if (document.getElementById("login_form").checkValidity()) {
-    console.log("valid");
     document.getElementById(button).setAttribute("disabled", "disabled");
     let spinner = document.createElement("span");
     spinner.setAttribute(
@@ -9,6 +8,7 @@ function loading_login(button, email, password) {
     );
     spinner.setAttribute("aria-hidden", "true");
     document.getElementById(button).appendChild(spinner);
+    document.getElementById(remember_me).setAttribute("disabled", "disabled");
     document
       .getElementById(email)
       .setAttribute("class", "form-control is-valid");
