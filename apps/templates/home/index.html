@@ -49,7 +49,7 @@
               <td><button class="compareButton" type="button"  onclick="compareCharts({{ grade|safe }})">Vergleich</button></td>
               {% endif %}
           {% endfor %}
-          <tr class="average-row" data-module-id="{{ module.module_id }}">
+          <tr>
             {% if module.total_average %}
             <td><b>Gesamtdurchschnitt: {{ module.total_average }}</b></td>
             {% endif %}
