@@ -25,6 +25,9 @@
       </thead>
       <tbody>
         {% for module in own_grades %}
+        <tr>
+          <td><b>{{ module.module_name }}</b></td>
+        </tr>
           {% for grade in module.units %}
           <tr>
               <td>{{ grade.unit_name }}</td>
@@ -127,7 +130,7 @@ th, td {
     var missChartCtx = document.getElementById('misschart').getContext('2d');
 
     var compareChartData = generateRandomChartData(grade);
-    var missChartData = generateRandomMissChartData();
+    var missChartData = [grade.failure_rate, grade.passing_rate];
 
     var compareChart = new Chart(compareChartCtx, {
       type: 'bar',
@@ -204,10 +207,6 @@ th, td {
   }
   function generateRandomChartData(grade) {
     return [grade.average_first_attempt, Math.random() * 5 + 1, Math.random() * 5 + 1, Math.random() * 5 + 1];
-  }
-
-  function generateRandomMissChartData() {
-    return [Math.random(), Math.random()];
   }
 
   function removeAndCreateCanvas(chartId) {

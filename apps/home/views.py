@@ -6,7 +6,8 @@ from django.template import loader
 from django.urls import reverse
 from django.views.decorators.cache import cache_control
 from django.conf import settings
-
+from apps.data_endpoint.utils.grade_distribution import get_grade_distribution_as_dict
+from apps.data_endpoint.utils.failure_rate import get_failure_rate_first_attempt, get_passing_rate_first_attempt
 from apps.data_endpoint.read_data import get_grades
 from ..utils.decorators import refresh_dualis
 import json
@@ -27,11 +28,17 @@ def index(request: HttpRequest) -> HttpResponse:
 
     own_grades = get_grades(request.user.email)
     for module in own_grades:
-        for grade in module['units']:
+        for unit in module['units']:
             # Ersetze None-Werte durch 0
-            for key in grade:
-                if grade[key] is None:
-                    grade[key] = 0
+            for key in unit:
+                if unit[key] is None:
+                    unit[key] = 0
+            # Append grade distribution
+            unit['grade_distribution'] = get_grade_distribution_as_dict(unit['unit_id'])
+            # Append failure rate
+            unit['failure_rate'] = get_failure_rate_first_attempt(unit['unit_id'])
+            # Append passing rate
+            unit['passing_rate'] = get_passing_rate_first_attempt(unit['unit_id'])
 
     print(json.dumps(own_grades,indent=4))
     context = {'own_grades': own_grades}

@@ -18,12 +18,14 @@ def get_failure_rate_first_attempt(unit_id: str) -> float:
 
     for grade in grades:
         if grade.grade_first_attempt:
-            if float(grade.grade_first_attempt) >= 4.0:
+            if float(grade.grade_first_attempt) > 4.0:
                 n_failed += 1
             else:
                 n_passed += 1
-
-    return float(n_failed) / (n_passed + n_failed)
+    if n_passed + n_failed == 0:
+        return 0
+    else:
+        return float(n_failed) / (n_passed + n_failed)
 
 
 def get_passing_rate_first_attempt(unit_id: str) -> float:
