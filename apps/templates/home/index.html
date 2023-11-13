@@ -31,7 +31,7 @@
     </table>
   {{cours}}
   </div>
-
+  
   <div class="chart-box">
     <div class="compare">
       <canvas id="comparechart"></canvas>
@@ -39,6 +39,7 @@
   </div>
 
   <div class="chart-box">
+    <br/>
     <div class="miss">
       <canvas id="misschart"></canvas>
     </div>
@@ -97,11 +98,9 @@ th, td {
 </style>
 
 <script>
-  
-
   function compareCharts() {
-    var compareChartCtx = removeAndCreateCanvas('comparechart',0);
-    var missChartCtx = removeAndCreateCanvas('misschart',1);
+    var compareChartCtx = removeAndCreateCanvas('comparechart');
+    var missChartCtx = removeAndCreateCanvas('misschart');
 
     var compareChartCtx = document.getElementById('comparechart').getContext('2d');
     var missChartCtx = document.getElementById('misschart').getContext('2d');
@@ -190,7 +189,7 @@ th, td {
     return [Math.random(), Math.random()];
   }
 
-  function removeAndCreateCanvas(chartId, index) {
+  function removeAndCreateCanvas(chartId) {
     var oldCanvas = document.getElementById(chartId);
   
     if (oldCanvas) {
@@ -203,7 +202,7 @@ th, td {
     newCanvas.id = chartId;
     
     // Dem gewünschten Container hinzufügen
-    if (index == 0) {
+    if (chartId == 'comparechart') {
       var container = document.querySelector('.compare');  // Wähle comparechart aus
     } else {
       var container = document.querySelector('.miss');  // Wähle misschart aus
