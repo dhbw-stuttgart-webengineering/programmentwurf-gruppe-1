@@ -1,143 +1,157 @@
 {% extends "layouts/base-fullscreen.html" %} 
-{% block title %} Home {%endblock title %} 
+{% block title %} Home {%endblock title %}
+
 {% block content %}
 
-<main class="grid-container">
-  <div class="grades">
+<div class="container">
+  <div class="row">
     {% if request.user.is_authenticated %}
-    <p>Willkommen, {{ request.user.name }}!</p>
+      <p>Willkommen, {{ request.user.name }}!</p>
     {% else %}
-    <p>Du bist nicht eingeloggt!</p>
-    {% endif %} 
-  
-    <h2>Eigene Noten</h2>
-    <table aria-describedby="grades-summary">
-      <thead>
-        <tr>
-          <th>Kurs</th>
-          <th>Note</th>
-          <th>Vergleich</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for grade in own_grades %}
-        <tr>
-          <td>{{ grade.course }}</td>
-          <td>{{ grade.grade }}</td>
-          <td><button id= "compareButton" type="button"  onclick="compareCharts()">Vergleich</button></td>
-        </tr>
+      <p>Du bist nicht eingeloggt!</p>
+    {% endif %}
+  </div>
+  <div class="row">
+    <div class="col">
+      <h3 class="my-3">Eigene Noten</h3>
+      
+      <div class="accordion" id="accordion_grades">
+        {% for module in own_grades %}
+          {% if not module.total_average %}
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#entry{{ forloop.counter0 }}" aria-controls="entry{{ forloop.counter0 }}">
+                  {{ module.module_name }}
+                </button>
+              </h2>
+              <div id="entry{{ forloop.counter0 }}" class="accordion-collapse collapse" data-bs-parent="#accordion_grades">
+                <div class="accordion-body">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col">
+                        <strong>Modul</strong>
+                      </div>
+                      <div class="col">
+                        <strong>1. Versuch</strong>
+                      </div>
+                      <div class="col">
+                        <strong>2. Versuch</strong>
+                      </div>
+                    </div>
+                    {% for grade in module.units %}
+                      <div class="row">
+                        <div class="col">
+                          {{ grade.unit_name }}
+                        </div>
+                        <div class="col">
+                          {% if grade.grade_first_attempt %}
+                            {{ grade.grade_first_attempt }}
+                          {% else %}
+                            N/A
+                          {% endif %}
+                        </div>
+                        <div class="col">
+                          {% if grade.grade_second_attempt %}
+                            {{ grade.grade_second_attempt }}
+                          {% else %}
+                            N/A
+                          {% endif %}
+                        </div>
+                      </div>
+                      <div class="row justify-content-center my-3">
+                        {% if grade.grade_first_attempt %}
+                          <button class="btn btn-outline-primary" type="button" onclick="compareCharts({{ grade|safe }});">Vergleich</button>
+                        {% else %}
+                          Vergleich nicht möglich
+                        {% endif %}
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
         {% endfor %}
-      </tbody>
-    </table>
-  {{cours}}
-  </div>
-  
-  <div class="chart-box">
-    <div class="compare">
-      <canvas id="comparechart"></canvas>
+      </div>
+      {% for module in own_grades %}
+        {% if module.total_average %}
+          <div class="my-3">
+            <p><b>Gesamtdurchschnitt: {{ module.total_average|floatformat:3 }}</b></p>
+          </div>
+        {% endif %}
+      {% endfor %}
     </div>
+    <div id="comparison" class="col">
+      <h3 class="my-3">Vergleiche</h3>
+      <div class="border border-2 border-secondary rounded mb-3 p-3">
+        <div class="compare">
+          <canvas id="comparechart"></canvas>
+        </div>
+      </div>
+      <div class="border border-2 border-secondary rounded mb-3 p-3">
+        <div class="miss">
+          <canvas id="misschart"></canvas>
+        </div>
+      </div>
   </div>
+</div>
+{% endblock content %}
 
-  <div class="chart-box">
-    <br/>
-    <div class="miss">
-      <canvas id="misschart"></canvas>
-    </div>
-  </div>
-</main>
-
-<style>
-  .grid-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Zwei Spalten */
-    grid-template-rows: 1fr 1fr; /* Automatische Höhe */
-    gap: 20px; /* Abstand zwischen den Spalten */
-  }
-
-  .grades, .chart-box {
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    padding: 10px;
-    max-width: 500px;
-    width: 100%; /* Jede Box nimmt die gesamte verfügbare Breite */
-    
-  }
-
-  .grades {
-    grid-column: 1 / 2; /* Position in erster Spalte */
-    grid-row: 1 / 3; /* Position in erster Zeile */
-  }
-
-  .chart-box {
-    grid-column: 2 / 3; /* Position in zweiter Spalte */
-    margin-bottom: 20px; /* Abstand zwischen den Diagrammen */
-    display: flex; /* Elemente als Flexbox behandeln */
-    justify-content: center; /* Inhalt horizontal zentrieren */
-    align-items: center; /* Inhalt vertikal zentrieren */
-    
-  }
-  #comparechart{
-    grid-row: 1 / 2; /* Position in erster Zeile */
-   
-  }
-
-  #misschart {
-    grid-row: 2 / 3; /* Position in zweiter Zeile */
-  }
-
-  table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-th, td {
-    text-align: left;
-    padding: 8px;
-}
-
-</style>
-
+{% block javascript %}
 <script>
-  function compareCharts() {
+  function compareCharts(grade) {
+    var coursename = grade.unit_name;
     var compareChartCtx = removeAndCreateCanvas('comparechart');
     var missChartCtx = removeAndCreateCanvas('misschart');
 
     var compareChartCtx = document.getElementById('comparechart').getContext('2d');
     var missChartCtx = document.getElementById('misschart').getContext('2d');
 
-    var compareChartData = generateRandomChartData();
-    var missChartData = generateRandomMissChartData();
+    var compareChartData = grade.grade_distribution;
+    var missChartData = [grade.failure_rate, grade.passing_rate];
 
-    var compareChart = new Chart(compareChartCtx, {
+    var noten = []; // Noten von 1.0 bis 5.0
+    for (var i = 1; i <= 5; i += 0.1) {
+      noten.push(parseFloat(i.toFixed(1)));
+    }
+
+    var lineChart = new Chart(compareChartCtx, {
       type: 'bar',
       data: {
-        labels: ['Kurs A', 'Kurs B', 'Kurs C', 'Kurs D'],
-        datasets: [{
-          label: 'Durchschnittsnoten',
-          data: compareChartData,
-          backgroundColor: generateRandomColors(4),
-          borderColor: 'rgba(255, 255, 255, 1)',
-          borderWidth: 1
-        }]
+          labels: noten.map(String),  // Konvertiere Noten in Zeichenketten für die Anzeige
+          datasets: [{
+              label: 'Anzahl der Schüler',
+              data: compareChartData,  // Annahme: compareChartData enthält die Anzahl der Schüler für jede Note
+              fill: false,
+              borderColor: generateRandomColors(1)[0],
+              borderWidth: 2,
+              pointBackgroundColor: '#fff',
+              pointRadius: 4,
+              pointHoverRadius: 6,
+          }]
       },
       options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: false,
-            min: 1,
-            max: 6,
-          }
-        },
-        plugins: {
-          legend: {
-            display: false
+          responsive: true,
+          scales: {
+              y: {
+                  beginAtZero: true,
+                  stepSize: 1,  // Schrittgröße auf der Y-Achse
+              }
+              
           },
-          title: {
-            display: true,
-            text: 'Kursvergleich'
+          plugins: {
+              legend: {
+                  display: false
+              },
+              title: {
+                  display: true,
+                  text: 'Notenverteilung - ' + coursename
+              },
+              tooltip: {
+                  mode: 'index',
+                  intersect: false,
+              }
           }
-        }
       }
     });
 
@@ -165,12 +179,12 @@ th, td {
           },
           title: {
             display: true,
-            text: "Prüfungsergebnisse",
+            text: "Durchfallquote - " + coursename,
           },
         },
       },
     });
-    
+    document.getElementById('comparison').scrollIntoView({behavior: 'smooth'});
   }
   
   function generateRandomColors(numColors) {
@@ -181,13 +195,7 @@ th, td {
     }
     return colors;
   }
-  function generateRandomChartData() {
-    return [Math.random() * 5 + 1, Math.random() * 5 + 1, Math.random() * 5 + 1, Math.random() * 5 + 1];
-  }
-
-  function generateRandomMissChartData() {
-    return [Math.random(), Math.random()];
-  }
+  
 
   function removeAndCreateCanvas(chartId) {
     var oldCanvas = document.getElementById(chartId);
@@ -211,6 +219,23 @@ th, td {
   
     return newCanvas.getContext('2d');
   }
-  </script>
 
-{% endblock content %}
+  document.addEventListener('DOMContentLoaded', function () {
+    var moduleNames = document.querySelectorAll('.module-name');
+  
+    moduleNames.forEach(function (moduleName) {
+      moduleName.addEventListener('click', function () {
+        var moduleId = moduleName.getAttribute('href').substring(1);
+        var moduleRow = document.getElementById(moduleId);
+  
+        if (moduleRow.classList.contains('show')) {
+          moduleRow.classList.remove('show');
+        } else {
+          moduleRow.classList.add('show');
+        }
+      });
+    });
+  });
+
+</script>
+{% endblock javascript %}
