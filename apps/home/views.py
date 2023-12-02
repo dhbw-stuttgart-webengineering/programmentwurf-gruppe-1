@@ -1,7 +1,7 @@
 """Views for the home app"""
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect, HttpRequest, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.template import loader
 from django.urls import reverse
 from django.views.decorators.cache import cache_control
@@ -11,6 +11,8 @@ from apps.data_endpoint.utils.grade_distribution import get_grade_distribution_a
 from apps.data_endpoint.utils.failure_rate import get_failure_rate_first_attempt, get_passing_rate_first_attempt
 from apps.data_endpoint.read_data import get_grades
 from ..utils.decorators import refresh_dualis
+from ..authentication.views import decrypt
+
 import json
 
 
@@ -59,9 +61,7 @@ def index(request: HttpRequest) -> HttpResponse:
     # Append total average
     own_grades.append({'total_average': total_average})
     
-    
-    print(json.dumps(own_grades,indent=4))
-    context = {'own_grades': own_grades}
+    context = {'own_grades': own_grades,"name": decrypt(request.user.name)}
     return render(request, 'home/index.html', context)
 
 

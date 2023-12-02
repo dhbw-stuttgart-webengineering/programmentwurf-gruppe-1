@@ -55,9 +55,9 @@ def make_login(request: HttpRequest, email, password) -> bool:
 
     dualis = Dualis(
         email, password)
-
+    
     user, _ = DualisUser.objects.update_or_create(
-        email=email, name=dualis.get_name())
+        email=encrypt(email), name=encrypt(dualis.get_name()))
 
     login(request, user,
           backend='django.contrib.auth.backends.ModelBackend')
