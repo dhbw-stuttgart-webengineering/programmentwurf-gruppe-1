@@ -142,7 +142,7 @@ class WebScraper:
 
             elif columns[0].has_attr('class') and 'tbdata' in columns[0]['class']:
 
-                if "noch nicht gesetzt" in columns[3].text:
+                if "noch nicht gesetzt" in columns[3].text or columns[3].text.strip() == "":
                     grade = None
                 elif "b" in columns[3].text:
                     grade = 1.0
