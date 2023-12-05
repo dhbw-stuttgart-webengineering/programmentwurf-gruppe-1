@@ -42,7 +42,7 @@ def index(request: HttpRequest) -> HttpResponse:
     own_grades = unique_modules
 
     total_average = calculate_total_average_weighted(request.user.email)
-
+    unique_semesters_dict = {}
 
     for module in own_grades:
         for unit in module['units']:
@@ -50,6 +50,13 @@ def index(request: HttpRequest) -> HttpResponse:
             for key in unit:
                 if unit[key] is None:
                     unit[key] = 0
+            
+            semester = module["semester"]
+            # Prüfe, ob das Semester bereits im Dictionary ist, bevor es hinzugefügt wird
+            if semester not in unique_semesters_dict:
+                unique_semesters_dict[semester] = None
+                   
+                
             # Append grade distribution
             unit['grade_distribution'] = get_grade_distribution_as_dict(unit['unit_id'])
             # Append failure rate
@@ -58,10 +65,16 @@ def index(request: HttpRequest) -> HttpResponse:
             unit['passing_rate'] = get_passing_rate_first_attempt(unit['unit_id'])
     # Append total average
     own_grades.append({'total_average': total_average})
+    # Füge das Dictionary mit einzigartigen Semestern zu own_grades hinzu
+    #own_grades.append({'different_semesters': list(unique_semesters_dict.keys())})
     
     
     print(json.dumps(own_grades,indent=4))
-    context = {'own_grades': own_grades}
+    print(json.dumps(list(unique_semesters_dict.keys()),indent=4))
+    context = {
+        'own_grades': own_grades,
+        'different_semesters': list(unique_semesters_dict.keys()),
+        }
     return render(request, 'home/index.html', context)
 
 
