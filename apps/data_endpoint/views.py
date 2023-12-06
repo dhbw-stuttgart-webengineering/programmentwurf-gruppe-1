@@ -76,3 +76,4 @@ def refresh_data(request: HttpRequest) -> HttpResponse:
         print("Invalid Token")
         return logout_view(request)
     
+    
