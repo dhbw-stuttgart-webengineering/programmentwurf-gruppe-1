@@ -1,7 +1,8 @@
 """Views for the home app"""
+import json
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect, HttpRequest, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.template import loader
 from django.urls import reverse
 from django.views.decorators.cache import cache_control
@@ -11,7 +12,7 @@ from apps.data_endpoint.utils.grade_distribution import get_grade_distribution_a
 from apps.data_endpoint.utils.failure_rate import get_failure_rate_first_attempt, get_passing_rate_first_attempt
 from apps.data_endpoint.read_data import get_grades
 from ..utils.decorators import refresh_dualis
-import json
+
 
 
 @login_required(login_url="/login/")
@@ -33,9 +34,9 @@ def index(request: HttpRequest) -> HttpResponse:
     unique_modules = []
     for module in own_grades:
         module_name = module['module_name']
-        
         # Überprüfe, ob das Modul bereits in unique_modules ist
-        if not any(existing_module['module_name'] == module_name for existing_module in unique_modules):
+        if not any(existing_module['module_name'] == module_name 
+                   for existing_module in unique_modules):
             unique_modules.append(module)
 
     # Aktualisiere own_grades mit den eindeutigen Modulen
@@ -62,9 +63,7 @@ def index(request: HttpRequest) -> HttpResponse:
             semester = module["semester"]
             # Prüfe, ob das Semester bereits im Dictionary ist, bevor es hinzugefügt wird
             if semester not in unique_semesters_dict:
-                unique_semesters_dict[semester] = None
-              
-                
+                unique_semesters_dict[semester] = None 
             # Append grade distribution
             unit['grade_distribution'] = get_grade_distribution_as_dict(unit['unit_id'])
             # Append failure rate
