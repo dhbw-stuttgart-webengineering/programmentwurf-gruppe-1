@@ -4,7 +4,7 @@
 {% block content %}
 
 <div class="container">
-  <!-- Überprüfen ob eingeloggt -->
+  <!-- Überprüfen ob der Benutzer eingeloggt ist -->
   <div class="row">
     {% if request.user.is_authenticated %}
       <p>Willkommen, {{ request.user.name }}!</p>
