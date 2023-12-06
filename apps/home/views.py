@@ -41,7 +41,10 @@ def index(request: HttpRequest) -> HttpResponse:
     # Aktualisiere own_grades mit den eindeutigen Modulen
     own_grades = unique_modules
 
+    # Berechne den gewichteten Gesamtschnitt
     total_average = calculate_total_average_weighted(request.user.email)
+
+    # Erstelle ein Dictionary mit den eindeutigen Semestern
     unique_semesters_dict = {}
 
     for module in own_grades:
@@ -50,12 +53,17 @@ def index(request: HttpRequest) -> HttpResponse:
             for key in unit:
                 if unit[key] is None:
                     unit[key] = 0
-            
+            # Semesternamen anpassen
+            if "SoSe" in module["semester"]:
+                module["semester"] = module["semester"].replace("SoSe", "Sommersemester")
+            elif "WiSe" in module["semester"]:
+                module["semester"] = module["semester"].replace("WiSe", "Wintersemester")
+
             semester = module["semester"]
             # Prüfe, ob das Semester bereits im Dictionary ist, bevor es hinzugefügt wird
             if semester not in unique_semesters_dict:
                 unique_semesters_dict[semester] = None
-                   
+              
                 
             # Append grade distribution
             unit['grade_distribution'] = get_grade_distribution_as_dict(unit['unit_id'])
@@ -65,12 +73,11 @@ def index(request: HttpRequest) -> HttpResponse:
             unit['passing_rate'] = get_passing_rate_first_attempt(unit['unit_id'])
     # Append total average
     own_grades.append({'total_average': total_average})
-    # Füge das Dictionary mit einzigartigen Semestern zu own_grades hinzu
-    #own_grades.append({'different_semesters': list(unique_semesters_dict.keys())})
-    
-    
+
+    # Ausgabe der Übergabevariablen
     print(json.dumps(own_grades,indent=4))
     print(json.dumps(list(unique_semesters_dict.keys()),indent=4))
+
     context = {
         'own_grades': own_grades,
         'different_semesters': list(unique_semesters_dict.keys()),
