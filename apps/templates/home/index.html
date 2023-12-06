@@ -15,9 +15,6 @@
     <div class="col">
       <h3 class="my-3">Eigene Noten</h3>
       {% for semester in different_semesters %}
-          
-      
-      
         <div class="accordion" id="accordion_grades">
           <div class="accordion-item">
             <h2 class="accordion-header">
@@ -26,66 +23,61 @@
               </button>
             </h2>
             <div id="entry{{ forloop.counter0 }}" class="accordion-collapse collapse" data-bs-parent="#accordion_grades">
-            <div class="accordion-body">
-            {% for module in own_grades %}
-              {% if semester == module.semester %}
-                {% if not module.total_average %}
-                  
-                    
-                    
-                        <div class="container">
+              <div class="accordion-body">
+                {% for module in own_grades %}
+                  {% if semester == module.semester %}
+                    {% if not module.total_average %}
+                      <div class="container">
+                        <div class="row">
+                          <div class="col">
+                            <strong>{{ module.module_name }}</strong>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col">
+                            <strong>Modul</strong>
+                          </div>
+                          <div class="col">
+                            <strong>1. Versuch</strong>
+                          </div>
+                          <div class="col">
+                            <strong>2. Versuch</strong>
+                          </div>
+                        </div>
+                        {% for grade in module.units %}
                           <div class="row">
                             <div class="col">
-                              <strong>{{ module.module_name }}</strong>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col">
-                              <strong>Modul</strong>
+                              {{ grade.unit_name }}
                             </div>
                             <div class="col">
-                              <strong>1. Versuch</strong>
-                            </div>
-                            <div class="col">
-                              <strong>2. Versuch</strong>
-                            </div>
-                          </div>
-                          {% for grade in module.units %}
-                            <div class="row">
-                              <div class="col">
-                                {{ grade.unit_name }}
-                              </div>
-                              <div class="col">
-                                {% if grade.grade_first_attempt %}
-                                  {{ grade.grade_first_attempt }}
-                                {% else %}
-                                  N/A
-                                {% endif %}
-                              </div>
-                              <div class="col">
-                                {% if grade.grade_second_attempt %}
-                                  {{ grade.grade_second_attempt }}
-                                {% else %}
-                                  N/A
-                                {% endif %}
-                              </div>
-                            </div>
-                            <div class="row justify-content-center my-3">
                               {% if grade.grade_first_attempt %}
-                                <button class="btn btn-outline-primary" type="button" onclick="compareCharts({{ grade|safe }});">Vergleich</button>
+                                {{ grade.grade_first_attempt }}
                               {% else %}
-                                Vergleich nicht möglich
+                                N/A
                               {% endif %}
                             </div>
-                          {% endfor %}
-                        </div>
-                      
-                  
-                {% endif %}
-              {% endif %}
-            {% endfor %}
-          </div>
-          </div>
+                            <div class="col">
+                              {% if grade.grade_second_attempt %}
+                                {{ grade.grade_second_attempt }}
+                              {% else %}
+                                N/A
+                              {% endif %}
+                            </div>
+                          </div>
+                          <div class="row justify-content-center my-3">
+                            {% if grade.grade_first_attempt %}
+                              <button class="btn btn-outline-primary" type="button" onclick="compareCharts({{ grade|safe }});">Vergleich</button>
+                            {% else %}
+                              Vergleich nicht möglich
+                            {% endif %}
+                          </div>
+                        {% endfor %}
+                      </div>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
           </div>
         </div>
       {% endfor %}
