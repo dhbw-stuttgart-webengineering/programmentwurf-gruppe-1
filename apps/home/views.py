@@ -9,7 +9,9 @@ from django.views.decorators.cache import cache_control
 from django.conf import settings
 from apps.data_endpoint.calculate_average import calculate_total_average_weighted
 from apps.data_endpoint.utils.grade_distribution import get_grade_distribution_as_dict
-from apps.data_endpoint.utils.failure_rate import get_failure_rate_first_attempt, get_passing_rate_first_attempt
+from apps.data_endpoint.utils.failure_rate import \
+    get_failure_rate_first_attempt, \
+    get_passing_rate_first_attempt
 from apps.data_endpoint.read_data import get_grades
 from ..utils.decorators import refresh_dualis
 
@@ -35,7 +37,7 @@ def index(request: HttpRequest) -> HttpResponse:
     for module in own_grades:
         module_name = module['module_name']
         # Überprüfe, ob das Modul bereits in unique_modules ist
-        if not any(existing_module['module_name'] == module_name 
+        if not any(existing_module['module_name'] == module_name
                    for existing_module in unique_modules):
             unique_modules.append(module)
 
@@ -63,7 +65,7 @@ def index(request: HttpRequest) -> HttpResponse:
             semester = module["semester"]
             # Prüfe, ob das Semester bereits im Dictionary ist, bevor es hinzugefügt wird
             if semester not in unique_semesters_dict:
-                unique_semesters_dict[semester] = None 
+                unique_semesters_dict[semester] = None
             # Append grade distribution
             unit['grade_distribution'] = get_grade_distribution_as_dict(unit['unit_id'])
             # Append failure rate
