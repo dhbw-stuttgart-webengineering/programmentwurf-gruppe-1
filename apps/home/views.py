@@ -40,10 +40,7 @@ def index(request: HttpRequest) -> HttpResponse:
 
     # Aktualisiere own_grades mit den eindeutigen Modulen
     own_grades = unique_modules
-
     total_average = calculate_total_average_weighted(request.user.email)
-
-
     for module in own_grades:
         for unit in module['units']:
             # Ersetze None-Werte durch 0
@@ -58,8 +55,6 @@ def index(request: HttpRequest) -> HttpResponse:
             unit['passing_rate'] = get_passing_rate_first_attempt(unit['unit_id'])
     # Append total average
     own_grades.append({'total_average': total_average})
-    
-    
     print(json.dumps(own_grades,indent=4))
     context = {'own_grades': own_grades}
     return render(request, 'home/index.html', context)
