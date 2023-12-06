@@ -112,3 +112,4 @@ class GradeTestCase(TestCase):
     def tearDown(self):
         """Delete test data"""
         Grade.objects.all().delete()
+        print()
