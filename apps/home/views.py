@@ -1,4 +1,5 @@
 """Views for the home app"""
+
 import json
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -14,7 +15,6 @@ from apps.data_endpoint.utils.failure_rate import \
     get_passing_rate_first_attempt
 from apps.data_endpoint.read_data import get_grades
 from ..utils.decorators import refresh_dualis
-
 
 
 @login_required(login_url="/login/")
