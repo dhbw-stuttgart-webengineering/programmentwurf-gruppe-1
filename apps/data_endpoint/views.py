@@ -9,11 +9,11 @@ from django.views.decorators.cache import cache_control
 from ..authentication.views import decrypt, logout_view
 from ..utils.dualis import Dualis
 from ..utils.dualis.exceptions import InvalidUsernameorPasswordException
-from ..data_endpoint.data_save import search_data
-from ..data_endpoint.read_data import get_grades
-from ..data_endpoint.calculate_average import (calculate_average_module,
-                                               calculate_average_first_attempt,
-                                               calculate_average_second_attempt)
+from apps.data_endpoint.process_data.collecting_data_from_dualis import search_data
+from apps.data_endpoint.process_data.read_data import get_grades
+from apps.data_endpoint.process_data.calculate_average import (calculate_average_module,
+                                                               calculate_average_first_attempt,
+                                                               calculate_average_second_attempt)
 
 
 @login_required(login_url="/login/")
