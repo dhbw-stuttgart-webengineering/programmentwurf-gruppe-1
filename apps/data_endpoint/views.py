@@ -7,12 +7,12 @@ from django.utils import timezone
 from django.views.decorators.cache import cache_control
 
 from apps.data_endpoint.process_data.collecting_data_from_dualis import save_data_in_dictionary
-from ..utils.dualis import Dualis
-from ..utils.dualis.exceptions import InvalidUsernameorPasswordException
 from apps.data_endpoint.process_data.read_data import get_grades
 from apps.data_endpoint.process_data.calculate_average import (calculate_average_module,
                                                                calculate_average_first_attempt,
                                                                calculate_average_second_attempt)
+from ..utils.dualis import Dualis
+from ..utils.dualis.exceptions import InvalidUsernameorPasswordException
 from ..authentication.views import decrypt, logout_view
 
 

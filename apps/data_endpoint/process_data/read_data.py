@@ -1,7 +1,7 @@
 """Module to read the data from the database"""
 import os
 import django
-from ..models import Grade, Unit, Module
+from apps.data_endpoint.models import Grade, Unit, Module
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 django.setup()
