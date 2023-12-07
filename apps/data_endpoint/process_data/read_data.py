@@ -7,7 +7,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 django.setup()
 
 
-def get_grades(email_id):
+def get_grades(email_id) -> list:
     """get the grades from the database"""
     matching_id = Grade.objects.filter(email_id=email_id)
     grade_list = []
@@ -20,14 +20,14 @@ def get_grades(email_id):
         module_id = Module.objects.get(module_id=unit_id.id_of_module)
 
         for list_entry in grade_list:
-            """Check if the module is already in the list"""
+            #Check if the module is already in the list
             if list_entry["module_id"] == str(module_id):
                 proof_existing = True
                 index_of_element = grade_list.index(list_entry)
             else:
                 proof_existing = False
 
-        """Is the module already in the list, add the unit to the module"""
+        #Is the module already in the list, add the unit to the module
         if proof_existing:
             module_dict = \
                 {"unit_name" : unit_id.unit_name,
@@ -43,7 +43,7 @@ def get_grades(email_id):
                  }
             grade_list[index_of_element]["units"].append(module_dict)
 
-            """If the module is not in the list, add it to the list"""
+            #If the module is not in the list, add it to the list
         else:
             unit = \
                 {"unit_name" : unit_id.unit_name,
@@ -69,16 +69,16 @@ def get_grades(email_id):
         """Append the dictionary to the list"""
         grade_list.append(grade_dict)
     return grade_list
-"""The grades from the database are stored in a dictionary and returned in a list"""
-def get_module():
+#The grades from the database are stored in a dictionary and returned in a list
+def get_module() -> list:
     """function to get the modules from the database"""
     module_list = []
     module_id = Module.objects.all()
 
     for entry in module_id:
-        """Get each module from the database and save it in a dictionary"""
+        #Get each module from the database and save it in a dictionary
         try:
-            """The average is not a float, so it must be converted"""
+            #The average is not a float, so it must be converted
             average = float(entry.average)
         except TypeError:
             average = entry.average
@@ -90,9 +90,9 @@ def get_module():
              "module_credit" : entry.credits,
              "module_average" : average
              }
-        """Append the dictionary to the list"""
+        #Append the dictionary to the list
         module_list.append(module_dict)
 
 
     return module_list
-"""The modules from the database are stored in a dictionary and returned in a list"""
+#The modules from the database are stored in a dictionary and returned in a list

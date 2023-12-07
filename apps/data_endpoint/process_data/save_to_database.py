@@ -17,7 +17,7 @@ def save_data(email_id,
     """save the data from dualis in the database"""
 
     module_to_save, created = Module.objects.get_or_create(module_id=id_module)
-    """If the module is not in the database, it will be created"""
+    #If the module is not in the database, it will be created
     if created:
         module_to_save.module_id = id_module
         module_to_save.module_abk = module_number

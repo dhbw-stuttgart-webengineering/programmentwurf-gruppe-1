@@ -9,7 +9,7 @@ from django.views.decorators.cache import cache_control
 from ..authentication.views import decrypt, logout_view
 from ..utils.dualis import Dualis
 from ..utils.dualis.exceptions import InvalidUsernameorPasswordException
-from apps.data_endpoint.process_data.collecting_data_from_dualis import search_data
+from apps.data_endpoint.process_data.collecting_data_from_dualis import save_data_in_dictionary
 from apps.data_endpoint.process_data.read_data import get_grades
 from apps.data_endpoint.process_data.calculate_average import (calculate_average_module,
                                                                calculate_average_first_attempt,
@@ -61,7 +61,7 @@ def refresh_data(request: HttpRequest) -> HttpResponse:
 
         calculate_average_module()
 
-        search_data(data, request.user.email)
+        save_data_in_dictionary(data, request.user.email)
 
         request.user.last_updated = timezone.localtime()
         request.user.save()
