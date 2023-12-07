@@ -36,6 +36,7 @@ class GradeTests(TestCase):
 
 
 class ModuleTestCase(TestCase):
+    """Test case for the Module model"""
     def setUp(self):
         """Create test data"""
         Module.objects.create(module_id="123456789",
@@ -49,7 +50,7 @@ class ModuleTestCase(TestCase):
         """Test if the model saves correctly"""
         obj = Module.objects.get(module_id="123456789")
 
-        """Test if the database contains the expected values"""
+        #Test if the database contains the expected values
         self.assertEqual(obj.module_id, '123456789')
         self.assertEqual(obj.module_abk, 'Test')
         self.assertEqual(obj.module_name, 'Test')
@@ -62,14 +63,14 @@ class ModuleTestCase(TestCase):
         """Test if the model updates correctly"""
         obj = Module.objects.get(module_id="123456789")
 
-        """Change a value"""
+        #Change a value
         obj.module_abk = 'changed'
         obj.save()
 
-        """Get the updated object from the database"""
+        #Get the updated object from the database
         updated_obj = Module.objects.get(module_id="123456789")
 
-        """Test if the value has been updated"""
+        #Test if the value has been updated
         self.assertEqual(updated_obj.module_abk, 'changed')
 
     def tearDown(self):
@@ -77,6 +78,7 @@ class ModuleTestCase(TestCase):
         Module.objects.all().delete()
 
 class UnitTestCase(TestCase):
+    """Test case for the Unit model"""
     def setUp(self):
         """Create test data"""
         Unit.objects.create(unit_id="123456789",
@@ -89,7 +91,7 @@ class UnitTestCase(TestCase):
         """Test if the model saves correctly"""
         obj = Unit.objects.get(unit_id="123456789")
 
-        """Test if the database contains the expected values"""
+        #Test if the database contains the expected values
         self.assertEqual(obj.unit_id, '123456789')
         self.assertEqual(obj.unit_name, 'Test')
         self.assertEqual(obj.credits, 'Test')
@@ -100,14 +102,14 @@ class UnitTestCase(TestCase):
         """Test if the model updates correctly"""
         obj = Unit.objects.get(unit_id="123456789")
 
-        """Change a value"""
+        #Change a value
         obj.unit_name = 'changed'
         obj.save()
 
-        """Get the updated object from the database"""
+        #Get the updated object from the database
         updated_obj = Unit.objects.get(unit_id="123456789")
 
-        """Test if the value has been updated"""
+        #Test if the value has been updated
         self.assertEqual(updated_obj.unit_name, 'changed')
 
     def tearDown(self):
@@ -115,6 +117,7 @@ class UnitTestCase(TestCase):
         Unit.objects.all().delete()
 
 class GradeTestCase(TestCase):
+    """Test case for the Grade model"""
     mail = "test@mail.com"
     def setUp(self):
         """Create test data"""
@@ -134,13 +137,13 @@ class GradeTestCase(TestCase):
         """Test if the model updates correctly"""
         obj = Grade.objects.get(email_id=GradeTestCase.mail)
 
-        """Change a value"""
+        #Change a value
         obj.grade_first_attempt = 1
         obj.save()
 
         updated_obj = Grade.objects.get(email_id=GradeTestCase.mail)
 
-        """Test if the value has been updated"""
+        #Test if the value has been updated
         self.assertEqual(updated_obj.grade_first_attempt, 1)
 
     def tearDown(self):

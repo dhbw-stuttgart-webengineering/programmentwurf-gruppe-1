@@ -27,7 +27,7 @@ def save_data(email_id,
         module_to_save.save()
 
     unit_to_save, created = Unit.objects.get_or_create(unit_id=unit["id"])
-    """If the unit is not in the database, it will be created"""
+    #If the unit is not in the database, it will be created
     if created:
         unit_to_save.unit_id = unit["id"]
         unit_to_save.unit_name = unit["name"]
@@ -35,7 +35,7 @@ def save_data(email_id,
         unit_to_save.id_of_module = module_to_save
         unit_to_save.save()
 
-    """Create or update the grades of the student"""
+    #Create or update the grades of the student
     student_grades, _ = Grade.objects.get_or_create(email_id=email_id, id_of_unit=unit_to_save)
     student_grades.name = email_id
     student_grades.grade_first_attempt = unit["grade_first_attempt"]
