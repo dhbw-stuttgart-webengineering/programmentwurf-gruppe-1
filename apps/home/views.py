@@ -8,12 +8,12 @@ from django.template import loader
 from django.urls import reverse
 from django.views.decorators.cache import cache_control
 from django.conf import settings
-from apps.data_endpoint.calculate_average import calculate_total_average_weighted
+from apps.data_endpoint.process_data.calculate_average import calculate_total_average_weighted
 from apps.data_endpoint.utils.grade_distribution import get_grade_distribution_as_dict
 from apps.data_endpoint.utils.failure_rate import \
     get_failure_rate_first_attempt, \
     get_passing_rate_first_attempt
-from apps.data_endpoint.read_data import get_grades
+from apps.data_endpoint.process_data.read_data import get_grades
 from ..utils.decorators import refresh_dualis
 
 
