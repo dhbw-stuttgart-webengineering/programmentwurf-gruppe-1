@@ -23,7 +23,6 @@ mysqlclient==2.2.0
 packaging==23.1
 pyasn1==0.5.0
 pycparser==2.21
-pycrypto==2.6.1
 pycryptodome==3.19.0
 Pygments==2.16.1
 python-keyczar==0.716
