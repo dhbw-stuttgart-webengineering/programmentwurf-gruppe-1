@@ -70,6 +70,12 @@
                               {% endif %}
                             </div>
                           </div>
+                          <div class="row justify-content-center">
+                            <!-- Den Durchschnitt des Moduls anzeigen -->
+                            {% if grade.grade_first_attempt %}
+                              <strong>Modul Durchschnitt: {{ grade.average_first_attempt}}</strong>
+                            {% endif %}
+                          </div>
                           <div class="row justify-content-center my-3">
                             <!-- Einen Vergleich Button einfügen für jedes Modul in dem es eine Note gibt -->
                             {% if grade.grade_first_attempt %}
