@@ -75,6 +75,15 @@ class WebScraper:
         return [(option.text, option["value"]) for option in soup.find_all("option")]
 
     def _scrape_modules(self, semester_name: str, semester_link: str) -> list:
+        """Scrapes Modules
+
+        Args:
+            semester_name (str): Name of Semster
+            semester_link (str): Link to Semester
+
+        Returns:
+            list: List of Modules
+        """
         modules = []
 
         soup = self.session.get(
@@ -109,6 +118,14 @@ class WebScraper:
         return modules
 
     def _scrape_units(self, module_detail_link: str) -> list:
+        """Scrape units
+
+        Args:
+            module_detail_link (str): Link to Module Details
+
+        Returns:
+            list: List of Units
+        """
 
         unit_soup = self.session.get(
             self.HTTP_DHBW +
@@ -118,6 +135,14 @@ class WebScraper:
         return self._extract_unit_info(unit_soup)
 
     def _extract_unit_info(self, soup: bs4.BeautifulSoup) -> list:
+        """Extract Unit Info from Module Detail Page
+
+        Args:
+            soup (bs4.BeautifulSoup): HTML Site as Soup
+
+        Returns:
+            list: List of Units
+        """
         units = {}
         table = soup.find("table", {"class": "tb"})
 
@@ -157,6 +182,14 @@ class WebScraper:
         return list(units.values())
 
     def _extract_name_and_id(self, module: str) -> (str, str):
+        """Extracts name and ID using REGEX
+
+        Args:
+            str (str): Module Name
+
+        Returns:
+            (str,str): Tuple containing name and id
+        """
 
         # Adjust for NBSP and split
         pattern = r'^([\S]{9}(?:.1)*)(?: |[\S\s]{3})([^\n]*) \([\s\S]{9,12}\)'
