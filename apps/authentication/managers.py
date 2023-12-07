@@ -6,7 +6,26 @@ from django.utils import timezone
 class UserManager(BaseUserManager):
     """User Manager"""
 
-    def _create_user(self, email, password, is_staff, is_superuser, **extra_fields):
+    def _create_user(self,
+                     email: str,
+                     password: str,
+                     is_staff: bool,
+                     is_superuser: bool,
+                     **extra_fields):
+        """Creates a User
+
+        Args:
+            email (str): User E-Mail
+            password (str): User Password
+            is_staff (bool): True if Staff
+            is_superuser (bool): True if Superuser
+
+        Raises:
+            ValueError: raised if e-mail not given
+
+        Returns:
+            user: User object
+        """
         if not email:
             raise ValueError('Users must have an email address')
         now = timezone.now()

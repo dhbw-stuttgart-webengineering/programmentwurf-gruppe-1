@@ -57,6 +57,14 @@ class DualisSession(requests.Session):
         self._auth_token = self._create_authtoken()
 
     def get(self, url, **kwargs) -> bs4.BeautifulSoup:
+        """Scrapes HTML from url
+
+        Args:
+            url (str): URL
+
+        Returns:
+            bs4.BeautifulSoup: Soup Object
+        """
         response = super().get(url, **kwargs)
         response.encoding = 'UTF-8'
         return bs4.BeautifulSoup(response.text, "html.parser")
