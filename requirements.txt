@@ -8,7 +8,7 @@ cffi==1.16.0
 charset-normalizer==3.2.0
 colorama==0.4.6
 cryptography==41.0.4
-Django==4.2.5
+Django==4.2.7
 django-appconf==1.0.5
 django-cryptography==1.1
 django-environ==0.11.2
