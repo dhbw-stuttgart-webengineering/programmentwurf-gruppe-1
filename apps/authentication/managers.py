@@ -6,7 +6,12 @@ from django.utils import timezone
 class UserManager(BaseUserManager):
     """User Manager"""
 
-    def _create_user(self, email: str, password: str, is_staff: bool, is_superuser: bool, **extra_fields):
+    def _create_user(self,
+                     email: str,
+                     password: str,
+                     is_staff: bool,
+                     is_superuser: bool,
+                     **extra_fields):
         """Creates a User
 
         Args:
