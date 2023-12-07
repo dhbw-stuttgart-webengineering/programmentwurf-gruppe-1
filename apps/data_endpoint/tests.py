@@ -1,7 +1,6 @@
-<<<<<<< HEAD
 """Test Module"""
 from django.test import TestCase
-from .models import Grade, Unit
+from .models import Module, Unit, Grade
 from .utils import get_failure_rate_first_attempt
 
 
@@ -34,9 +33,7 @@ class GradeTests(TestCase):
     def test_failure_rate_all_unassigned(self):
         """Test failure rate with all unassigned values"""
         self.assertEqual(0, get_failure_rate_first_attempt("Third"))
-=======
-from django.test import TestCase
-from .models import Module, Unit, Grade
+
 
 class ModuleTestCase(TestCase):
     def setUp(self):
@@ -149,4 +146,3 @@ class GradeTestCase(TestCase):
     def tearDown(self):
         """Delete test data"""
         Grade.objects.all().delete()
->>>>>>> feature/vanessa
