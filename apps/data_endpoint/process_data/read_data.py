@@ -1,33 +1,36 @@
 """Module to read the data from the database"""
 import os
 import django
-from ..data_endpoint.models import Grade, Unit, Module
+from apps.data_endpoint.models import Grade, Unit, Module
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 django.setup()
 
 
-def get_grades(email_id):
+def get_grades(email_id) -> list:
     """get the grades from the database"""
     matching_id = Grade.objects.filter(email_id=email_id)
     grade_list = []
-    proof_vorhanden = False
+    proof_existing = False
     index_of_element = 0
     grade_dict = {}
 
-    for eintrag in matching_id:
-        unit_id = Unit.objects.get(unit_id=eintrag.id_of_unit)
+    for entry in matching_id:
+        #Get the unit and module from the database
+        unit_id = Unit.objects.get(unit_id=entry.id_of_unit)
         module_id = Module.objects.get(module_id=unit_id.id_of_module)
 
-        for list_eintrag in grade_list:
-            if list_eintrag["module_id"] == str(module_id):
-                proof_vorhanden = True
-                index_of_element = grade_list.index(list_eintrag)
+        for list_entry in grade_list:
+            #check if the module is already in the list
+            if list_entry["module_id"] == str(module_id):
+                proof_existing = True
+                index_of_element = grade_list.index(list_entry)
             else:
-                proof_vorhanden = False
+                proof_existing = False
 
-        if proof_vorhanden:
-            unit_dict =\
+        #if the module is already in the list, the unit will be added to the module
+        if proof_existing:
+            unit_dict = \
                 {"unit_id": str(unit_id),
                  "unit_name": unit_id.unit_name,
                  "unit_credits": unit_id.credits,
@@ -35,12 +38,13 @@ def get_grades(email_id):
                  if unit_id.average_first_attempt else None,
                  "average_second_attempt": float(unit_id.average_second_attempt)
                  if unit_id.average_second_attempt else None,
-                 "grade_first_attempt": float(eintrag.grade_first_attempt)
-                 if eintrag.grade_first_attempt else None,
-                 "grade_second_attempt": float(eintrag.grade_second_attempt)
-                 if eintrag.grade_second_attempt else None
+                 "grade_first_attempt": float(entry.grade_first_attempt)
+                 if entry.grade_first_attempt else None,
+                 "grade_second_attempt": float(entry.grade_second_attempt)
+                 if entry.grade_second_attempt else None
                  }
             grade_list[index_of_element]["units"].append(unit_dict)
+        #if the module is not in the list, it will be added
         else:
             unit = \
                 {"unit_id": str(unit_id),
@@ -50,10 +54,10 @@ def get_grades(email_id):
                  if unit_id.average_first_attempt else None,
                  "average_second_attempt": float(unit_id.average_second_attempt)
                  if unit_id.average_second_attempt else None,
-                 "grade_first_attempt": float(eintrag.grade_first_attempt)
-                 if eintrag.grade_first_attempt else None,
-                 "grade_second_attempt": float(eintrag.grade_second_attempt)
-                 if eintrag.grade_second_attempt else None
+                 "grade_first_attempt": float(entry.grade_first_attempt)
+                 if entry.grade_first_attempt else None,
+                 "grade_second_attempt": float(entry.grade_second_attempt)
+                 if entry.grade_second_attempt else None
                  }
             grade_dict = \
                 {"module_id": module_id.module_id,
@@ -66,29 +70,30 @@ def get_grades(email_id):
                  }
         grade_list.append(grade_dict)
 
-    return grade_list  # Die Noten aus der Datenbank werden in einem
-    #  Dictionary gespeichert und in einer Liste zurückgegeben"""
+    return grade_list  # Grades from the database are stored in a
+    # dictionary and returned in a list
 
 
-def get_module():
+def get_module() -> list:
     """function to get the modules from the database"""
     module_list = []
     module_id = Module.objects.all()
 
-    for eintrag in module_id:
+    for entry in module_id:
+        #try to convert the average to a float
         try:
-            average = float(eintrag.average)
+            average = float(entry.average)
         except TypeError:
-            average = eintrag.average
+            average = entry.average
 
-        module_dict =\
-            {"module_abk": eintrag.module_abk,
-             "module_name": eintrag.module_name,
-             "semester": eintrag.semester,
-             "module_credit": eintrag.credits,
+        module_dict = \
+            {"module_abk": entry.module_abk,
+             "module_name": entry.module_name,
+             "semester": entry.semester,
+             "module_credit": entry.credits,
              "module_average": average
              }
         module_list.append(module_dict)
 
-    return module_list  # Die Module aus der Datenbank werden in einem
-    #  Dictionary gespeichert und in einer Liste zurückgegeben"""
+    return module_list  # Modules from the database are stored in a
+    # dictionary and returned in a list
