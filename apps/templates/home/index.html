@@ -7,7 +7,7 @@
   <!-- Überprüfen ob der Benutzer eingeloggt ist -->
   <div class="row">
     {% if request.user.is_authenticated %}
-      <p>Willkommen, {{ request.user.name }}!</p>
+      <p>Willkommen, {{ name }}!</p>
     {% else %}
       <p>Du bist nicht eingeloggt!</p>
     {% endif %}
@@ -70,8 +70,14 @@
                               {% endif %}
                             </div>
                           </div>
-                          <!-- Einen Vergleich Button einfügen für jedes Modul in dem es eine Note gibt -->
-                          <div class="row mb-3">
+                          <div class="row justify-content-center">
+                            <!-- Den Durchschnitt des Moduls anzeigen -->
+                            {% if grade.grade_first_attempt %}
+                              <strong>Modul Durchschnitt: {{ grade.average_first_attempt}}</strong>
+                            {% endif %}
+                          </div>
+                          <div class="row justify-content-center my-3">
+                            <!-- Einen Vergleich Button einfügen für jedes Modul in dem es eine Note gibt -->
                             {% if grade.grade_first_attempt %}
                               <button class="btn btn-outline-primary btn-sm" type="button" onclick="compareCharts({{ grade|safe }});">Vergleich</button>
                             {% else %}
