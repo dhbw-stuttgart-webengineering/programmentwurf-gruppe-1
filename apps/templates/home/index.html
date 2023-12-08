@@ -18,7 +18,7 @@
       <!-- Für jedes Semster einen Button erstellen -->
       {% for semester in different_semesters %}
         <div class="accordion" id="accordion_grades">
-          <div class="accordion-item">
+          <div class="accordion-item mb-1">
             <h2 class="accordion-header">
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#entry{{ forloop.counter0 }}" aria-controls="entry{{ forloop.counter0 }}">
                 {{ semester }}
@@ -34,39 +34,39 @@
                         <div class = "row">
                           <div class="row">
                             <div class="col">
-                              <strong>{{ module.module_name }}</strong>
+                              <h4 class="text-primary-emphasis">{{ module.module_name }}</h4>
                             </div>
                           </div>
                         </div>
                         <div class="row">
                           <div class="col">
-                            <strong>Modul</strong>
+                            <p class="fw-bold">Modul</p>
                           </div>
                           <div class="col">
-                            <strong>1. Versuch</strong>
+                            <p class="fw-bold">1. Versuch</p>
                           </div>
                           <div class="col">
-                            <strong>2. Versuch</strong>
+                            <p class="fw-bold">2. Versuch</p>
                           </div>
                         </div>
                         <!-- Den Modulen die Noten zuordnen -->
                         {% for grade in module.units %}
                           <div class="row">
                             <div class="col">
-                              {{ grade.unit_name }}
+                              <p class="fw-light lh-sm">{{ grade.unit_name }}</p>
                             </div>
                             <div class="col">
                               {% if grade.grade_first_attempt %}
-                                {{ grade.grade_first_attempt }}
+                                <p class="fw-light lh-sm">{{ grade.grade_first_attempt }}</p>
                               {% else %}
-                                N/A
+                                <p class="fw-light lh-sm">N/A</p>
                               {% endif %}
                             </div>
                             <div class="col">
                               {% if grade.grade_second_attempt %}
-                                {{ grade.grade_second_attempt }}
+                                <p class="fw-light lh-sm">{{ grade.grade_second_attempt }}</p>
                               {% else %}
-                                N/A
+                                <p class="fw-light lh-sm">N/A</p>
                               {% endif %}
                             </div>
                           </div>
@@ -79,7 +79,7 @@
                           <div class="row justify-content-center my-3">
                             <!-- Einen Vergleich Button einfügen für jedes Modul in dem es eine Note gibt -->
                             {% if grade.grade_first_attempt %}
-                              <button class="btn btn-outline-primary" type="button" onclick="compareCharts({{ grade|safe }});">Vergleich</button>
+                              <button class="btn btn-outline-primary btn-sm" type="button" onclick="compareCharts({{ grade|safe }});">Vergleich</button>
                             {% else %}
                               Vergleich nicht möglich
                             {% endif %}
@@ -98,7 +98,7 @@
       {% for module in own_grades %}
         {% if module.total_average %}
           <div class="my-3">
-            <p><b>Gesamtdurchschnitt: {{ module.total_average|floatformat:3 }}</b></p>
+            <p class="fw-bold">Gesamtdurchschnitt: {{ module.total_average|floatformat:3 }}</p>
           </div>
         {% endif %}
       {% endfor %}
