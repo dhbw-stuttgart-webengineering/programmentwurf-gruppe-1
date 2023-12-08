@@ -2,55 +2,59 @@
 import os
 import django
 from django.db.models import Avg
-from ..data_endpoint.models import Grade, Unit, Module
+from apps.data_endpoint.models import Grade, Unit, Module
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 django.setup()
 
 
-def calculate_average_module():
+def calculate_average_module() -> None:
     """Function to calculate the average of the modules"""
-    daten = Module.objects.all()
-    for ergebnis in daten:
-        unit_first_grade = Unit.objects.filter(id_of_module=ergebnis.module_id)
-        for data_second in unit_first_grade:
-            durchschnitt_first = data_second.average_first_attempt
-            durchschnitt_second = data_second.average_second_attempt
+    data = Module.objects.all()
+    for result in data:
+        # For each result in the data, get units of the modules
+        units = Unit.objects.filter(id_of_module=result.module_id)
+        for data_second in units:
+            # For each unit in the units, get the average of the first and second attempt
+            average_first = data_second.average_first_attempt
+            average_second = data_second.average_second_attempt
             try:
-                sum_of_average = (durchschnitt_first + durchschnitt_second)/2
+                # Try to calculate the average of the first and second attempt,
+                # to get the average of the module"""
+                sum_of_average = (average_first + average_second)/2
             except TypeError:
-                sum_of_average = durchschnitt_first
+                sum_of_average = average_first
 
-            ergebnis.average = sum_of_average
-            ergebnis.save()
+            result.average = sum_of_average
+            result.save()
 
 
-def calculate_average_first_attempt():
+def calculate_average_first_attempt() -> None:
     """Function to calculate the average of the first attempt"""
-    daten = Unit.objects.all()
-    for ergebnis in daten:
-        durchschnitt = Grade.objects.filter(id_of_unit=ergebnis.unit_id).aggregate(
+    data = Unit.objects.all()
+    for result in data:
+        # For each result in the data, get the average of the first attempt
+        average = Grade.objects.filter(id_of_unit=result.unit_id).aggregate(
             average_first_attempt=Avg('grade_first_attempt'))
-        ergebnis.average_first_attempt = durchschnitt["average_first_attempt"]
-        ergebnis.save()
+        result.average_first_attempt = average["average_first_attempt"]
+        result.save()
 
 
-def calculate_average_second_attempt():
+def calculate_average_second_attempt() -> None:
     """Function to calculate the average of the second attempt"""
-    daten = Unit.objects.all()
-    for ergebnis in daten:
-        durchschnitt = Grade.objects.filter(id_of_unit=ergebnis.unit_id).aggregate(
+    data = Unit.objects.all()
+    for result in data:
+        # For each result in the data, get the average of the second attempt
+        average = Grade.objects.filter(id_of_unit=result.unit_id).aggregate(
             average_second_attempt=Avg('grade_second_attempt'))
-        ergebnis.average_second_attempt = durchschnitt["average_second_attempt"]
-        ergebnis.save()
+        result.average_second_attempt = average["average_second_attempt"]
+        result.save()
 
 
 def calculate_total_average_weighted(email: str) -> float:
     """Function to calculate the total average weighted
-
     Args:
         email (str): Students Email
-
     Returns:
         float: Total average weighted
     """
@@ -80,10 +84,8 @@ def calculate_total_average_weighted(email: str) -> float:
 
 def calculate_total_average(email: str) -> float:
     """Function to calculate the total average
-
     Args:
         email (str): Students Email
-
     Returns:
         float: Total average
     """
