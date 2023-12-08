@@ -49,7 +49,7 @@ def refresh_data(request: HttpRequest) -> HttpResponse:
     try:
         password = decrypt(request.COOKIES.get("password"))
 
-        dualis = Dualis(request.user.email, password)
+        dualis = Dualis(decrypt(request.user.email), password)
 
         data = dualis.get_grades()
 

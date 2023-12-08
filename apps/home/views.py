@@ -1,6 +1,5 @@
 """Views for the home app"""
 
-import json
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
@@ -15,6 +14,7 @@ from apps.data_endpoint.utils.failure_rate import \
     get_passing_rate_first_attempt
 from apps.data_endpoint.process_data.read_data import get_grades
 from ..utils.decorators import refresh_dualis
+from ..authentication.views import decrypt
 
 
 @login_required(login_url="/login/")
@@ -58,31 +58,32 @@ def index(request: HttpRequest) -> HttpResponse:
                     unit[key] = 0
             # Semesternamen anpassen
             if "SoSe" in module["semester"]:
-                module["semester"] = module["semester"].replace("SoSe", "Sommersemester")
+                module["semester"] = module["semester"].replace(
+                    "SoSe", "Sommersemester")
             elif "WiSe" in module["semester"]:
-                module["semester"] = module["semester"].replace("WiSe", "Wintersemester")
+                module["semester"] = module["semester"].replace(
+                    "WiSe", "Wintersemester")
 
             semester = module["semester"]
             # Prüfe, ob das Semester bereits im Dictionary ist, bevor es hinzugefügt wird
             if semester not in unique_semesters_dict:
                 unique_semesters_dict[semester] = None
             # Append grade distribution
-            unit['grade_distribution'] = get_grade_distribution_as_dict(unit['unit_id'])
+            unit['grade_distribution'] = get_grade_distribution_as_dict(
+                unit['unit_id'])
             # Append failure rate
-            unit['failure_rate'] = get_failure_rate_first_attempt(unit['unit_id'])
+            unit['failure_rate'] = get_failure_rate_first_attempt(
+                unit['unit_id'])
             # Append passing rate
-            unit['passing_rate'] = get_passing_rate_first_attempt(unit['unit_id'])
+            unit['passing_rate'] = get_passing_rate_first_attempt(
+                unit['unit_id'])
     # Append total average
     own_grades.append({'total_average': total_average})
-
-    # Ausgabe der Übergabevariablen
-    print(json.dumps(own_grades,indent=4))
-    print(json.dumps(list(unique_semesters_dict.keys()),indent=4))
 
     context = {
         'own_grades': own_grades,
         'different_semesters': list(unique_semesters_dict.keys()),
-        }
+        'name': decrypt(request.user.name)}
     return render(request, 'home/index.html', context)
 
 

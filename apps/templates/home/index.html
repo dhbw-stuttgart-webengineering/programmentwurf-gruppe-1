@@ -7,7 +7,7 @@
   <!-- Überprüfen ob der Benutzer eingeloggt ist -->
   <div class="row">
     {% if request.user.is_authenticated %}
-      <p>Willkommen, {{ request.user.name }}!</p>
+      <p>Willkommen, {{ name }}!</p>
     {% else %}
       <p>Du bist nicht eingeloggt!</p>
     {% endif %}
