@@ -68,6 +68,7 @@ def index(request: HttpRequest) -> HttpResponse:
             # Prüfe, ob das Semester bereits im Dictionary ist, bevor es hinzugefügt wird
             if semester not in unique_semesters_dict:
                 unique_semesters_dict[semester] = None
+
             # Append grade distribution
             unit['grade_distribution'] = get_grade_distribution_as_dict(
                 unit['unit_id'])
