@@ -1,5 +1,6 @@
 """Login View"""
 from datetime import timedelta
+from typing import Literal
 
 from cryptography.fernet import Fernet
 from django.conf import settings
@@ -12,10 +13,9 @@ from django.views.decorators.cache import cache_control
 from ..utils.dualis import Dualis, InvalidUsernameorPasswordException
 from .forms import LoginForm
 from .models import DualisUser
-from typing import Literal
 
 
-def encrypt(data: str, type: Literal['email', 'name', 'other'] = 'other') -> str:
+def encrypt(data: str, type_: Literal['email', 'name', 'other'] = 'other') -> str:
     """Encrypts data with the SECRET_KEY from environment
 
     Args:
@@ -27,11 +27,11 @@ def encrypt(data: str, type: Literal['email', 'name', 'other'] = 'other') -> str
     """
     f = Fernet(settings.SECRET_KEY.encode())
 
-    if type == 'other':
+    if type_ == 'other':
         return f.encrypt(data.encode()).decode()
 
     # check if email is already present in database
-    for hashed in DualisUser.objects.values_list(type, flat=True):
+    for hashed in DualisUser.objects.values_list(type_, flat=True):
         if data == f.decrypt(hashed).decode():
             return hashed
         else:
@@ -71,7 +71,7 @@ def make_login(request: HttpRequest, email, password) -> bool:
     print(encrypt(email))
 
     user, _ = DualisUser.objects.update_or_create(
-        email=encrypt(email, type='email'), name=encrypt(dualis.get_name(), type='name'))
+        email=encrypt(email, type_='email'), name=encrypt(dualis.get_name(), type_='name'))
 
     login(request, user,
           backend='django.contrib.auth.backends.ModelBackend')

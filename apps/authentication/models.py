@@ -6,18 +6,10 @@ from django.db.models import Model
 from .managers import UserManager
 
 
-class EncryptedEmailField(models.EmailField):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-    def value_from_object(self, obj: Model):
-        return super().value_from_object(obj)
-
-
 class DualisUser(AbstractBaseUser, PermissionsMixin):
     """DualisUser Model
     """
-    email = EncryptedEmailField(max_length=254, unique=True, primary_key=True)
+    email = models.EmailField(max_length=254, unique=True, primary_key=True)
     name = models.CharField(max_length=254, null=True, blank=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)

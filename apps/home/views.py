@@ -15,6 +15,7 @@ from apps.data_endpoint.utils.failure_rate import \
     get_passing_rate_first_attempt
 from apps.data_endpoint.process_data.read_data import get_grades
 from ..utils.decorators import refresh_dualis
+from ..authentication.views import decrypt
 
 
 @login_required(login_url="/login/")
@@ -80,8 +81,10 @@ def index(request: HttpRequest) -> HttpResponse:
     # Append total average
     own_grades.append({'total_average': total_average})
 
-    print(json.dumps(own_grades, indent=4))
-    context = {'own_grades': own_grades}
+    context = {
+        'own_grades': own_grades,
+        'different_semesters': list(unique_semesters_dict.keys()),
+        'name': decrypt(request.user.name)}
     return render(request, 'home/index.html', context)
 
 
