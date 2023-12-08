@@ -9,7 +9,7 @@ charset-normalizer==3.2.0
 colorama==0.4.6
 cryptography==41.0.6
 Django==4.2.7
-django-appconf==1.0.5
+django-appconf==1.0.6
 django-cryptography==1.1
 django-environ==0.11.2
 docutils==0.20.1
