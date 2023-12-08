@@ -76,10 +76,6 @@ def index(request: HttpRequest) -> HttpResponse:
     # Append total average
     own_grades.append({'total_average': total_average})
 
-    # Ausgabe der Übergabevariablen
-    print(json.dumps(own_grades,indent=4))
-    print(json.dumps(list(unique_semesters_dict.keys()),indent=4))
-
     context = {
         'own_grades': own_grades,
         'different_semesters': list(unique_semesters_dict.keys()),
