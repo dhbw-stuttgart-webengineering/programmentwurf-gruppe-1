@@ -40,18 +40,18 @@
                         </div>
                         <div class="row">
                           <div class="col">
-                            <p class="fw-bold">Modul</p>
+                            <p class="fw-bold text-primary-emphasis">Modul</p>
                           </div>
                           <div class="col">
-                            <p class="fw-bold">1. Versuch</p>
+                            <p class="fw-bold text-primary-emphasis">1. Versuch</p>
                           </div>
                           <div class="col">
-                            <p class="fw-bold">2. Versuch</p>
+                            <p class="fw-bold text-primary-emphasis">2. Versuch</p>
                           </div>
                         </div>
                         <!-- Den Modulen die Noten zuordnen -->
                         {% for grade in module.units %}
-                          <div class="row">
+                          <div class="row justify-content-evenly">
                             <div class="col">
                               <p class="fw-light lh-sm">{{ grade.unit_name }}</p>
                             </div>
@@ -70,19 +70,23 @@
                               {% endif %}
                             </div>
                           </div>
-                          <div class="row justify-content-center">
-                            <!-- Den Durchschnitt des Moduls anzeigen -->
-                            {% if grade.grade_first_attempt %}
-                              <strong>Modul Durchschnitt: {{ grade.average_first_attempt}}</strong>
-                            {% endif %}
-                          </div>
-                          <div class="row justify-content-center my-3">
-                            <!-- Einen Vergleich Button einfügen für jedes Modul in dem es eine Note gibt -->
-                            {% if grade.grade_first_attempt %}
-                              <button class="btn btn-outline-primary btn-sm" type="button" onclick="compareCharts({{ grade|safe }});">Vergleich</button>
-                            {% else %}
-                              Vergleich nicht möglich
-                            {% endif %}
+                          <div class="row align-content-center justify-content-evenly mb-4">
+                            <div class="col">
+                              <!-- Den Durchschnitt des Moduls anzeigen -->
+                              {% if grade.grade_first_attempt %}
+                                <p class="fw-bold">Modul Durchschnitt: {{ grade.average_first_attempt}}</p>
+                              {% else %}
+                                <p class="fw-bold">Modul Durchschnitt: N/A</p>
+                              {% endif %}
+                            </div>
+                            <div class="col">
+                              <!-- Einen Vergleich Button einfügen für jedes Modul in dem es eine Note gibt -->
+                              {% if grade.grade_first_attempt %}
+                                <button class="btn btn-outline-primary btn-sm" type="button" onclick="compareCharts({{ grade|safe }});">Vergleich</button>
+                              {% else %}
+                                <p>Vergleich nicht möglich</p>
+                              {% endif %}
+                            </div>
                           </div>
                         {% endfor %}
                       </div>
