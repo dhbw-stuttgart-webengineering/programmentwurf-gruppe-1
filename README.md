@@ -9,7 +9,17 @@ Ein Projekt um via Dualis Login Noten auszulesen und sich mit anderen Studenten 
 
 ## Ordnerstruktur
 
-`apps` ist alles was mit Frontend zu tun hat, in `dualis` finden sich alle Dateien für den Zugriff auf Dualis.
+    apps
+        authentication    - Login Backend
+        data_endpoint     - Backend for reloading data
+        home              - Index View / Handle 404/500 Errors
+        static            - Static Files (i.e. CSS/JS)
+        templates         - HTML Templates
+        utils
+            dualis        - Dualis API
+    core                  - Django Configuration
+    nginx                 - NGINX Confioguration for production deployment
+
 
 ## Virtualenv Tutorial
 
@@ -38,6 +48,14 @@ Um die erfolgreiche Installation zu überprüfen könnt ihr folgendes eingeben:
 Nun könnt ihr ganz normal weiter arbeiten. Um nötige Bibliotheken zu installieren könnt ihr noch mit `pip` die aufgelistetet Bibliotheken aus der `requirements.txt` installieren
 
     pip install -r requirements.txt
+
+Zum starten von Django folgendes ausführen:
+
+    python manage.py makemigrations
+
+    python manage.py migrate
+
+    python manage.py runserver
 
 ## Empfohlene Extensions
 
